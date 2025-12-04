@@ -17,6 +17,7 @@ public class Player extends Entity {
 
     int standCounter = 0;
     boolean moving = false;
+    boolean sprinting = false;
     int pixelCounter = 0;
 
     final int originalPlayerSize = 32;  // 32x32 px
@@ -40,7 +41,7 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = (gp.tileSize * 7) + 32;  // WORLD START POS
+        worldX = (gp.tileSize * 10) + 32;  // WORLD START POS
         worldY = (gp.tileSize * 4) + 16;  // =o=
         speed = 3;
         direction = "down";
@@ -87,6 +88,8 @@ public class Player extends Entity {
                     direction = "right";
                 }
 
+                sprinting = keyH.shiftPressed;
+
                 moving = true;
 
                 // CHECK TILE COLLISION
@@ -100,9 +103,14 @@ public class Player extends Entity {
                 }
             }
         }
-        if (moving == true) {
-            int move = speed;
-            if (collisionOn == false) {
+        int move;
+        if (moving) {
+            if (sprinting) {
+                move = speed*2;
+            } else {
+                move = speed;
+            }
+            if (!collisionOn) {
                 if(pixelCounter + move > gp.tileSize) {
                     move = gp.tileSize - pixelCounter;
                 }
