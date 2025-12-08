@@ -10,12 +10,6 @@ import java.io.IOException;
 import main.GamePanel;
 import main.KeyHandler;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 public class InteractiveBotton {
 
     public final int worldX = 25;
@@ -37,10 +31,10 @@ public class InteractiveBotton {
         this.keyH = keyH;
         this.leftClicked = leftClicked;
 
-        getPlayerImage();
+        getBottonImage();
     }
 
-    public void getPlayerImage() {
+    public void getBottonImage() {
         try {
             pokedexIcon = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/pokedexIcon.png"));
 

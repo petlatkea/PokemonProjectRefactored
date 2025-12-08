@@ -8,9 +8,6 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-
-import static java.awt.event.MouseEvent.MOUSE_CLICKED;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -44,9 +41,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     // == ENTITY & PLAYER ===
     public Player player = new Player(this, keyH);
-    public Pokedex pokedex = new Pokedex(this, keyH);
-    public InteractiveBotton botton = new InteractiveBotton(this, keyH, leftClick);
     public SuperObject[] obj = new SuperObject[10];
+
+    // == POKEDEX & BUTTONS
+    public InteractiveBotton button = new InteractiveBotton(this, keyH, leftClick);
+    public Pokedex pokedex = new Pokedex(this, keyH);
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;
@@ -131,6 +130,14 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
         tileM.drawLayer(g2, tileM.mapTileNumEnvironment);
 
+        //Pokedex Icon
+        button.drawpokedexIcon(g2);
+
+        //Pokedex
+        if (keyH.pokedexPressed||leftClick.clicked && leftClick.mousePressed2(40, 696, 44, 58)) {
+            pokedex.draw(g2);
+        }
+
         // DEBUG
         long passedTime = System.nanoTime() - drawStart;
 
@@ -160,10 +167,8 @@ public class GamePanel extends JPanel implements Runnable {
                 frameSincePrint = 0;
             }
         }
-        botton.drawpokedexIcon(g2);
-            if (keyH.pokedexPressed||leftClick.clicked && leftClick.mousePressed2(40, 696, 44, 58)) {
-                pokedex.draw(g2);
-            }
+
+
         g2.dispose();
     }
 
