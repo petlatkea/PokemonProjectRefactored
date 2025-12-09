@@ -42,6 +42,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    //Play bump
                 }
             }
             case "left" -> {
@@ -59,6 +60,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    //Play bump
                 }
             }
             case "down" -> {
@@ -76,6 +78,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    //Play bump
                 }
             }
             case "right" -> {
@@ -93,6 +96,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    //Play bump
                 }
             }
         }
