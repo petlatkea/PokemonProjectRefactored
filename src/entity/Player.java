@@ -23,6 +23,7 @@ public class Player extends Entity {
     final int originalPlayerSize = 32;  // 32x32 px
     public final int playerSize = originalPlayerSize * 4; // 128x128 px
 
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -162,4 +163,6 @@ public class Player extends Entity {
         g2.setColor(Color.red);
         g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
+
+
 }
