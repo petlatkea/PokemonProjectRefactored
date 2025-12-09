@@ -102,6 +102,10 @@ public class Pokemon {
         String dots = ".".repeat(dotsCount);
         System.out.println(fullLabel + dots + value);
     }
+
+    public String getName() {
+        return name;
+    }
 }
 
 
