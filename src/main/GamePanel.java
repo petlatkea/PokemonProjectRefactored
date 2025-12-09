@@ -31,8 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
-    ClickHandler leftClick = new ClickHandler();
+    KeyHandler keyH = new KeyHandler(this);
+    ClickHandler leftClick = new ClickHandler(this);
     Sound music = new Sound();
     Sound sfx = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] obj = new SuperObject[10];
 
     // == POKEDEX & BUTTONS
+    private boolean isPokedexShown = false;
     public InteractiveBotton button = new InteractiveBotton(this, keyH, leftClick);
     public Pokedex pokedex = new Pokedex(this, keyH);
 
@@ -135,11 +136,10 @@ public class GamePanel extends JPanel implements Runnable {
         button.drawpokedexIcon(g2);
 
         //Pokedex
-        if (keyH.pPressed ||leftClick.clicked && leftClick.mousePressedBox(40, 696, 44, 58) && leftClick.getCount() == 1) {
-                pokedex.draw(g2);
-                button.drawpokedexButtons(g2);
+        if (isPokedexShown) {
+            pokedex.draw(g2);
+            button.drawpokedexButtons(g2);
         }
-
 
         // DEBUG
         long passedTime = System.nanoTime() - drawStart;
@@ -189,5 +189,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void playSFX(int i) {
         sfx.setFile(i);
         sfx.play();
+    }
+
+    public void switchPokedexStatus() {
+        this.isPokedexShown = !this.isPokedexShown;
     }
 }

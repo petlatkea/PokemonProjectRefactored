@@ -4,8 +4,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
+    GamePanel gp;
     public boolean upPressed, leftPressed, downPressed, rightPressed, shiftPressed, pPressed;
     private int count = 0;
+
+    public KeyHandler(GamePanel gp) {
+        this.gp = gp;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -28,17 +34,12 @@ public class KeyHandler implements KeyListener{
             rightPressed = true;
         }
 
+
         if(code == KeyEvent.VK_SHIFT) {
             shiftPressed = true;
         }
         if(code == KeyEvent.VK_P){
-            if(count == 1) {
-                pPressed = false;
-                count = 0;
-            } else {
-                pPressed = true;
-                count++;
-            }
+            gp.switchPokedexStatus();
         }
     }
 
