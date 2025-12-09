@@ -6,7 +6,6 @@ import java.net.URL;
 import entity.Player;
 
 public class Sound {
-
     Clip clip;
     URL[] soundURL = new URL[30];
     Player player;
@@ -20,6 +19,10 @@ public class Sound {
     boolean isFading = false;
     FloatControl gainControl;
 
+    // ===== Collision cooldown =====
+    private long lastCollisionSoundTime = 0;
+    private final long collisionCooldown = 800; // ms
+
     // ============================
     // MUSIC ZONE HANDLING
     // ============================
@@ -28,7 +31,7 @@ public class Sound {
         int y = player.worldY / gp.tileSize;
 
         if (x == 19 && y == 52) return 2; // Lab
-        if (x <= 27 && y > 38 && y <= 56) return 0; // twinleaf
+        if (x <= 27 && y >= 38 && y <= 56) return 0; // twinleaf
         if (x > 27 && x <= 55 && y >= 14 && y <= 64) return 1; // route 1
         if (x > 55 && x <= 70 && y >= 14 && y <= 64) return 1; // route 1
         else return 3;
@@ -43,7 +46,6 @@ public class Sound {
             setFile();
             play();
             loop();
-            System.out.println("Music switched to zone: " + musicZone);
         }
     }
 
@@ -59,6 +61,8 @@ public class Sound {
         soundURL[2] = getClass().getResource("/sound/Lab.wav");
         soundURL[3] = getClass().getResource("/sound/Lake.wav");
         soundURL[4] = getClass().getResource("/sound/FloaromaTown.wav");
+        soundURL[20] = getClass().getResource("/sound/collision.wav");
+        soundURL[21] = getClass().getResource("/sound/button.wav");
 
     }
 
@@ -67,10 +71,45 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[musicZone]);
             clip = AudioSystem.getClip();
             clip.open(ais);
+            gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void PlayCollisionSound() {
+        long now = System.currentTimeMillis();
+        if (now - lastCollisionSoundTime < collisionCooldown) return;
+        lastCollisionSoundTime = now;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[20]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            playEffect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playButtonSound() {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[21]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            if (gp.keyH.enterPressed) {
+                playEffect();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void playEffect() {
+        clip.start();
+    }
+
 
     public void play() {
         clip.start();
@@ -92,7 +131,8 @@ public class Sound {
     //         FADE UPDATE
     // ============================
 
-    public void updateFade() {
+
+    /*public void updateFade() {
         if (!isFading || gainControl == null) return;
 
         if (Math.abs(volume - targetVolume) > 0.5f) {
@@ -128,4 +168,7 @@ public class Sound {
         fadeSpeed = 1.0f;
         isFading = true;
     }
+
+     */
+
 }

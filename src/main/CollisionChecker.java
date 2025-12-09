@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.Player;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -42,6 +43,8 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    gp.collisionSound.PlayCollisionSound();
+
                 }
             }
             case "left" -> {
@@ -59,6 +62,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    gp.collisionSound.PlayCollisionSound();
                 }
             }
             case "down" -> {
@@ -76,6 +80,8 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    gp.collisionSound.PlayCollisionSound();
+
                 }
             }
             case "right" -> {
@@ -93,6 +99,7 @@ public class CollisionChecker {
 
                 if(collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
+                    gp.collisionSound.PlayCollisionSound();
                 }
             }
         }

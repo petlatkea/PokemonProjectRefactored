@@ -53,6 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 100;
 
     Sound music = new Sound(this,player);
+    public Sound collisionSound = new Sound(this,player);
+    public Sound buttonSound = new Sound(this,player);
 
     // === FPS ===
     int FPS = 60;
