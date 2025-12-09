@@ -15,18 +15,21 @@ public class TileManager {
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNumBackground;
-    public int[][] mapTileNumEnvironment;
+    public int[][] mapTileNumEnvironmentB;
+    public int[][] mapTileNumEnvironmentF;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
-        tile = new Tile[86];
+        tile = new Tile[333];
         mapTileNumBackground = new int[gp.maxWorldCol][gp.maxWorldRow];
-        mapTileNumEnvironment = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNumEnvironmentB = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNumEnvironmentF = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
         loadMap("/maps/mapBackground.csv", mapTileNumBackground);
-        loadMap("/maps/mapEnvironment.csv", mapTileNumEnvironment);
+        loadMap("/maps/mapEnvironmentB.csv", mapTileNumEnvironmentB);
+        loadMap("/maps/mapEnvironmentF.csv", mapTileNumEnvironmentF);
     }
 
     public void getTileImage() {
