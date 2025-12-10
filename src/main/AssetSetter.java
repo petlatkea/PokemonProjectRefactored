@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Female1;
 import object.OBJ_Pokeball;
 import object.OBJ_Rock;
 
@@ -10,12 +11,15 @@ public class AssetSetter {
     }
 
     public void setObject() {
-            //gp.obj[0] = new OBJ_Pokeball();
-            //gp.obj[0].worldX = 9 * gp.tileSize;
-            //gp.obj[0].worldY = 4 * gp.tileSize;
+        gp.obj[0] = new OBJ_Pokeball(gp);
+        gp.obj[0].worldX = 18 * gp.tileSize;
+        gp.obj[0].worldY = 35 * gp.tileSize;
+        gp.obj[0].collision = true;
+    }
 
-            //gp.obj[1] = new OBJ_Rock();
-            //gp.obj[1].worldX = 10 * gp.tileSize;
-            //gp.obj[1].worldY = 4 * gp.tileSize;
+    public void setNPC() {
+        gp.npc[0] = new NPC_Female1(gp);
+        gp.npc[0].worldX = 23 * gp.tileSize;
+        gp.npc[0].worldY = 39 * gp.tileSize;
     }
 }
