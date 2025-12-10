@@ -137,8 +137,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Pokedex
         if (isPokedexShown) {
-            pokedex.draw(g2);
+            pokedex.drawPokedexGirl(g2);
             button.drawpokedexButtons(g2);
+            pokedex.drawPokedexSprite(g2,118,210, 96,96);
         }
 
         // DEBUG
