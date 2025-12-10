@@ -111,11 +111,11 @@ public class GamePanel extends JPanel implements Runnable {
                 repaint();
             }
 
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + drawCount);
-                drawCount = 0;
-                timer += 1000;
-            }
+//            if (System.currentTimeMillis() - timer >= 1000) {
+//                System.out.println("FPS: " + drawCount);
+//                drawCount = 0;
+//                timer += 1000;
+//            }
         }
     }
 
@@ -178,8 +178,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Pokedex
         if (isPokedexShown) {
-            pokedex.draw(g2);
+            pokedex.drawPokedexGirl(g2);
             button.drawpokedexButtons(g2);
+            pokedex.drawPokedexSprite(g2,225,300, 96,96);
         }
 
         // UI
