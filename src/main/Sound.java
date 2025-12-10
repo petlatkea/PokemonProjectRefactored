@@ -21,7 +21,7 @@ public class Sound {
 
     // ===== Collision cooldown =====
     private long lastCollisionSoundTime = 0;
-    private final long collisionCooldown = 800; // ms
+    private final long collisionCooldown = 400; // ms
 
     // ============================
     // MUSIC ZONE HANDLING
