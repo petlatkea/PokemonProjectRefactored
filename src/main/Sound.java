@@ -27,10 +27,10 @@ public class Sound {
     // MUSIC ZONE HANDLING
     // ============================
     public int getMusicZone() {
-        int x = player.worldX / gp.tileSize;
-        int y = player.worldY / gp.tileSize;
+        int x = (player.worldX / gp.tileSize) +1;
+        int y = (player.worldY / gp.tileSize) +1;
 
-        if (x == 19 && y == 52) return 2; // Lab
+        if (x == 12 && y == 39) return 2; // Lab
         if (x <= 27 && y >= 38 && y <= 56) return 0; // twinleaf
         if (x > 27 && x <= 55 && y >= 14 && y <= 64) return 1; // route 1
         if (x > 55 && x <= 70 && y >= 14 && y <= 64) return 1; // route 1
