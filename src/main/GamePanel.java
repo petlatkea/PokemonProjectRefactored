@@ -97,11 +97,11 @@ public class GamePanel extends JPanel implements Runnable {
                 repaint();
             }
 
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + drawCount);
-                drawCount = 0;
-                timer += 1000;
-            }
+//            if (System.currentTimeMillis() - timer >= 1000) {
+//                System.out.println("FPS: " + drawCount);
+//                drawCount = 0;
+//                timer += 1000;
+//            }
         }
     }
 
@@ -139,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (isPokedexShown) {
             pokedex.drawPokedexGirl(g2);
             button.drawpokedexButtons(g2);
-            pokedex.drawPokedexSprite(g2,118,210, 96,96);
+            pokedex.drawPokedexSprite(g2,225,300, 96,96);
         }
 
         // DEBUG
@@ -163,14 +163,14 @@ public class GamePanel extends JPanel implements Runnable {
 
             frameSincePrint++;
             int printInterval = 30;
-            if (frameSincePrint >= printInterval) {
-                System.out.printf(
-                        "Draw: %.3f ms | Highest: %.3f ms | Average: %.3f ms%n",
-                        passedMs, highestMs, averageMs
-                );
-                System.out.println("xPos: " + player.worldX/64 + " yPos: " + player.worldY/64);
-                frameSincePrint = 0;
-            }
+//            if (frameSincePrint >= printInterval) {
+//                System.out.printf(
+//                        "Draw: %.3f ms | Highest: %.3f ms | Average: %.3f ms%n",
+//                        passedMs, highestMs, averageMs
+//                );
+//                System.out.println("xPos: " + player.worldX/64 + " yPos: " + player.worldY/64);
+//                frameSincePrint = 0;
+//            }
         }
 
 

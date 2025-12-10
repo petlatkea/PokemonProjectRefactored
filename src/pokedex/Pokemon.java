@@ -28,6 +28,7 @@ public class Pokemon {
     public boolean validPokemon = true;
     private String pokemonSprite;
 
+
     public void pokedexLoad(){
 
         Scanner sc = new Scanner(System.in);
@@ -135,6 +136,7 @@ public class Pokemon {
         return pokemonSprite;
     }
 
+    // Gemmer PNG fra API i cache
     public void pngCache() {
         URL url;
 
@@ -169,22 +171,17 @@ public class Pokemon {
 
     }
 
-    private BufferedImage loadImageFromUrl(URL url) {
+    // Tager web adressen og gemmer PNG fra den i BufferedImage
+    public BufferedImage loadImageFromUrl(URL url) {
         try {
-            // 1. Create a URL object from the string
-
-
-            // 2. Use ImageIO.read(URL) to fetch and decode the image
+            // Use ImageIO.read(URL) to fetch and decode the image
             // This method handles the networking (open connection, get input stream)
             BufferedImage bufferedImage = ImageIO.read(url);
-
             // ImageIO.read() returns null if no registered ImageReader can decode the stream
             if (bufferedImage == null) {
                 System.err.println("ImageIO could not decode image format from the URL.");
             }
-
             return bufferedImage;
-
         } catch (IOException e) {
             // Catches MalformedURLException (if the URL string is invalid)
             // and other IOExceptions (network errors, file not found, etc.)
@@ -193,6 +190,7 @@ public class Pokemon {
             return null;
         }
     }
+
 }
 
 
