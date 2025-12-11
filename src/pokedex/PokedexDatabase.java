@@ -5,8 +5,30 @@ import java.sql.*;
 public class PokedexDatabase {
     private static final String DB_URL = "jdbc:sqlite:pokedex.db";
 
+    public static boolean getPokemonByName(Pokemon p) { //Sender data tilbage udfra et pokemon navn
+        String sql = "SELECT * FROM pokemon_data WHERE name = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+        PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1, p.name);
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                p.id = rs.getInt("id");
+                p.height = rs.getInt("height");
+                p.weight = rs.getInt("weight");
+
+                return true;
+            }
+            return false;
+        } catch (SQLException e){
+            System.err.println("Error reading Pokemon " + p.name + ": " + e.getMessage());
+            return false;
+        }
+    }
     public static void insertPokemon(Pokemon p, String description) { // Indsætter data fra et pokemon object til databasen
-        String sql = "INSERT INTO pokemon_data(id, name, height, weight, types, description, hp, attack, defense, special_attack, special_defense, speed) " +
+        String sql = "INSERT OR IGNORE INTO pokemon_data(id, name, height, weight, types, description, hp, attack, defense, special_attack, special_defense, speed) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -41,29 +63,27 @@ public class PokedexDatabase {
             System.err.println("Error inserting Pokemon " + p.name + ": " + e.getMessage());
         }
     }
-
-    public static boolean getPokemonByName(Pokemon p) { //Sender data tilbage udfra et pokemon navn
-        String sql = "SELECT * FROM pokemon_data WHERE name = ?";
+    public static boolean getPokemonById(Pokemon p, String answer) { //Sender data tilbage udfra et pokemon navn
+        String sql = "SELECT * FROM pokemon_data WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
 
-            pstmt.setString(1, p.name);
+            pstmt.setString(1, answer);
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                // Found in database! Populate the Pokemon object.
-                p.id = rs.getInt("id");
+            if(rs.next()){
+                p.name = rs.getString("name");
                 p.height = rs.getInt("height");
                 p.weight = rs.getInt("weight");
 
-                return true; // Fundet i databasen
+                return true;
             }
-            return false; // Ikke fundet i databasen
-
-        } catch (SQLException e) {
+            return false;
+        } catch (SQLException e){
             System.err.println("Error reading Pokemon " + p.name + ": " + e.getMessage());
             return false;
         }
     }
+
 }

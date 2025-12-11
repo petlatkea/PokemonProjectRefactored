@@ -79,12 +79,7 @@ public class Pokedex {
 
         pokemon.pokedexLoad();
 
-        path = pokemon.getPath();
-        if (path == null) { // If statement kan fjernes, når det funker.
-            System.err.println("Search failed or path could not be determined. Returning to Pokedex state.");
-            gp.gameState = gp.pokedexState;
-            return;
-        }
+        path = cachePath();
         File outputFile = new File(path);
         if (outputFile.exists()) {
             loadPokemonCache();
@@ -140,8 +135,14 @@ public class Pokedex {
         System.out.print("Please enter pokemon name: ");
         name = sc.nextLine().toLowerCase();
         pokemon.setName(name);
+        try {
+            pokemon.setId(Integer.parseInt(name));
+        } catch (NumberFormatException _) {
+        }
     }
-
+    private String cachePath() {
+        return "src/resources/pokedexPngCache/pokemon_name_" + pokemon.name + ".png";
+    }
 }
 
 

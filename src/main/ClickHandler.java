@@ -8,9 +8,6 @@ import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GamePanel gp;
-    InteractiveButton interactiveButton;
-    public boolean clicked;
-    private int count;
     private int x;
     private int y;
 
@@ -94,9 +91,5 @@ public class ClickHandler implements MouseListener {
         Rectangle rect = new Rectangle(worldX, worldY, width, height);
         boolean isPointInside = (rect.contains(this.x, this.y));
         return isPointInside;
-    }
-
-    public int getCount() {
-        return count;
     }
 }

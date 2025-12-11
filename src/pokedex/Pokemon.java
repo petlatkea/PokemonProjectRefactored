@@ -13,7 +13,6 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Scanner;
 
 public class Pokemon {
 
@@ -33,15 +32,9 @@ public class Pokemon {
     public void pokedexLoad() {
         String expectedPath = cachePath();
 
-        if (PokedexDatabase.getPokemonByName(this)) { // <- Attempts to fill basic data (id, height, weight)
+        if (PokedexDatabase.getPokemonByName(this)||PokedexDatabase.getPokemonById(this,name)) { // <- Attempts to fill basic data (id, height, weight)
             System.out.println("Data loaded from SQLite cache.");
-
             path = expectedPath;
-
-            File outputFile = new File(path);
-            if (!outputFile.exists()) {
-                System.out.println("Not in database");
-            }
             return;
         }
         // Hvis ikke i database, hent fra API
@@ -51,7 +44,7 @@ public class Pokemon {
     public void pokedexEntry() {
 
         try {
-
+            System.out.println("loading pokemon info from API");
                 String url = "https://pokeapi.co/api/v2/pokemon/" + this.name;
 
                 // søg efter pokemon
@@ -81,7 +74,7 @@ public class Pokemon {
                 this.sprites = p.sprites;
                 this.stats = p.stats;
 
-                this.printInfo();
+                this.printInfoFromApi();
 
 
         } catch (IOException e) {
@@ -92,7 +85,7 @@ public class Pokemon {
 
     }
 
-    public void printInfo() throws IOException, InterruptedException {
+    public void printInfoFromApi() throws IOException, InterruptedException {
         double kg = this.weight * 0.1;
         double mtr = this.height * 0.1;
 
@@ -212,6 +205,10 @@ public class Pokemon {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
 
