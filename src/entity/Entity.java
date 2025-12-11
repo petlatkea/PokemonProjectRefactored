@@ -14,10 +14,8 @@ public class Entity {
 
     public BufferedImage up1, up2, up3, left1, left2, left3, down1, down2, down3, right1, right2, right3;
     public String direction;
-
     public int spriteCounter = 0;
     public int spriteNum = 1;
-
     final int originalEntitySize = 32;  // 32x32 px
     public final int entitySize = originalEntitySize * 4; // 128x128 px
 
@@ -26,12 +24,29 @@ public class Entity {
     public int solidAreaDefaultY;
     public boolean collisionOn = false;
 
+    String[] dialogues = new String[20];
+    int dialogueIndex = 0;
+
     public Entity (GamePanel gp) {
         this.gp = gp;
     }
 
     public void setAction() {} // Might be used later for NPC interaction
+    public void speak() {
+        if (dialogues[dialogueIndex] == null) {
+            dialogueIndex = 0;
+        }
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
 
+        switch(gp.player.direction) {
+            case "up" -> direction = "down";
+            case "down" -> direction = "up";
+            case "left" -> direction = "right";
+            case "right" -> direction = "left";
+
+        }
+    }
     public void update() {}
 
 
