@@ -32,10 +32,16 @@ public class AssetSetter {
         gp.obj[3].worldY = 62 * gp.tileSize;
         gp.obj[3].collision = true;
 
-        gp.obj[4] = new OBJ_Rock(gp);
-        gp.obj[4].worldX = 86 * gp.tileSize;
-        gp.obj[4].worldY = 89 * gp.tileSize;
+        gp.obj[4] = new OBJ_Pokeball(gp);
+        gp.obj[4].worldX = 7 * gp.tileSize;
+        gp.obj[4].worldY = 71 * gp.tileSize;
         gp.obj[4].collision = true;
+
+
+        gp.obj[5] = new OBJ_Rock(gp);
+        gp.obj[5].worldX = 86 * gp.tileSize;
+        gp.obj[5].worldY = 89 * gp.tileSize;
+        gp.obj[5].collision = true;
     }
 
     public void setNPC() {
