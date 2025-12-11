@@ -2,6 +2,8 @@ package main;
 
 import entity.NPC_Female1;
 import entity.NPC_Machop;
+import entity.NPC_Male1;
+import entity.NPC_Male2;
 import object.OBJ_Pokeball;
 import object.OBJ_Rock;
 
@@ -53,19 +55,29 @@ public class AssetSetter {
         gp.npc[1].worldX = 41 * gp.tileSize;
         gp.npc[1].worldY = 11 * gp.tileSize;
 
-
-        gp.npc[2] = new NPC_Machop(gp);
+        gp.npc[2] = new NPC_Male1(gp);
         gp.npc[2].worldX = 60 * gp.tileSize;
-        gp.npc[2].worldY = 93 * gp.tileSize;
+        gp.npc[2].worldY = 90 * gp.tileSize;
+        gp.npc[2].direction = "up";
+
 
         gp.npc[3] = new NPC_Machop(gp);
-        gp.npc[3].worldX = 70 * gp.tileSize;
-        gp.npc[3].worldY = 84 * gp.tileSize;
-        gp.npc[3].direction = "left";
+        gp.npc[3].worldX = 59 * gp.tileSize;
+        gp.npc[3].worldY = 89 * gp.tileSize;
+        gp.npc[3].direction = "right";
 
         gp.npc[4] = new NPC_Machop(gp);
-        gp.npc[4].worldX = 83 * gp.tileSize;
-        gp.npc[4].worldY = 93 * gp.tileSize;
+        gp.npc[4].worldX = 70 * gp.tileSize;
+        gp.npc[4].worldY = 84 * gp.tileSize;
+        gp.npc[4].direction = "left";
+
+        gp.npc[5] = new NPC_Machop(gp);
+        gp.npc[5].worldX = 85 * gp.tileSize;
+        gp.npc[5].worldY = 93 * gp.tileSize;
+
+        gp.npc[6] = new NPC_Male2(gp);
+        gp.npc[6].worldX = 84 * gp.tileSize;
+        gp.npc[6].worldY = 88 * gp.tileSize;
 
 
     }
