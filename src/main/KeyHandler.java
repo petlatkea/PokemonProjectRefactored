@@ -68,6 +68,13 @@ public class KeyHandler implements KeyListener{
                 gp.gameState = gp.playState;
             }
         }
+        // BATTLE STATE
+        else if (gp.gameState == gp.battleState){
+            //
+            if (code == KeyEvent.VK_SPACE){
+                spacePressed = true;
+            }
+        }
     }
 
     @Override
