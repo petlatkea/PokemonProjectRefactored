@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
-    ClickHandler leftClick = new ClickHandler(this);
+    public ClickHandler leftClick = new ClickHandler(this);
 
     //Sound sfx = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+    public final int battleState = 4;
 
     // == POKEDEX & BUTTONS ==
     private boolean isPokedexShown = false;
@@ -66,9 +67,9 @@ public class GamePanel extends JPanel implements Runnable {
     // === BATTLE SYSTEM ===
     public Battle battle;
 
-    Sound music = new Sound(this,player);
-    public Sound collisionSound = new Sound(this,player);
-    public Sound buttonSound = new Sound(this,player);
+    Sound music = new Sound(this, player);
+    public Sound collisionSound = new Sound(this, player);
+    public Sound buttonSound = new Sound(this, player);
 
     // === FPS ===
     int FPS = 60;
@@ -131,31 +132,31 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
             music.updateMusic();
             music.updateFade();
-            for(int i = 0; i < npc.length; i++) {
-                if(npc[i] != null) {
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
                     npc[i].update();
                 }
             }
 
-            if (keyH.bPressed){
+            if (keyH.bPressed) {
                 Pokemon playerPokemon = Pokemon.load("25");
                 Pokemon enemyPokemon = Pokemon.load("11");
 
                 this.battle = new Battle(this, playerPokemon, enemyPokemon);
-                this.gameState = stateBattle;
+                this.gameState = battleState;
             }
         }
         if (gameState == pauseState) {
 
         }
 
-        if (gameState == battleState){
+        if (gameState == battleState) {
             // Battle screen
-            if (battle != null){
+            if (battle != null) {
                 battle.update();
             }
 
-            if (keyH.spacePressed && battle != null){
+            if (keyH.spacePressed && battle != null) {
                 battle.endBattle();
             }
         }
@@ -174,101 +175,99 @@ public class GamePanel extends JPanel implements Runnable {
         long drawStart = System.nanoTime();
 
 
-        if (gameState == playState){
-        // Background Layer
-        tileM.drawLayer(g2, tileM.mapTileNumBackground);
+        if (gameState != battleState) {
+            // Background Layer
+            tileM.drawLayer(g2, tileM.mapTileNumBackground);
 
-        // Object Layer
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+            // Object Layer
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
-        }
 
-        // Environment Behind player
-        tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
+            // Environment Behind player
+            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
 
-        // NPCs
-        for(int i = 0; i < npc.length; i++) {
-            if(npc[i] != null) {
-                npc[i].draw(g2);
+            // NPCs
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
             }
-        }
 
-        // Player
-        player.draw(g2);
+            // Player
+            player.draw(g2);
 
-        // Environment Front of player
-        tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
+            // Environment Front of player
+            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
 
-        //Pokedex Icon
-        button.drawpokedexIcon(g2);
+            //Pokedex Icon
+            button.drawpokedexIcon(g2);
 
-        //Pokedex
-        if (isPokedexShown) {
-            pokedex.drawPokedexGirl(g2);
-            button.drawpokedexButtons(g2);
-            pokedex.drawPokedexSprite(g2,225,300, 96,96);
-        }
+            //Pokedex
+            if (isPokedexShown) {
+                pokedex.drawPokedexGirl(g2);
+                button.drawpokedexButtons(g2);
+                pokedex.drawPokedexSprite(g2, 225, 300, 96, 96);
+            }
 
-        // UI
-        ui.draw(g2);
+            // UI
+            ui.draw(g2);
 
-        } else if (gameState == stateBattle){
-            if (battle != null){
+        } else {
+            if (battle != null) {
                 battle.draw(g2);
-            } else{
+            } else {
                 g2.setColor(Color.lightGray);
                 g2.drawString("BATTLE STATE (no battle object)", 50, 50);
 
                 // probably gonna need to use the g2.draw... function like g2.drawImage();
             }
+        }
 
+            // DEBUG
+            long passedTime = System.nanoTime() - drawStart;
 
-        // DEBUG
-        long passedTime = System.nanoTime() - drawStart;
+            double passedMs = passedTime / 1_000_000.0;
 
-        double passedMs = passedTime / 1_000_000.0;
+            if (warmupFrames > 0) {
+                warmupFrames--;
+            } else {
+                // TRACK AVG & MAX
+                if (passedTime > highestDrawTime) {
+                    highestDrawTime = passedTime;
+                }
 
-        if (warmupFrames > 0) {
-            warmupFrames--;
-        } else {
-            // TRACK AVG & MAX
-            if (passedTime > highestDrawTime) {
-                highestDrawTime = passedTime;
-            }
+                totalDrawTime += passedTime;
+                drawCount++;
 
-            totalDrawTime += passedTime;
-            drawCount++;
+                double averageMs = (totalDrawTime / (double) drawCount) / 1_000_000.0;
+                double highestMs = highestDrawTime / 1_000_000.0;
 
-            double averageMs = (totalDrawTime / (double) drawCount) / 1_000_000.0;
-            double highestMs = highestDrawTime / 1_000_000.0;
-
-            frameSincePrint++;
-            int printInterval = 30;
-            if (frameSincePrint >= printInterval) {
+                frameSincePrint++;
+                int printInterval = 30;
+                if (frameSincePrint >= printInterval) {
 //                System.out.printf(
 //                        "Draw: %.3f ms | Highest: %.3f ms | Average: %.3f ms%n",
 //                        passedMs, highestMs, averageMs
 //                );
-               System.out.println("xPos: " + ((player.worldX/64)+1) + " yPos: " + ((player.worldY/64)+1));
-                frameSincePrint = 0;
+                    System.out.println("xPos: " + ((player.worldX / 64) + 1) + " yPos: " + ((player.worldY / 64) + 1));
+                    frameSincePrint = 0;
+                }
             }
-        }
-
-
         g2.dispose();
     }
 
-    public void playMusic() {
-        music.setFile();
-        music.play();
+        public void playMusic () {
+            music.setFile();
+            music.play();
 
-    }
+        }
 
-    public void stopMusic() {
-        music.stop();
-    }
+        public void stopMusic () {
+            music.stop();
+        }
 
     /*public void playSFX(int i) {
         sfx.setFile();
@@ -277,7 +276,7 @@ public class GamePanel extends JPanel implements Runnable {
 
      */
 
-    public void switchPokedexStatus() {
-        this.isPokedexShown = !this.isPokedexShown;
-    }
+        public void switchPokedexStatus () {
+            this.isPokedexShown = !this.isPokedexShown;
+        }
 }
