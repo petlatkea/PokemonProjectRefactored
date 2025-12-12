@@ -1,13 +1,12 @@
 package main;
 
-import pokedex.InteractiveButton;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GamePanel gp;
+    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed;
     private int x;
     private int y;
 
@@ -36,38 +35,21 @@ public class ClickHandler implements MouseListener {
         }
         // Pressed on Pokedex Search Button
         if (mousePressedBox(245, 565, 147, 64)) {
-            if (gp.gameState == gp.pokedexState){
-                gp.button.isSearching = true;
-                gp.button.drawTimer = gp.button.drawDuration;
-                gp.repaint();
-
-                new Thread(() -> {
-                    gp.pokedex.searchForPokemon();
-                }).start();
+            if (gp.gameState == gp.pokedexState) {
+                searchButtonPressed = true;
             }
         }
         //Pressed on Pokedex left button
         if (mousePressedBox(190, 576, 45, 45)) {
             if (gp.gameState == gp.pokedexState) {
-                gp.button.isDirectionLeft = true;
-                gp.button.drawTimer = gp.button.drawDuration;
-                gp.repaint();
-
-                new Thread(() -> {
-                    // Søg efter forrige pokemon metode insættes her
-                }).start();
+                System.out.println("=== LEFT BUTTON PRESSED ===");
+                previousButtonPressed = true;
             }
         }
         //Pressed on Pokedex right button
         if (mousePressedBox(398, 576, 45, 45)) {
             if (gp.gameState == gp.pokedexState) {
-                gp.button.isDirectionRight = true;
-                gp.button.drawTimer = gp.button.drawDuration;
-                gp.repaint();
-
-                new Thread(() -> {
-                    // Søg efter næste pokemon metode insættes her
-                }).start();
+                nextButtonPressed = true;
             }
         }
         if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254*4, 46*4) && gp.gameState == gp.dialogueState) {
@@ -79,6 +61,10 @@ public class ClickHandler implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        System.out.println("=== RELEASED MOUSE ===");
+        previousButtonPressed = false;
+        searchButtonPressed = false;
+        nextButtonPressed = false;
 
     }
 
