@@ -36,7 +36,7 @@ public class ClickHandler implements MouseListener {
         }
         // Pressed on Pokedex Search Button
         if (mousePressedBox(245, 565, 147, 64)) {
-            if (gp.gameState == gp.pokedexState) {
+            if (gp.gameState == gp.pokedexState){
                 gp.button.isSearching = true;
                 gp.button.drawTimer = gp.button.drawDuration;
                 gp.repaint();

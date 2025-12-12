@@ -34,13 +34,11 @@ public class PokedexDatabase {
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // 1. Prepare basic info and types string
             pstmt.setInt(1, p.id);
             pstmt.setString(2, p.name);
             pstmt.setInt(3, p.height);
             pstmt.setInt(4, p.weight);
 
-            // Convert types array to a single comma-separated string
             String types = "";
             for (TypeEntry entry : p.types) {
                 types += entry.type.name + ",";
@@ -48,8 +46,6 @@ public class PokedexDatabase {
             pstmt.setString(5, types.replaceAll(",$", "")); // Remove trailing comma
             pstmt.setString(6, description);
 
-            // 2. Prepare stats (assuming standard order: HP, Attack, Defense, etc.)
-            // You should make this more robust in a real application, but for now:
             pstmt.setInt(7, p.stats[0].base_stat);  // HP
             pstmt.setInt(8, p.stats[1].base_stat);  // Attack
             pstmt.setInt(9, p.stats[2].base_stat);  // Defense
