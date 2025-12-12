@@ -26,8 +26,6 @@ public class Pokedex {
     GamePanel gp;
     KeyHandler keyH;
     Pokemon pokemon = new Pokemon();
-    InteractiveButton interactiveButton;
-
 
     final int originalPokedexWidth = 256;  // 256*192 px
     final int originalPokedexHeight = 192;
@@ -103,7 +101,7 @@ public class Pokedex {
         String imageUrl = pokemon.getPokemonSprite();
         URL url;
         try {
-            URI uri = new URI(imageUrl); //imageurl sættes ind her i stedet, når søgefunktion er klar
+            URI uri = new URI(imageUrl);
             url = uri.toURL();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
