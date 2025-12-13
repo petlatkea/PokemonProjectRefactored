@@ -11,8 +11,7 @@ import java.io.InputStream;
 public class UI {
     GamePanel gp;
     Graphics2D g2;
-    Player player;
-    ClickHandler clickH = new ClickHandler(gp);
+    ClickHandler clickH;
 
     UtilityTool uTool = new UtilityTool();
     public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton;
@@ -31,11 +30,9 @@ public class UI {
     private static final long AREA_DISPLAY_DURATION = 3000; // 3 seconds
     int animatedIconY = -200;
 
-    public UI(GamePanel gp, ClickHandler clickH, Player player) {
+    public UI(GamePanel gp, ClickHandler clickH) {
         this.gp = gp;
         this.clickH = clickH;
-        this.player = player;
-
 
         InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
         try {
@@ -46,6 +43,8 @@ public class UI {
             throw new RuntimeException(e);
         }
         getUIImages();
+        getAreaIcons();
+        getAreaNames();
     }
 
     public void showMessage(String text) {
@@ -82,7 +81,6 @@ public class UI {
         if (gp.gameState == gp.playState) {
             drawPokedexIcon();
             drawAreaIcons();
-
         }
 
         // PAUSE STATE
@@ -108,6 +106,7 @@ public class UI {
         g2.drawImage(image, x, y, image.getWidth() * 2, image.getHeight() * 2, null);
     }
 
+    // ===== PAUSE =====
     public void drawPauseScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80));
 
@@ -118,6 +117,12 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
+    public int getXForCenteredText(String text) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return gp.screenWidth / 2 - length / 2;
+    }
+
+    // ===== DIALOGUE =====
     public void drawDialogueScreen() {
         // WINDOW
         int x = (gp.screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
@@ -139,6 +144,7 @@ public class UI {
         g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
     }
 
+    // ===== POKEDEX =====
     public void drawPokedexScreen() {
         // POKEDEX
         int x = 0;
@@ -187,12 +193,7 @@ public class UI {
         }
     }
 
-    public int getXForCenteredText(String text) {
-        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        return gp.screenWidth / 2 - length / 2;
-    }
-
-
+    // ===== AREA ICONS =====
     public void getAreaIcons() {
         try {
             areaIcons[0] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneSmallCity.png"));
@@ -216,22 +217,16 @@ public class UI {
         areaNames[5] = "Route 202";
         areaNames[6] = "Solaceon Town";
         areaNames[7] = " Mt.Coronet";
-
-
     }
 
-
     public void drawAreaIcons() {
-        getAreaIcons();
-        getAreaNames();
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
-        int x = (player.worldX / gp.tileSize) + 1;
-        int y = (player.worldY / gp.tileSize) + 1;
+        int x = (gp.player.worldX / gp.tileSize) + 1;
+        int y = (gp.player.worldY / gp.tileSize) + 1;
 
         long elapsed = System.currentTimeMillis() - areaDisplayStartTime;
-
 
         int iconX = 635;
         int iconY = -200;
@@ -273,17 +268,14 @@ public class UI {
 
         // Draw only if within 3 seconds
         if (currentArea != -1 && elapsed <= AREA_DISPLAY_DURATION) {
-
             if (animatedIconY < 0) {
                 animatedIconY += 4;
             }
-
             g2.drawImage(areaIcons[currentArea], iconX, animatedIconY, iconWidth, iconHeight, null);
             g2.drawString(areaNames[currentArea], nameX, animatedIconY + 70);
         }
 
         if (elapsed > AREA_DISPLAY_DURATION) {
-
             if (animatedIconY > -200) {
                 animatedIconY -= 4;
             }
