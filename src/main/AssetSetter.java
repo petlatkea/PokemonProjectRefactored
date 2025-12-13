@@ -1,9 +1,6 @@
 package main;
 
-import entity.NPC_Female1;
-import entity.NPC_Machop;
-import entity.NPC_Male1;
-import entity.NPC_Male2;
+import entity.*;
 import object.OBJ_Pokeball;
 import object.OBJ_Rock;
 
@@ -46,38 +43,54 @@ public class AssetSetter {
         gp.obj[5].collision = true;
     }
 
+
     public void setNPC() {
-        gp.npc[0] = new NPC_Female1(gp);
-        gp.npc[0].worldX = 23 * gp.tileSize;
-        gp.npc[0].worldY = 39 * gp.tileSize;
+        gp.npc[0] = new NPC_Prof(gp);
+        gp.npc[0].worldX = 12 * gp.tileSize;
+        gp.npc[0].worldY = 40 * gp.tileSize;
+        gp.npc[0].direction = "up";
 
         gp.npc[1] = new NPC_Female1(gp);
-        gp.npc[1].worldX = 41 * gp.tileSize;
-        gp.npc[1].worldY = 11 * gp.tileSize;
+        gp.npc[1].worldX = 23 * gp.tileSize;
+        gp.npc[1].worldY = 39 * gp.tileSize;
 
-        gp.npc[2] = new NPC_Male1(gp);
-        gp.npc[2].worldX = 60 * gp.tileSize;
-        gp.npc[2].worldY = 90 * gp.tileSize;
-        gp.npc[2].direction = "up";
+        gp.npc[2] = new NPC_Female2(gp);
+        gp.npc[2].worldX = 9 * gp.tileSize;
+        gp.npc[2].worldY = 47 * gp.tileSize;
+
+        gp.npc[3] = new NPC_Female3(gp);
+        gp.npc[3].worldX = 52 * gp.tileSize;
+        gp.npc[3].worldY = 8 * gp.tileSize;
+
+        gp.npc[4] = new NPC_Male6(gp);
+        gp.npc[4].worldX = 5 * gp.tileSize;
+        gp.npc[4].worldY = 12 * gp.tileSize;
+        gp.npc[5].direction = "left";
 
 
-        gp.npc[3] = new NPC_Machop(gp);
-        gp.npc[3].worldX = 59 * gp.tileSize;
-        gp.npc[3].worldY = 89 * gp.tileSize;
-        gp.npc[3].direction = "right";
+        gp.npc[10] = new NPC_Male1(gp);
+        gp.npc[10].worldX = 60 * gp.tileSize;
+        gp.npc[10].worldY = 90 * gp.tileSize;
+        gp.npc[10].direction = "up";
 
-        gp.npc[4] = new NPC_Machop(gp);
-        gp.npc[4].worldX = 70 * gp.tileSize;
-        gp.npc[4].worldY = 84 * gp.tileSize;
-        gp.npc[4].direction = "left";
 
-        gp.npc[5] = new NPC_Machop(gp);
-        gp.npc[5].worldX = 85 * gp.tileSize;
-        gp.npc[5].worldY = 93 * gp.tileSize;
+        gp.npc[11] = new NPC_Machop(gp);
+        gp.npc[11].worldX = 59 * gp.tileSize;
+        gp.npc[11].worldY = 89 * gp.tileSize;
+        gp.npc[11].direction = "right";
 
-        gp.npc[6] = new NPC_Male2(gp);
-        gp.npc[6].worldX = 84 * gp.tileSize;
-        gp.npc[6].worldY = 88 * gp.tileSize;
+        gp.npc[12] = new NPC_Machop(gp);
+        gp.npc[12].worldX = 70 * gp.tileSize;
+        gp.npc[12].worldY = 84 * gp.tileSize;
+        gp.npc[12].direction = "left";
+
+        gp.npc[13] = new NPC_Machop(gp);
+        gp.npc[13].worldX = 85 * gp.tileSize;
+        gp.npc[13].worldY = 93 * gp.tileSize;
+
+        gp.npc[14] = new NPC_Male2(gp);
+        gp.npc[14].worldX = 84 * gp.tileSize;
+        gp.npc[14].worldY = 88 * gp.tileSize;
 
 
     }
