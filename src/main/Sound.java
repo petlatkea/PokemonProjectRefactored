@@ -24,6 +24,10 @@ public class Sound {
     private long lastCollisionSoundTime = 0;
     private final long collisionCooldown = 400; // ms
 
+    // ===== Button cooldown =====
+    private long lastButtonSound = 0;
+    private final long buttonCooldown = 400; // ms
+
     // ============================
     // MUSIC ZONE HANDLING
     // ============================
@@ -32,14 +36,14 @@ public class Sound {
         int y = (player.worldY / gp.tileSize) + 1;
 
         if (x > 42 && x <= 71 && y >= 5 && y <= 22) return 4;// floaroma town
-        else if (x>=49 && x <= 55 && y>=62 && y <=66) return 6; // route 203 extra corner
+        else if (x>=49 && x <= 55 && y>=62 && y <=66) return 6; // route 202 extra corner
         else if (x == 18 && y == 85) return 10; // PokeMart
         else if (x == 11 && y == 85) return 9; // PokeCenter
         else if (x == 11 && y == 76) return 11; // BattleArena
         else if (x >= 38 && x < 94 && y >= 83 && y <= 94) return 8; // valley
         else if (x <= 38 && y >= 62 && y <= 91) return 7; // big town
-        else if (x >= 27 && x <= 54 && y >= 17 && y <= 65) return 1; // route 1
-        else if (x >= 40 && x <= 92 && y >= 55 && y <= 73) return 6; // route 203
+        else if (x >= 27 && x <= 54 && y >= 17 && y <= 65) return 1; // route 201
+        else if (x >= 40 && x <= 92 && y >= 55 && y <= 73) return 6; // route 202
         else if (x == 12 && y == 39) return 2; // Lab
         else if (x <= 27 && y >= 38 && y <= 57) return 0; // twinleaf
         else if (x <= 42 && y < 34) return 3; // lake
@@ -78,6 +82,7 @@ public class Sound {
         soundURL[11] = getClass().getResource("/sound/BattleTheme.wav");
         soundURL[20] = getClass().getResource("/sound/collision.wav");
         soundURL[21] = getClass().getResource("/sound/button.wav");
+        soundURL[22] = getClass().getResource("/sound/MachopCry.wav");
 
     }
 
@@ -95,33 +100,52 @@ public class Sound {
 
     public void PlayCollisionSound() {
         long now = System.currentTimeMillis();
-        if (now - lastCollisionSoundTime < collisionCooldown) return;
-        lastCollisionSoundTime = now;
+        if (now - lastButtonSound < buttonCooldown) return;
+        lastButtonSound = now;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[20]);
             clip = AudioSystem.getClip();
             clip.open(ais);
-            playEffect();
+            playEffect(-10f);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void playButtonSound() {
+        long now = System.currentTimeMillis();
+        if (now - lastCollisionSoundTime < collisionCooldown) return;
+        lastCollisionSoundTime = now;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[21]);
             clip = AudioSystem.getClip();
             clip.open(ais);
             if (gp.keyH.enterPressed) {
-                playEffect();
+                playEffect(-15f);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void machopSound() {
+        long now = System.currentTimeMillis();
+        if (now - lastCollisionSoundTime < collisionCooldown) return;
+        lastCollisionSoundTime = now;
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[22]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            playEffect(-5f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void playEffect() {
+
+    public void playEffect(float volume) {
+        gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(volume);
         clip.start();
     }
 
@@ -180,7 +204,7 @@ public class Sound {
 
         volume = -40f;
         targetVolume = -10f;
-        fadeSpeed = 0.2f;
+        fadeSpeed = 0.3f;
 
         gainControl.setValue(volume);
         play();

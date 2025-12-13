@@ -1,5 +1,7 @@
 package main;
 
+import entity.Player;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +11,9 @@ import java.io.InputStream;
 public class UI {
     GamePanel gp;
     Graphics2D g2;
+    Player player;
     ClickHandler clickH = new ClickHandler(gp);
+
     UtilityTool uTool = new UtilityTool();
     public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton;
 
@@ -19,9 +23,18 @@ public class UI {
     int messageCounter = 0;
     public String currentDialogue = "";
 
-    public UI(GamePanel gp, ClickHandler clickH) {
+    // === Area Icons ===
+    Image[] areaIcons = new Image[10];
+    String[] areaNames = new String[8];
+    private int currentArea = -1;
+    private long areaDisplayStartTime = 0;
+    private static final long AREA_DISPLAY_DURATION = 3000; // 3 seconds
+    int animatedIconY = -200;
+
+    public UI(GamePanel gp, ClickHandler clickH, Player player) {
         this.gp = gp;
         this.clickH = clickH;
+        this.player = player;
 
 
         InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
@@ -68,6 +81,8 @@ public class UI {
         // PLAY STATE
         if (gp.gameState == gp.playState) {
             drawPokedexIcon();
+            drawAreaIcons();
+
         }
 
         // PAUSE STATE
@@ -176,4 +191,108 @@ public class UI {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth / 2 - length / 2;
     }
+
+
+    public void getAreaIcons() {
+        try {
+            areaIcons[0] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneSmallCity.png"));
+            areaIcons[1] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneOcean.png"));
+            areaIcons[2] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneBeach.png"));
+            areaIcons[3] = ImageIO.read(getClass().getResourceAsStream("/ui/zonePlains.png"));
+            areaIcons[4] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneForest.png"));
+            areaIcons[5] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneVillage.png"));
+            areaIcons[6] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneMountain.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getAreaNames() {
+        areaNames[0] = "Twinleaf Town";
+        areaNames[1] = "Route 201";
+        areaNames[2] = "Lake of Rage";
+        areaNames[3] = "Floaroma Fields";
+        areaNames[4] = "Eterna Forest";
+        areaNames[5] = "Route 202";
+        areaNames[6] = "Solaceon Town";
+        areaNames[7] = " Mt.Coronet";
+
+
+    }
+
+
+    public void drawAreaIcons() {
+        getAreaIcons();
+        getAreaNames();
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
+        g2.setColor(Color.BLACK);
+
+        int x = (player.worldX / gp.tileSize) + 1;
+        int y = (player.worldY / gp.tileSize) + 1;
+
+        long elapsed = System.currentTimeMillis() - areaDisplayStartTime;
+
+
+        int iconX = 635;
+        int iconY = -200;
+
+        int nameX = 660;
+        int nameY = -130;
+
+        int iconWidth = 345;
+        int iconHeight = 95;
+
+        int newArea = -1;
+
+        if (x > 42 && x <= 71 && y >= 5 && y <= 22) {
+            newArea = 3;
+        } else if (x >= 49 && x <= 55 && y >= 62 && y <= 66) {
+            newArea = 5;
+        } else if (x >= 38 && x < 94 && y >= 83 && y <= 94) {
+            newArea = 7;
+        } else if (x <= 38 && y >= 62 && y <= 91) {
+            newArea = 6;
+        } else if (x >= 27 && x <= 54 && y >= 17 && y <= 65) {
+            newArea = 1;
+        } else if (x >= 40 && x <= 92 && y >= 55 && y <= 73) {
+            newArea = 5;
+        } else if (x <= 27 && y >= 38 && y <= 57) {
+            newArea = 0;
+        } else if (x <= 42 && y < 34) {
+            newArea = 2;
+        } else if (x >= 71 && x <= 92 && y >= 7 && y <= 54) {
+            newArea = 4;
+        }
+
+        // If area changed, reset timer
+        if (newArea != -1 && newArea != currentArea) {
+            currentArea = newArea;
+            areaDisplayStartTime = System.currentTimeMillis();
+            animatedIconY = -200;
+        }
+
+        // Draw only if within 3 seconds
+        if (currentArea != -1 && elapsed <= AREA_DISPLAY_DURATION) {
+
+            if (animatedIconY < 0) {
+                animatedIconY += 4;
+            }
+
+            g2.drawImage(areaIcons[currentArea], iconX, animatedIconY, iconWidth, iconHeight, null);
+            g2.drawString(areaNames[currentArea], nameX, animatedIconY + 70);
+        }
+
+        if (elapsed > AREA_DISPLAY_DURATION) {
+
+            if (animatedIconY > -200) {
+                animatedIconY -= 4;
+            }
+            g2.drawImage(areaIcons[currentArea], iconX, animatedIconY, iconWidth, iconHeight, null);
+            g2.drawString(areaNames[currentArea], nameX, animatedIconY + 70);
+        }
+    }
 }
+
+
+
+

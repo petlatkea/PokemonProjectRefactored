@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 100;
 
     // === SOUND ===
-    Sound music = new Sound(this,player);
+    public Sound music = new Sound(this,player);
     public Sound collisionSound = new Sound(this,player);
     public Sound buttonSound = new Sound(this,player);
 
