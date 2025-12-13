@@ -33,5 +33,6 @@ public class NPC_Machop extends Entity {
             gp.player.keyH.ePressed = false;
         }
         super.speak();
+        gp.music.machopSound();
     }
 }

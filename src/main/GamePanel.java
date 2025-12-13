@@ -38,13 +38,13 @@ public class GamePanel extends JPanel implements Runnable {
     //Sound sfx = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
-    public UI ui = new UI(this);
     Thread gameThread;
 
     // == ENTITY & OBJECT ===
     public Player player = new Player(this, keyH);
     public SuperObject[] obj = new SuperObject[10];
     public Entity[] npc = new Entity[10];
+    public UI ui = new UI(this, player);
 
     // == GAME STATE ==
     public int gameState;
@@ -61,7 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldCol = 100;
     public final int maxWorldRow = 100;
 
-    Sound music = new Sound(this,player);
+    public Sound music = new Sound(this,player);
     public Sound collisionSound = new Sound(this,player);
     public Sound buttonSound = new Sound(this,player);
 
