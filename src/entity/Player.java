@@ -161,8 +161,6 @@ public class Player extends Entity {
             case "right" -> image = right[spriteNum - 1];
         }
         g2.drawImage(image, screenX, screenY-8, null);
-        g2.setColor(Color.red);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
     }
 
 

@@ -77,8 +77,6 @@ public class Entity {
             }
 
             g2.drawImage(image, screenX, screenY, entitySize, entitySize, null);
-            g2.setColor(Color.red);
-            g2.drawRect(screenX + 32, screenY + 56, solidArea.width, solidArea.height);
         }
     }
 
