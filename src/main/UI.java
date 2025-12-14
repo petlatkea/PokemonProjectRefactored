@@ -165,6 +165,8 @@ public class UI {
         if (!clickH.onOffAction){
             gp.gameState = gp.playState;
             clickH.onOffAction=true;
+            pokemon.name = null;
+            showPokedexStartText = true;
         }
     }
 
