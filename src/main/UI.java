@@ -1,7 +1,5 @@
 package main;
 
-import entity.Player;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,9 +15,6 @@ public class UI {
     public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton;
 
     public Font pkmnFont;
-    public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
     public String currentDialogue = "";
 
     // === Area Icons ===
@@ -37,38 +32,70 @@ public class UI {
         InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
         try {
             pkmnFont = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (FontFormatException | IOException e) {
             throw new RuntimeException(e);
         }
         getUIImages();
-        getAreaIcons();
         getAreaNames();
     }
 
-    public void showMessage(String text) {
-        message = text;
-        messageOn = true;
+    public void getUIImages() {
+        dialogueWindowImage = setup("/ui/dialogueBox", 3, 3);
+        uTool.scaleImage(dialogueWindowImage, 3, 3);
+
+        pokedexBoy = setup("/pokedexSprites/boy");
+        pokedexGirl = setup("/pokedexSprites/girl");
+        pokedexIcon = setup("/pokedexSprites/pokedexIcon");
+        searchButtonReleased = setup("/pokedexSprites/searchPokemonGreen");
+        searchButtonPressed = setup("/pokedexSprites/searchPokemonOrange");
+        previousButtonReleased = setup("/pokedexSprites/directionBlueLeft");
+        previousButtonPressed = setup("/pokedexSprites/directionRedLeft");
+        nextButtonReleased = setup("/pokedexSprites/directionBlueRight");
+        nextButtonPressed = setup("/pokedexSprites/directionRedRight");
+        onOffButton = setup("/pokedexSprites/onOffButton");
+
+        areaIcons[0] = setup("/ui/zoneSmallCity");
+        areaIcons[1] = setup("/ui/zoneOcean");
+        areaIcons[2] = setup("/ui/zoneBeach");
+        areaIcons[3] = setup("/ui/zonePlains");
+        areaIcons[4] = setup("/ui/zoneForest");
+        areaIcons[5] = setup("/ui/zoneVillage");
+        areaIcons[6] = setup("/ui/zoneMountain");
     }
 
-    public void getUIImages() {
+    public void getAreaNames() {
+        areaNames[0] = "Twinleaf Town";
+        areaNames[1] = "Route 201";
+        areaNames[2] = "Lake of Rage";
+        areaNames[3] = "Floaroma Fields";
+        areaNames[4] = "Eterna Forest";
+        areaNames[5] = "Route 202";
+        areaNames[6] = "Solaceon Town";
+        areaNames[7] = " Mt.Coronet";
+    }
+
+    public BufferedImage setup(String imagePath) {
+        BufferedImage image;
+
         try {
-            dialogueWindowImage = ImageIO.read(getClass().getResourceAsStream("/ui/dialogueBox.png"));
-            uTool.scaleImage(dialogueWindowImage, 3, 3);
-            pokedexBoy = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/boy.png"));
-            pokedexGirl = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/girl.png"));
-            pokedexIcon = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/pokedexIcon.png"));
-            searchButtonReleased = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/searchPokemonGreen.png"));
-            searchButtonPressed = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/searchPokemonOrange.png"));
-            previousButtonReleased = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionBlueLeft.png"));
-            previousButtonPressed = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionRedLeft.png"));
-            nextButtonReleased = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionBlueRight.png"));
-            nextButtonPressed = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionRedRight.png"));
-            onOffButton = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/onOffButton.png"));
-        } catch (IOException e) {
+            image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return image;
+    }
+
+    public BufferedImage setup(String imagePath, int scaleX, int scaleY) {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image;
+
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            image = uTool.scaleImage(image, scaleX, scaleY);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return image;
     }
 
     public void draw(Graphics2D g2) {
@@ -194,31 +221,6 @@ public class UI {
     }
 
     // ===== AREA ICONS =====
-    public void getAreaIcons() {
-        try {
-            areaIcons[0] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneSmallCity.png"));
-            areaIcons[1] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneOcean.png"));
-            areaIcons[2] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneBeach.png"));
-            areaIcons[3] = ImageIO.read(getClass().getResourceAsStream("/ui/zonePlains.png"));
-            areaIcons[4] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneForest.png"));
-            areaIcons[5] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneVillage.png"));
-            areaIcons[6] = ImageIO.read(getClass().getResourceAsStream("/ui/zoneMountain.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void getAreaNames() {
-        areaNames[0] = "Twinleaf Town";
-        areaNames[1] = "Route 201";
-        areaNames[2] = "Lake of Rage";
-        areaNames[3] = "Floaroma Fields";
-        areaNames[4] = "Eterna Forest";
-        areaNames[5] = "Route 202";
-        areaNames[6] = "Solaceon Town";
-        areaNames[7] = " Mt.Coronet";
-    }
-
     public void drawAreaIcons() {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);

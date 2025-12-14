@@ -82,7 +82,7 @@ public class Entity {
 
     public BufferedImage setup(String imagePath) {
         UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
+        BufferedImage image;
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
