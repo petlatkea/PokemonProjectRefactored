@@ -8,7 +8,7 @@ import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GamePanel gp;
-    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, isNextButtonPressed, isPreviousButtonPressed, onOff;
+    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
     private int x;
     private int y;
 
@@ -49,7 +49,7 @@ public class ClickHandler implements MouseListener {
         if (mousePressedBox(190, 576, 45, 45)) {
             if (gp.gameState == gp.pokedexState) {
                 previousButtonPressed = true;
-                String input = String.valueOf((gp.originalPokemon.getId()-1));
+                String input = String.valueOf((gp.originalPokemon.getId() - 1));
                 if (!input.isEmpty()) {
                     gp.pokedex.search(input);
                 }
@@ -59,17 +59,16 @@ public class ClickHandler implements MouseListener {
         if (mousePressedBox(398, 576, 45, 45)) {
             if (gp.gameState == gp.pokedexState) {
                 nextButtonPressed = true;
-                String input = String.valueOf((gp.originalPokemon.getId()+1));
+                String input = String.valueOf((gp.originalPokemon.getId() + 1));
                 if (!input.isEmpty()) {
                     gp.pokedex.search(input);
                 }
             }
         }
         // Pressed on Pokedex ON/OFF button
-        if (mousePressedBox(398, 576, 45, 45)) {
+        if (mousePressedBox(605, 220, 66, 60)) {
             if (gp.gameState == gp.pokedexState) {
                 onOff = true;
-
             }
         }
         if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254 * 4, 46 * 4) && gp.gameState == gp.dialogueState) {
@@ -84,7 +83,11 @@ public class ClickHandler implements MouseListener {
         searchButtonPressed = false;
         previousButtonPressed = false;
         nextButtonPressed = false;
+        onOff = false;
 
+        if (!onOff && mousePressedBox(605,220,66,60)){
+            onOffAction = false;
+        }
 
 
     }

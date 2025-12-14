@@ -162,6 +162,10 @@ public class UI {
             image = pokedexBoy;
         }
         g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
+        if (!clickH.onOffAction){
+            gp.gameState = gp.playState;
+            clickH.onOffAction=true;
+        }
     }
 
     public void drawButtons() {
@@ -172,10 +176,10 @@ public class UI {
         int height = 64;
         int size = 48;
         int sButtonX = 245;
-        int onOffX = 625;
-        int onOffY = 200;
-        int onOffW = 51;
-        int onOffH = 47;
+        int onOffX = 605;
+        int onOffY = 220;
+        int onOffW = 76;
+        int onOffH = 70;
 
         if (clickH.previousButtonPressed) {
             g2.drawImage(previousButtonPressed, pButtonX, buttonY, size, size, null);
