@@ -14,7 +14,7 @@ public class UI {
     ClickHandler clickH;
 
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton;
+    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton, titleScreenBackground,logo,opal;
 
     public Font pkmnFont;
     public boolean messageOn = false;
@@ -66,6 +66,9 @@ public class UI {
             nextButtonReleased = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionBlueRight.png"));
             nextButtonPressed = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/directionRedRight.png"));
             onOffButton = ImageIO.read(getClass().getResourceAsStream("/pokedexSprites/onOffButton.png"));
+            titleScreenBackground = ImageIO.read(getClass().getResourceAsStream("/titleScreen/background.png"));
+            logo = ImageIO.read(getClass().getResourceAsStream("/titleScreen/logo.png"));
+            opal = ImageIO.read(getClass().getResourceAsStream("/titleScreen/opal.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -97,6 +100,11 @@ public class UI {
         if (gp.gameState == gp.pokedexState) {
             drawPokedexScreen();
         }
+        // TITLE SCREEN STATE
+        if (gp.gameState == gp.titleScreenState) {
+            drawTitleScreen();
+        }
+
     }
 
     public void drawPokedexIcon() {
@@ -282,6 +290,23 @@ public class UI {
             g2.drawImage(areaIcons[currentArea], iconX, animatedIconY, iconWidth, iconHeight, null);
             g2.drawString(areaNames[currentArea], nameX, animatedIconY + 70);
         }
+    }
+
+
+    public void drawTitleScreen() {
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
+        g2.setColor(Color.BLACK);
+
+        g2.drawImage(titleScreenBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        g2.drawImage(logo, (gp.screenWidth/2) -350, 25, 700, 250, null);
+        g2.drawString("Press enter to start",gp.screenWidth/2-150,gp.screenHeight/2+100);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16));
+        g2.drawString("Made By: Andreas, Jacob, Theis & Bertram",25,750);
+        g2.drawImage(opal,gp.screenWidth/2-150, 250, 350, 150, null);
+
+
+
+
     }
 }
 
