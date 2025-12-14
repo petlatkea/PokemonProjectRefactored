@@ -14,7 +14,7 @@ public class UI {
     ClickHandler clickH;
 
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton, titleScreenBackground,logo,opal;
+    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButton, titleScreenBackground,logo,opal,rowan,lucas,dawn;
 
     public Font pkmnFont;
     public boolean messageOn = false;
@@ -69,6 +69,9 @@ public class UI {
             titleScreenBackground = ImageIO.read(getClass().getResourceAsStream("/titleScreen/background.png"));
             logo = ImageIO.read(getClass().getResourceAsStream("/titleScreen/logo.png"));
             opal = ImageIO.read(getClass().getResourceAsStream("/titleScreen/opal.png"));
+            rowan = ImageIO.read(getClass().getResourceAsStream("/titleScreen/rowan.png"));
+            lucas = ImageIO.read(getClass().getResourceAsStream("/titleScreen/lucas.png"));
+            dawn = ImageIO.read(getClass().getResourceAsStream("/titleScreen/dawn.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -300,9 +303,13 @@ public class UI {
         g2.drawImage(titleScreenBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
         g2.drawImage(logo, (gp.screenWidth/2) -350, 25, 700, 250, null);
         g2.drawString("Press enter to start",gp.screenWidth/2-150,gp.screenHeight/2+100);
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16));
         g2.drawString("Made By: Andreas, Jacob, Theis & Bertram",25,750);
         g2.drawImage(opal,gp.screenWidth/2-150, 250, 350, 150, null);
+        g2.drawImage(rowan,750, 400, 94*2, 139*2, null);
+        g2.drawImage(lucas,100, 400, 56*2, 123*2, null);
+        g2.drawImage(dawn,200, 450, 63*2, 125*2, null);
+
 
 
 
