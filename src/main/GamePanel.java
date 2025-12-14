@@ -29,6 +29,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;     // 1024 px
     public final int screenHeight = tileSize * maxScreenRow;    // 768 px
 
+    // == GENDER STATE ==
+    public int genderState = 1;
+
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
@@ -229,11 +232,11 @@ public class GamePanel extends JPanel implements Runnable {
         music.stop();
     }
 
-    /*public void playSFX(int i) {
+    /*
+    public void playSFX(int i) {
         sfx.setFile();
         sfx.play();
     }
-
      */
 
     public void switchPokedexStatus() {
