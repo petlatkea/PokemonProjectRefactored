@@ -48,12 +48,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     // == GAME STATE ==
     public int gameState;
+    public final int titleScreenState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int pokedexState = 4;
     public final int pokedexSearchState = 5;
-    public final int titleScreenState = 6;
 
     // == POKEDEX & BUTTONS ==
     public boolean isPokedexShown = false;
@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic();
         aSetter.setObject();
         aSetter.setNPC();
-        gameState = playState;
+        gameState = titleScreenState;
     }
 
     public void startGameThread() {
@@ -153,38 +153,39 @@ public class GamePanel extends JPanel implements Runnable {
         long drawStart = System.nanoTime();
 
 
+        if (gameState != titleScreenState) {
 
-        // Background Layer
-        tileM.drawLayer(g2, tileM.mapTileNumBackground);
+            // Background Layer
+            tileM.drawLayer(g2, tileM.mapTileNumBackground);
 
-        // Object Layer
-        for (int i = 0; i < obj.length; i++) {
-            if (obj[i] != null) {
-                obj[i].draw(g2, this);
+            // Object Layer
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
+                }
             }
-        }
 
-        // Environment Behind player
-        tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
+            // Environment Behind player
+            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
 
-        // NPCs
-        for(int i = 0; i < npc.length; i++) {
-            if(npc[i] != null) {
-                npc[i].draw(g2);
+            // NPCs
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2);
+                }
             }
+
+            // Player
+            player.draw(g2);
+
+            // Environment Front of player
+            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
+
+            //Pokedex
+            pokedex.draw(g2);
         }
-
-        // Player
-        player.draw(g2);
-
-        // Environment Front of player
-        tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
-
-        //Pokedex
-        pokedex.draw(g2);
-
-        // UI
-        ui.draw(g2);
+            // UI
+            ui.draw(g2);
 
 
 
