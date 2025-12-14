@@ -63,9 +63,9 @@ public class Pokedex {
         path = cachePath();
         if (path != null) {
             loadPokemonCache();
-            System.out.println("Already exist");
+            System.out.println("PNG loaded from cache");
         } else {
-            System.out.println("loaded from api");
+            System.out.println("PNG loaded from api");
             this.pokemonSprite = null;
             loadPokemonToPokedex();
         }
