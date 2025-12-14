@@ -12,6 +12,8 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    int genderState = 2;
+
     int standCounter = 0;
     boolean moving = false;
     boolean sprinting = false;
@@ -48,18 +50,26 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setup("/player/walk_up_1");
-        up2 = setup("/player/walk_up_2");
-        up3 = setup("/player/walk_up_3");
-        left1 = setup("/player/walk_left_1");
-        left2 = setup("/player/walk_left_2");
-        left3 = setup("/player/walk_left_3");
-        down1 = setup("/player/walk_down_1");
-        down2 = setup("/player/walk_down_2");
-        down3 = setup("/player/walk_down_3");
-        right1 = setup("/player/walk_right_1");
-        right2 = setup("/player/walk_right_2");
-        right3 = setup("/player/walk_right_3");
+        String gender = switch (genderState) {
+            case 1 -> "female";
+            case 2 -> "male";
+            default -> throw new IllegalStateException("No gender with the genderSate:" + genderState);
+        };
+
+        String path = "/player/" + gender + "/";
+
+        up1     = setup(path + "walk_up_1");
+        up2     = setup(path + "walk_up_2");
+        up3     = setup(path + "walk_up_3");
+        left1   = setup(path + "walk_left_1");
+        left2   = setup(path + "walk_left_2");
+        left3   = setup(path + "walk_left_3");
+        down1   = setup(path + "walk_down_1");
+        down2   = setup(path + "walk_down_2");
+        down3   = setup(path + "walk_down_3");
+        right1  = setup(path + "walk_right_1");
+        right2  = setup(path + "walk_right_2");
+        right3  = setup(path + "walk_right_3");
     }
 
     public void update() {
