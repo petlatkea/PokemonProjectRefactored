@@ -1,5 +1,6 @@
 package main;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,19 +21,39 @@ public class ClickHandler implements MouseListener {
 
     }
 
+
     @Override
     public void mousePressed(MouseEvent e) {
         this.x = e.getX();
         this.y = e.getY();
         this.clicked = true;
 
+        if (SwingUtilities.isLeftMouseButton(e)){
+            handleLeftClick();
+        }
+
+        if (SwingUtilities.isRightMouseButton(e)){
+            handleRightClick();
+        }
+    }
+
+    public void handleLeftClick(){
+
         if (mousePressedBox(40, 696, 44, 58) && gp.gameState == gp.playState) {
-           gp.switchPokedexStatus();
+            gp.switchPokedexStatus();
         }
         if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254*4, 46*4) && gp.gameState == gp.dialogueState) {
             gp.keyH.enterPressed = true;
             gp.buttonSound.playButtonSound();
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void handleRightClick(){
+        if (gp.gameState == gp.battleState){
+            if (gp.battle != null){
+                gp.battle.rightClick();
+            }
         }
     }
 
