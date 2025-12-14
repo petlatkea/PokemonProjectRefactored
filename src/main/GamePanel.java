@@ -182,11 +182,11 @@ public class GamePanel extends JPanel implements Runnable {
 
             // Environment Front of player
             tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
+        }
 
         // UI
         ui.draw(g2);
 
-}
 
         // DEBUG
         long passedTime = System.nanoTime() - drawStart;
