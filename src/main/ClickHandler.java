@@ -14,6 +14,7 @@ public class ClickHandler implements MouseListener {
 
     public ClickHandler(GamePanel gp) {
         this.gp = gp;
+        onOffAction = true;
     }
 
     @Override
