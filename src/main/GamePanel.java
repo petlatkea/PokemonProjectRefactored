@@ -54,11 +54,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int pokedexState = 4;
-    public final int pokedexSearchState = 5;
-
-    // == POKEDEX & BUTTONS ==
-    public boolean isPokedexShown = false;
-
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;

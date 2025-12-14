@@ -30,6 +30,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+        // SEARCH
         if (gp.gameState == gp.pokedexState && gp.ui.drawingInput) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.inputBuffer.length() > 0) {
