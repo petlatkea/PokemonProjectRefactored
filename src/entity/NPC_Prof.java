@@ -40,10 +40,12 @@ public class NPC_Prof extends Entity {
         dialogues[7] = "Right..";
         dialogues[8] = "Silly me, going on about my Glameow again. \nYou're here for a pokemon";
         dialogues[9] = "Please pick one of the pokemon \nyou see before you.";
+        dialogues[10] = "";
     }
 
     public void speak() {
-        if (dialogues[dialogueIndex] == dialogues[9]) {
+        if (dialogues[dialogueIndex] == dialogues[10]) {
+            System.out.println("Pick Your Pokemon");
             gp.player.keyH.ePressed = false;
         }
         super.speak();
