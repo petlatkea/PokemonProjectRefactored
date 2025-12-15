@@ -430,7 +430,7 @@ public class UI {
         }
         // Pokemon description
         y += lineSpace;
-        String description = PokemonDescription.getDescription(pokemon.getName());
+        String description = pokemon.getDescription();
         g2.drawString("DESCRIPTION: ", x, y);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 9));
         y += lineSpace;
