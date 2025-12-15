@@ -59,6 +59,14 @@ public class Sound {
             musicZone = newZone;
             fadeOut();
         }
+
+        if (gp.gameState == gp.battleState) {
+            stop();
+            musicZone = 11;
+            setFile();
+            play();
+            loop();
+        }
     }
 
     // ============================
