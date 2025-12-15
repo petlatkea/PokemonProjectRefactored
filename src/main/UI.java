@@ -74,13 +74,14 @@ public class UI {
         lucas = setup("/titleScreen/lucas");
         dawn = setup("/titleScreen/dawn");
 
-        areaIcons[0] = setup("/ui/zoneSmallCity");
+        areaIcons[0] = setup("/ui/zoneVillage");
         areaIcons[1] = setup("/ui/zoneOcean");
         areaIcons[2] = setup("/ui/zoneBeach");
         areaIcons[3] = setup("/ui/zonePlains");
         areaIcons[4] = setup("/ui/zoneForest");
-        areaIcons[5] = setup("/ui/zoneVillage");
-        areaIcons[6] = setup("/ui/zoneMountain");
+        areaIcons[5] = setup("/ui/zoneOcean");
+        areaIcons[6] = setup("/ui/zoneSmallCity");
+        areaIcons[7] = setup("/ui/zoneMountain");
     }
 
     public void getAreaNames() {
