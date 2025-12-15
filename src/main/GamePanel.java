@@ -31,18 +31,19 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;     // 1024 px
     public final int screenHeight = tileSize * maxScreenRow;    // 768 px
 
-    // == GENDER STATE ==
+    // == GENDER & STARTER POKEMON ==
     public int genderState = 1;
+    public int playerPokemon = 25;
 
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler(this);
-    ClickHandler clickH = new ClickHandler(this);
+    public ClickHandler clickH = new ClickHandler(this);
     Pokemon originalPokemon = new Pokemon();
     Pokedex pokedex = new Pokedex(this, keyH, originalPokemon);
 
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public AssetSetter aSetter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this, clickH);
     public UI ui = new UI(this, clickH, originalPokemon, pokedex);
     Thread gameThread;
 
@@ -59,15 +60,16 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
     public final int pokedexState = 4;
     public final int battleState = 5;
+    public final int starterChoiceState = 6;
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;
     public final int maxWorldRow = 100;
 
     // === SOUND ===
-    public Sound music = new Sound(this,player);
-    public Sound collisionSound = new Sound(this,player);
-    public Sound buttonSound = new Sound(this,player);
+    public Sound music = new Sound(this, player);
+    public Sound collisionSound = new Sound(this, player);
+    public Sound buttonSound = new Sound(this, player);
 
     // === BATTLE SYSTEM ===
     public Battle battle;
@@ -142,13 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
-            if (keyH.bPressed) {
-                Pokemon playerPokemon = Pokemon.load("25");
-                Pokemon enemyPokemon = Pokemon.load("11");
 
-                this.battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
-                this.gameState = battleState;
-            }
         }
         if (gameState == pauseState) {
 
@@ -256,15 +252,15 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
-        public void playMusic () {
-            music.setFile();
-            music.play();
+    public void playMusic() {
+        music.setFile();
+        music.play();
 
-        }
+    }
 
-        public void stopMusic () {
-            music.stop();
-        }
+    public void stopMusic() {
+        music.stop();
+    }
 
     public long getDrawCount() {
         return drawCount;
@@ -274,5 +270,23 @@ public class GamePanel extends JPanel implements Runnable {
         if (ui != null) {
             ui.inputSetup();
         }
+    }
+
+    public void startGymBattle() {
+        Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
+        Pokemon enemyPokemon = Pokemon.load("11");
+
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        gameState = battleState;
+        music.updateMusic();
+    }
+
+    public void startWildBattle() {
+        Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
+        Pokemon enemyPokemon = Pokemon.load("11");
+
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        gameState = battleState;
+        music.updateMusic();
     }
 }

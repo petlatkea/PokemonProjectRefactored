@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
 public class UI {
     GamePanel gp;
@@ -15,7 +16,7 @@ public class UI {
     Pokemon pokemon;
     Pokedex pokedex;
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, titleScreenBackground, logo, opal, rowan, lucas, dawn;
+    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, titleScreenBackground, logo, opal, rowan, lucas, dawn, turtwig, chimchar, piplup;
 
     public Font pkmnFont;
     private boolean showPokedexStartText = true;
@@ -52,7 +53,6 @@ public class UI {
 
     public void getUIImages() {
         dialogueWindowImage = setup("/ui/dialogueBox");
-        uTool.scaleImage(dialogueWindowImage, 3, 3);
 
         pokedexBoy = setup("/pokedexSprites/boy");
         pokedexGirl = setup("/pokedexSprites/girl");
@@ -74,23 +74,31 @@ public class UI {
         lucas = setup("/titleScreen/lucas");
         dawn = setup("/titleScreen/dawn");
 
-        areaIcons[0] = setup("/ui/zoneSmallCity");
+        turtwig = setup("/starterPokemon/turtwig");
+        turtwig = uTool.scaleImage(turtwig, 192, 192);
+        chimchar = setup("/starterPokemon/chimchar");
+        chimchar = uTool.scaleImage(chimchar, 192, 192);
+        piplup = setup("/starterPokemon/piplup");
+        piplup = uTool.scaleImage(piplup, 192, 192);
+
+        areaIcons[0] = setup("/ui/zoneVillage");
         areaIcons[1] = setup("/ui/zoneOcean");
         areaIcons[2] = setup("/ui/zoneBeach");
         areaIcons[3] = setup("/ui/zonePlains");
         areaIcons[4] = setup("/ui/zoneForest");
-        areaIcons[5] = setup("/ui/zoneVillage");
-        areaIcons[6] = setup("/ui/zoneMountain");
+        areaIcons[5] = setup("/ui/zoneOcean");
+        areaIcons[6] = setup("/ui/zoneSmallCity");
+        areaIcons[7] = setup("/ui/zoneMountain");
     }
 
     public void getAreaNames() {
         areaNames[0] = "Twinleaf Town";
         areaNames[1] = "Route 201";
-        areaNames[2] = "Lake of Rage";
+        areaNames[2] = "Opal Springs";
         areaNames[3] = "Floaroma Fields";
         areaNames[4] = "Eterna Forest";
         areaNames[5] = "Route 202";
-        areaNames[6] = "Solaceon Town";
+        areaNames[6] = "Celestic Town";
         areaNames[7] = " Mt.Coronet";
     }
 
@@ -149,6 +157,11 @@ public class UI {
         if (gp.gameState == gp.pokedexState) {
             drawPokedexScreen();
         }
+
+        // POKEMON CHOICE STATE
+        if (gp.gameState == gp.starterChoiceState) {
+            drawStartersScreen();
+        }
     }
 
     public void drawTitleScreen() {
@@ -187,6 +200,21 @@ public class UI {
         int y = 690;
         BufferedImage image = pokedexIcon;
         g2.drawImage(image, x, y, image.getWidth() * 2, image.getHeight() * 2, null);
+    }
+
+    // ===== STARTERS =====
+    public void drawStartersScreen() {
+        int width = gp.screenWidth;
+        int height = 200;
+        int x = 0;
+        int y = (gp.screenHeight-height)/2;
+        Color c = new Color(50,50,50,150);
+        g2.setColor(c);
+        g2.fillRect(x,y,width,height);
+
+        g2.drawImage(turtwig,99,y+4,null);
+        g2.drawImage(chimchar, 416,y+4,null);
+        g2.drawImage(piplup,733,y+4,null);
     }
 
     // ===== PAUSE =====

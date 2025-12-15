@@ -7,7 +7,8 @@ import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GamePanel gp;
-    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction, clicked;
+    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
+    public boolean clicked = false;
     private int x;
     private int y;
 
@@ -26,6 +27,11 @@ public class ClickHandler implements MouseListener {
     public void mousePressed(MouseEvent e) {
         this.x = e.getX();
         this.y = e.getY();
+        clicked = true;
+
+        if (SwingUtilities.isRightMouseButton(e)){
+            handleRightClick();
+        }
         // Pressed on podexIcon
         if (mousePressedBox(40, 696, 44, 58) && gp.gameState == gp.playState) {
             if (gp.gameState != gp.pokedexState) {
@@ -71,10 +77,38 @@ public class ClickHandler implements MouseListener {
                 onOff = true;
             }
         }
-        if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254 * 4, 46 * 4) && gp.gameState == gp.dialogueState) {
-            gp.keyH.enterPressed = true;
-            gp.buttonSound.playButtonSound();
-            gp.gameState = gp.playState;
+
+        // Pressed on Dialogue
+        if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254 * 4, 46 * 4)) {
+            if (gp.gameState == gp.dialogueState) {
+                gp.keyH.enterPressed = true;
+                gp.buttonSound.playButtonSound();
+                gp.gameState = gp.playState;
+            }
+        }
+
+        // Pressed on Turtwig
+        if (mousePressedBox(99, ((gp.screenHeight-200)/2)+4, 192, 192)) {
+            if (gp.gameState == gp.starterChoiceState) {
+                gp.playerPokemon = 387;
+                gp.gameState = gp.playState;
+            }
+        }
+
+        // Pressed on Chimchar
+        if (mousePressedBox(416, ((gp.screenHeight-200)/2)+4, 192, 192)) {
+            if (gp.gameState == gp.starterChoiceState) {
+                gp.playerPokemon = 390;
+                gp.gameState = gp.playState;
+            }
+        }
+
+        // Pressed on Chimchar
+        if (mousePressedBox(733, ((gp.screenHeight-200)/2)+4, 192, 192)) {
+            if (gp.gameState == gp.starterChoiceState) {
+                gp.playerPokemon = 393;
+                gp.gameState = gp.playState;
+            }
         }
     }
 
@@ -114,5 +148,16 @@ public class ClickHandler implements MouseListener {
         Rectangle rect = new Rectangle(worldX, worldY, width, height);
         boolean isPointInside = (rect.contains(this.x, this.y));
         return isPointInside;
+    }
+
+    public boolean consumeClick(int rx, int ry, int rw, int rh) {
+        if (!clicked) return false;
+
+        Rectangle r = new Rectangle(rx, ry, rw, rh);
+        if (r.contains(x, y)) {
+            clicked = false;   // 🔥 VERY IMPORTANT
+            return true;
+        }
+        return false;
     }
 }

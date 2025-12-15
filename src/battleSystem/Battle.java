@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Random;
 
 public class Battle {
@@ -18,18 +19,10 @@ public class Battle {
     ClickHandler clickH;
 
     // === Pictures ===
-    private BufferedImage battleBG;
-    private BufferedImage playerGround;
-    private BufferedImage enemyGround;
-    private BufferedImage myPokemonPic;
-    private BufferedImage enemyPokemonPic;
-    private BufferedImage playerInfoPanel;
-    private BufferedImage enemyInfoPanel;
-    private BufferedImage dialogBox;
+    private final BufferedImage battleBG, playerGround, enemyGround, myPokemonPic, enemyPokemonPic, playerInfoPanel, enemyInfoPanel, dialogBox;
 
     // === Pokemons ===
-    private Pokemon playerPokemon;
-    private Pokemon enemyPokemon;
+    private Pokemon playerPokemon, enemyPokemon;
 
     // === Pokemon HP ===
     private int playerMaxHp;
@@ -40,7 +33,7 @@ public class Battle {
     // === Pokemon Moves ===
     private Moves[] playerMoves;
     private Moves[] enemyMoves;
-    private int selectedMoveIndex = 0;
+    private int leerCounter = 0;
 
     // === Turn Base Control ===
     private boolean isPlayerTurn = true;
@@ -49,7 +42,7 @@ public class Battle {
     // Messages
     private String message = "";
     private long messageUntil = 0;
-    private final long messageDuration = 1300; //Millisecond
+    private final long messageDuration = 2000; //Millisecond
 
     private Random rng = new Random();
 
@@ -75,14 +68,33 @@ public class Battle {
         enemyCurrentHp = enemyMaxHp;
 
         // === HARCODED MOVES === will change or add more later
-        playerMoves = new Moves[] {
-                new Moves("Tackle", 40),
-                new Moves("Quick Attack", 40),
-                new Moves("Thunderbolt", 90),
-                new Moves("Growl", 0)
-        };
+        playerMoves = new Moves[4];
+        if (gp.playerPokemon == 387) {
+            playerMoves[0] = new Moves("Tackle", 40);
+            playerMoves[1] = new Moves("Bite", 60);
+            playerMoves[2] = new Moves("Razor Leaf", 55);
+            playerMoves[3] = new Moves("Leer", 0);
+        }
+        else if (gp.playerPokemon == 390) {
+            playerMoves[0] = new Moves("Scratch", 40);
+            playerMoves[1] = new Moves("Mach Punch", 40);
+            playerMoves[2] = new Moves("Flame Wheel", 60);
+            playerMoves[3] = new Moves("Leer", 0);
+        }
+        else if (gp.playerPokemon == 393) {
+            playerMoves[0] = new Moves("Pound", 40);
+            playerMoves[1] = new Moves("Peck", 35);
+            playerMoves[2] = new Moves("BubbleBeam", 65);
+            playerMoves[3] = new Moves("Leer", 0);
+        } else {
+            playerMoves[0] = new Moves("Tackle", 40);
+            playerMoves[1] = new Moves("Bite", 60);
+            playerMoves[2] = new Moves("Thunderbolt", 90);
+            playerMoves[3] = new Moves("Leer", 0);
+        }
 
-        enemyMoves = new Moves[] {
+
+        enemyMoves = new Moves[]{
                 new Moves("Poison Sting", 15),
                 new Moves("Fury Attack", 25),
                 new Moves("Twineedle", 40),
@@ -99,8 +111,8 @@ public class Battle {
             dialogBox = ImageIO.read(getClass().getResourceAsStream("/resources/ui/dialogueBox.png"));
 
             //String myPokeURL = playerPokemon.sprites.front_default;
-            String myPokeURL1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png";
-            myPokemonPic = ImageIO.read(new URL(myPokeURL1));
+            String myPokemonURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/" + gp.playerPokemon + ".png";
+            myPokemonPic = ImageIO.read(new URL(myPokemonURL));
             //String enemyPokeURL = enemyPokemon.sprites.front_default;
             String enemyPokeURL1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png";
             enemyPokemonPic = ImageIO.read(new URL(enemyPokeURL1));
@@ -109,7 +121,7 @@ public class Battle {
         }
     }
 
-    public void update(){
+    public void update() {
         // Timer to show messages
         if (System.currentTimeMillis() < messageUntil) {
             return;
@@ -121,14 +133,14 @@ public class Battle {
         }
 
         // Battle flow
-        if (isPlayerTurn){
-            mouseClick();
+        if (isPlayerTurn) {
+            handlePlayerInput();
         } else {
             enemyTurn();
         }
     }
 
-    private void mouseClick(){
+    private void handlePlayerInput() {
 
         int menuRightX = 680;
         int menuRightY = 580;
@@ -149,37 +161,35 @@ public class Battle {
         moveBoxes[2] = new Rectangle(menuRightX, menuRightY + buttonH + gapY, buttonW, buttonH);
         moveBoxes[3] = new Rectangle(menuRightX + buttonW + gapX, menuRightY + buttonH + gapY, buttonW, buttonH);
 
-        if (menuState == mainMenu){
+        if (menuState == mainMenu) {
 
-            if(clickH.mousePressedBox(fightButton.x, fightButton.y, fightButton.width, fightButton.height)){
+            if (clickH.consumeClick(fightButton.x, fightButton.y, fightButton.width, fightButton.height)) {
                 menuState = fightMenu;
                 return;
             }
 
-            if(clickH.mousePressedBox(bagButton.x, bagButton.y, bagButton.width, bagButton.height)){
+            if (clickH.consumeClick(bagButton.x, bagButton.y, bagButton.width, bagButton.height)) {
                 menuState = bagMenu;
-                showMessage("You opened your bag... (left click)");
                 return;
             }
 
-            if(clickH.mousePressedBox(pokeButton.x, pokeButton.y, pokeButton.width, pokeButton.height)){
+            if (clickH.consumeClick(pokeButton.x, pokeButton.y, pokeButton.width, pokeButton.height)) {
                 menuState = pokeMenu;
                 showMessage("You look at your Pokemons... (left click)");
                 return;
             }
 
-            if(clickH.mousePressedBox(runButton.x, runButton.y, runButton.width, runButton.height)){
+            if (clickH.consumeClick(runButton.x, runButton.y, runButton.width, runButton.height)) {
                 showMessage("You ran away safely!");
                 menuState = runAway;
                 isBattleFinished = true;
-                return;
             }
-        } else if (menuState == fightMenu){
-            for (int i = 0; i < moveBoxes.length; i++){
+        } else if (menuState == fightMenu) {
+            for (int i = 0; i < moveBoxes.length; i++) {
                 Rectangle r = moveBoxes[i];
 
-                if (clickH.mousePressedBox(r.x, r.y, r.width, r.height)){
-                    if (i < playerMoves.length){
+                if (clickH.consumeClick(r.x, r.y, r.width, r.height)) {
+                    if (i < playerMoves.length) {
                         usePlayerMove(i);
                         // return to main menu
                         menuState = mainMenu;
@@ -189,29 +199,34 @@ public class Battle {
                         return;
                     }
                 }
-
-//                if (clickH.mousePressedBox(menuRightX - 40, menuRightY - 40, (buttonW+gapX) * 2 + 80, (buttonH+gapY) * 2 + 80)) {
-//                    menuState = mainMenu;
-//                    clickH.clicked = false;
-//                    return;
-//                }
             }
-        } else {
-            showMessage("Menu not implemented");
+        } else if (menuState == bagMenu) {
+            int potionHealth = 20;
+            if (playerCurrentHp + potionHealth > playerMaxHp) {
+                potionHealth = playerMaxHp - playerCurrentHp;
+                showMessage("You used a potion and healed " + playerPokemon.getName().toUpperCase() + " for " + potionHealth + "HP");
+                playerCurrentHp += potionHealth;
+            } else {
+                showMessage("You used a potion and healed " + playerPokemon.getName().toUpperCase() + " for 20HP");
+                playerCurrentHp += potionHealth;
+            }
             menuState = mainMenu;
-            return;
+            isPlayerTurn = false;
         }
     }
 
-    private void usePlayerMove(int moveIndex){
+    private void usePlayerMove(int moveIndex) {
         if (moveIndex < 0 || moveIndex >= playerMoves.length) return;
         Moves move = playerMoves[moveIndex];
         if (move == null) return;
 
-        if (move.power <= 0){
+        if (Objects.equals(move.name, "Leer")) {
+            leerCounter++;
+            showMessage(playerPokemon.getName().toUpperCase() + " used " + move.name + "! The enemy " + enemyPokemon.getName().toUpperCase() + "'s defense fell.");
+        } else if (move.power <= 0) {
             showMessage(playerPokemon.getName().toUpperCase() + " used " + move.name + "! It did no damage...");
         } else {
-            int damage = calculateDamage(move.power);
+            int damage = (int) Math.floor(calculateDamage(move.power) * (1 + (leerCounter * 0.25)));
             enemyCurrentHp = Math.max(0, enemyCurrentHp - damage);
             showMessage(playerPokemon.getName().toUpperCase() + " used " + move.name + " and dealt " + damage + "HP!");
         }
@@ -224,15 +239,15 @@ public class Battle {
         isPlayerTurn = false;
     }
 
-    private void enemyTurn(){
-        if (enemyMoves == null){
+    private void enemyTurn() {
+        if (enemyMoves == null) {
             showMessage("Enemy has no moves...");
             isBattleFinished = true;
             return;
         }
 
         Moves move = enemyMoves[rng.nextInt(enemyMoves.length)];
-        if (move.power <=0){
+        if (move.power <= 0) {
             showMessage("Enemy " + enemyPokemon.getName().toUpperCase() + " used " + move.name + "! It did no damage...");
         } else {
             int damage = calculateDamage(move.power);
@@ -240,7 +255,7 @@ public class Battle {
             showMessage("Enemy " + enemyPokemon.getName().toUpperCase() + " used " + move.name + " and dealt " + damage + "HP!");
         }
 
-        if (playerCurrentHp <= 0){
+        if (playerCurrentHp <= 0) {
             showMessage("Your " + playerPokemon.getName().toUpperCase() + " fainted!");
             isBattleFinished = true;
             return;
@@ -249,10 +264,10 @@ public class Battle {
         isPlayerTurn = true;
     }
 
-    private int calculateDamage(int basePower){
+    private int calculateDamage(int basePower) {
         // lower = longer battle
         double scale = 0.10;
-        return (int) Math.ceil(basePower * scale);
+        return (int) Math.ceil((basePower * scale));
     }
 
     public void draw(Graphics2D g2) {
@@ -270,7 +285,7 @@ public class Battle {
         g2.drawImage(enemyPokemonPic, 720, 160, 250, 250, null);
 
         // Enemy info box (top-left)
-        g2.drawImage(enemyInfoPanel,0,160, 500, 100, null);
+        g2.drawImage(enemyInfoPanel, 0, 160, 500, 100, null);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
         g2.setColor(Color.WHITE);
 
@@ -286,7 +301,7 @@ public class Battle {
         g2.drawRect(eBarX, eBarY, eBarW, eBarH);
 
         // Player info box (lower-right)
-        g2.drawImage(playerInfoPanel,530,390, 500, 105, null);
+        g2.drawImage(playerInfoPanel, 530, 390, 500, 105, null);
 
         g2.setColor(Color.WHITE);
         g2.drawString((playerPokemon != null ? playerPokemon.getName().toUpperCase() : "You"), 650, 425);
@@ -318,9 +333,9 @@ public class Battle {
 
         // Colors for each button
         Color fightColor = new Color(220, 80, 80);   // red
-        Color bagColor = new Color(200,140,60);     // brown/yellow
-        Color pokeColor = new Color(80,160,120);   // green
-        Color runColor = new Color(60,120,200);   // blue
+        Color bagColor = new Color(200, 140, 60);     // brown/yellow
+        Color pokeColor = new Color(80, 160, 120);   // green
+        Color runColor = new Color(60, 120, 200);   // blue
 
         // button rectangles
         Rectangle btnFight = new Rectangle(menuRightX, menuRightY, buttonW, buttonH);
@@ -390,7 +405,7 @@ public class Battle {
         return 10;
     }
 
-    public void endBattle (){
+    public void endBattle() {
         gp.gameState = gp.playState;
         gp.battle = null;
     }
@@ -399,7 +414,7 @@ public class Battle {
         menuState = mainMenu;
     }
 
-    public void showMessage(String text){
+    public void showMessage(String text) {
         this.message = text;
         this.messageUntil = System.currentTimeMillis() + messageDuration;
     }

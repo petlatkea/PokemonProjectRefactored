@@ -5,9 +5,11 @@ import object.OBJ_Pokeball;
 import object.OBJ_Rock;
 
 public class AssetSetter {
+    ClickHandler clickH;
     GamePanel gp;
-    public AssetSetter(GamePanel gp) {
+    public AssetSetter(GamePanel gp, ClickHandler clickH) {
         this.gp = gp;
+        this.clickH = clickH;
     }
 
     public void setObject() {
@@ -98,7 +100,7 @@ public class AssetSetter {
         gp.npc[11].worldX = 25 * gp.tileSize;
         gp.npc[11].worldY = 76 * gp.tileSize;
 
-        gp.npc[12] = new NPC_GymLeader(gp);
+        gp.npc[12] = new NPC_GymLeader(gp, clickH);
         gp.npc[12].worldX = 11 * gp.tileSize;
         gp.npc[12].worldY = 77 * gp.tileSize;
 
