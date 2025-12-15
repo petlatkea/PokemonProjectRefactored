@@ -31,8 +31,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * maxScreenCol;     // 1024 px
     public final int screenHeight = tileSize * maxScreenRow;    // 768 px
 
-    // == GENDER STATE ==
+    // == GENDER & STARTER POKEMON ==
     public int genderState = 1;
+    public int starterPokemon = 393;
 
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
@@ -42,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     Pokedex pokedex = new Pokedex(this, keyH, originalPokemon);
 
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public AssetSetter aSetter = new AssetSetter(this);
+    public AssetSetter aSetter = new AssetSetter(this, clickH);
     public UI ui = new UI(this, clickH, originalPokemon, pokedex);
     Thread gameThread;
 
@@ -146,8 +147,9 @@ public class GamePanel extends JPanel implements Runnable {
                 Pokemon playerPokemon = Pokemon.load("25");
                 Pokemon enemyPokemon = Pokemon.load("11");
 
-                this.battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
-                this.gameState = battleState;
+                battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+                gameState = battleState;
+                music.updateMusic();
             }
         }
         if (gameState == pauseState) {
