@@ -150,14 +150,8 @@ public class Player extends Entity {
                 pixelCounter = 0;
                 if (isGrassOn && hasChecked==false) {
                     int chance = random.nextInt(10);
-                    System.out.println(chance);
                     if (chance == 1) {
-                        Pokemon playerPokemon = Pokemon.load("25");
-                        Pokemon enemyPokemon = Pokemon.load("11");
-
-                        gp.battle = new Battle(gp, playerPokemon, enemyPokemon, gp.clickH);
-                        gp.gameState = gp.battleState;
-
+                        gp.startWildBattle();
                     } else {
                         hasChecked = true;
                     }
