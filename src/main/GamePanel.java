@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // == GENDER & STARTER POKEMON ==
     public int genderState = 1;
-    public int starterPokemon = 393;
+    public int playerPokemon = 25;
 
     // === SYSTEM ===
     TileManager tileM = new TileManager(this);
@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
     public final int pokedexState = 4;
     public final int battleState = 5;
+    public final int starterChoiceState = 6;
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;
@@ -269,5 +270,23 @@ public class GamePanel extends JPanel implements Runnable {
         if (ui != null) {
             ui.inputSetup();
         }
+    }
+
+    public void startGymBattle() {
+        Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
+        Pokemon enemyPokemon = Pokemon.load("11");
+
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        gameState = battleState;
+        music.updateMusic();
+    }
+
+    public void startWildBattle() {
+        Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
+        Pokemon enemyPokemon = Pokemon.load("11");
+
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        gameState = battleState;
+        music.updateMusic();
     }
 }
