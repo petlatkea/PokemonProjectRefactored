@@ -1,11 +1,18 @@
 package entity;
 
+import battleSystem.Battle;
+import main.ClickHandler;
 import main.GamePanel;
+import pokedex.Pokemon;
+
+
 
 public class NPC_GymLeader extends Entity {
+    ClickHandler clickH;
 
-    public NPC_GymLeader(GamePanel gp) {
+    public NPC_GymLeader(GamePanel gp, ClickHandler clickH) {
         super(gp);
+        this.clickH = clickH;
 
         direction = "down";
         speed = 3;
@@ -33,12 +40,22 @@ public class NPC_GymLeader extends Entity {
         dialogues[0] = "Have you come to challenge me?";
         dialogues[1] = "That's quite brave of you kid.";
         dialogues[2] = "Are you ready for a battle against \nthe strongest guy in this town?!";
+        dialogues[3] = "";
     }
 
     public void speak() {
-        if (dialogues[dialogueIndex] == dialogues[2]) {
+        if (dialogues[dialogueIndex] == dialogues[3]) {
+            System.out.println("Battle starts");
+
+            Pokemon playerPokemon = Pokemon.load("25");
+            Pokemon enemyPokemon = Pokemon.load("11");
+
+            gp.battle = new Battle(gp, playerPokemon, enemyPokemon, clickH);
+            gp.gameState = gp.battleState;
+            gp.music.updateMusic();
             gp.player.keyH.ePressed = false;
         }
         super.speak();
+
     }
 }
