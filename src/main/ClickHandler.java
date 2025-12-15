@@ -1,7 +1,5 @@
 package main;
 
-import pokedex.Pokedex;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GamePanel gp;
-    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
+    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction, clicked;
     private int x;
     private int y;
 
