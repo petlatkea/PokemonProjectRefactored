@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int pokedexState = 4;
+    public final int battleState = 5;
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;
@@ -145,7 +146,7 @@ public class GamePanel extends JPanel implements Runnable {
                 Pokemon playerPokemon = Pokemon.load("25");
                 Pokemon enemyPokemon = Pokemon.load("11");
 
-                this.battle = new Battle(this, playerPokemon, enemyPokemon);
+                this.battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
                 this.gameState = battleState;
             }
         }
@@ -178,7 +179,7 @@ public class GamePanel extends JPanel implements Runnable {
         long drawStart = System.nanoTime();
 
 
-        if (gameState != titleScreenState || gameState != battleState) {
+        if (gameState != titleScreenState && gameState != battleState) {
 
             // Background Layer
             tileM.drawLayer(g2, tileM.mapTileNumBackground);
