@@ -1,5 +1,6 @@
 package battleSystem;
 
+import main.ClickHandler;
 import main.GamePanel;
 import pokedex.EntryStats;
 import pokedex.Pokemon;
@@ -14,6 +15,7 @@ import java.util.Random;
 public class Battle {
 
     private GamePanel gp;
+    ClickHandler clickH;
 
     // === Pictures ===
     private BufferedImage battleBG;
@@ -60,10 +62,11 @@ public class Battle {
     private int menuState = mainMenu;
 
 
-    public Battle(GamePanel gp, Pokemon playerPokemon, Pokemon enemyPokemon) {
+    public Battle(GamePanel gp, Pokemon playerPokemon, Pokemon enemyPokemon, ClickHandler clickH) {
         this.gp = gp;
         this.playerPokemon = playerPokemon;
         this.enemyPokemon = enemyPokemon;
+        this.clickH = clickH;
 
         // === HP INIT ===
         playerMaxHp = getBaseStat(playerPokemon, "hp");
@@ -126,7 +129,6 @@ public class Battle {
     }
 
     private void mouseClick(){
-        if (!gp.leftClick.clicked) return;
 
         int menuRightX = 680;
         int menuRightY = 580;
@@ -149,43 +151,38 @@ public class Battle {
 
         if (menuState == mainMenu){
 
-            if(gp.leftClick.mousePressedBox(fightButton.x, fightButton.y, fightButton.width, fightButton.height)){
+            if(clickH.mousePressedBox(fightButton.x, fightButton.y, fightButton.width, fightButton.height)){
                 menuState = fightMenu;
-                gp.leftClick.clicked = false;
                 return;
             }
 
-            if(gp.leftClick.mousePressedBox(bagButton.x, bagButton.y, bagButton.width, bagButton.height)){
+            if(clickH.mousePressedBox(bagButton.x, bagButton.y, bagButton.width, bagButton.height)){
                 menuState = bagMenu;
                 showMessage("You opened your bag... (left click)");
-                gp.leftClick.clicked = false;
                 return;
             }
 
-            if(gp.leftClick.mousePressedBox(pokeButton.x, pokeButton.y, pokeButton.width, pokeButton.height)){
+            if(clickH.mousePressedBox(pokeButton.x, pokeButton.y, pokeButton.width, pokeButton.height)){
                 menuState = pokeMenu;
                 showMessage("You look at your Pokemons... (left click)");
-                gp.leftClick.clicked = false;
                 return;
             }
 
-            if(gp.leftClick.mousePressedBox(runButton.x, runButton.y, runButton.width, runButton.height)){
+            if(clickH.mousePressedBox(runButton.x, runButton.y, runButton.width, runButton.height)){
                 showMessage("You ran away safely!");
                 menuState = runAway;
                 isBattleFinished = true;
-                gp.leftClick.clicked = false;
                 return;
             }
         } else if (menuState == fightMenu){
             for (int i = 0; i < moveBoxes.length; i++){
                 Rectangle r = moveBoxes[i];
 
-                if (gp.leftClick.mousePressedBox(r.x, r.y, r.width, r.height)){
+                if (clickH.mousePressedBox(r.x, r.y, r.width, r.height)){
                     if (i < playerMoves.length){
                         usePlayerMove(i);
                         // return to main menu
                         menuState = mainMenu;
-                        gp.leftClick.clicked = false;
                         return;
                     } else {
                         showMessage("No move in that slot.");
@@ -193,20 +190,17 @@ public class Battle {
                     }
                 }
 
-//                if (gp.leftClick.mousePressedBox(menuRightX - 40, menuRightY - 40, (buttonW+gapX) * 2 + 80, (buttonH+gapY) * 2 + 80)) {
+//                if (clickH.mousePressedBox(menuRightX - 40, menuRightY - 40, (buttonW+gapX) * 2 + 80, (buttonH+gapY) * 2 + 80)) {
 //                    menuState = mainMenu;
-//                    gp.leftClick.clicked = false;
+//                    clickH.clicked = false;
 //                    return;
 //                }
             }
         } else {
             showMessage("Menu not implemented");
             menuState = mainMenu;
-            gp.leftClick.clicked = false;
             return;
         }
-
-    gp.leftClick.clicked = false;
     }
 
     private void usePlayerMove(int moveIndex){
