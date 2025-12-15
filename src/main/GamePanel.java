@@ -1,5 +1,6 @@
 package main;
 
+import battleSystem.Battle;
 import entity.Entity;
 import entity.Player;
 import object.SuperObject;
@@ -67,6 +68,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Sound collisionSound = new Sound(this,player);
     public Sound buttonSound = new Sound(this,player);
 
+    // === BATTLE SYSTEM ===
+    public Battle battle;
+
     // === FPS ===
     int FPS = 60;
 
@@ -131,14 +135,33 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
             music.updateMusic();
             music.updateFade();
-            for(int i = 0; i < npc.length; i++) {
-                if(npc[i] != null) {
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
                     npc[i].update();
                 }
+            }
+
+            if (keyH.bPressed) {
+                Pokemon playerPokemon = Pokemon.load("25");
+                Pokemon enemyPokemon = Pokemon.load("11");
+
+                this.battle = new Battle(this, playerPokemon, enemyPokemon);
+                this.gameState = battleState;
             }
         }
         if (gameState == pauseState) {
 
+        }
+
+        if (gameState == battleState) {
+            // Battle screen
+            if (battle != null) {
+                battle.update();
+            }
+
+            if (keyH.spacePressed && battle != null) {
+                battle.endBattle();
+            }
         }
     }
 
@@ -155,7 +178,7 @@ public class GamePanel extends JPanel implements Runnable {
         long drawStart = System.nanoTime();
 
 
-        if (gameState != titleScreenState) {
+        if (gameState != titleScreenState || gameState != battleState) {
 
             // Background Layer
             tileM.drawLayer(g2, tileM.mapTileNumBackground);
@@ -182,6 +205,15 @@ public class GamePanel extends JPanel implements Runnable {
 
             // Environment Front of player
             tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
+        } else {
+            if (battle != null) {
+                battle.draw(g2);
+            } else {
+                g2.setColor(Color.lightGray);
+                g2.drawString("BATTLE STATE (no battle object)", 50, 50);
+
+                // probably gonna need to use the g2.draw... function like g2.drawImage();
+            }
         }
 
         // UI
@@ -223,15 +255,15 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
-    public void playMusic() {
-        music.setFile();
-        music.play();
+        public void playMusic () {
+            music.setFile();
+            music.play();
 
-    }
+        }
 
-    public void stopMusic() {
-        music.stop();
-    }
+        public void stopMusic () {
+            music.stop();
+        }
 
     public long getDrawCount() {
         return drawCount;
@@ -241,6 +273,5 @@ public class GamePanel extends JPanel implements Runnable {
         if (ui != null) {
             ui.inputSetup();
         }
-
     }
 }

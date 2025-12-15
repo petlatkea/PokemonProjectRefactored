@@ -2,6 +2,7 @@ package main;
 
 import pokedex.Pokedex;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,8 +21,8 @@ public class ClickHandler implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-
     }
+
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -76,6 +77,14 @@ public class ClickHandler implements MouseListener {
             gp.keyH.enterPressed = true;
             gp.buttonSound.playButtonSound();
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void handleRightClick(){
+        if (gp.gameState == gp.battleState){
+            if (gp.battle != null){
+                gp.battle.rightClick();
+            }
         }
     }
 

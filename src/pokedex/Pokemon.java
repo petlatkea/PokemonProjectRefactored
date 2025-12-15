@@ -218,6 +218,39 @@ public class Pokemon {
 
 }
 
+    public static Pokemon load(String pokeName) {
+        try {
+            String url = "https://pokeapi.co/api/v2/pokemon/" + pokeName.toLowerCase();
+
+            // søg efter pokemon
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response1 = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            // If pokemon does not exist
+            if (response1.statusCode() == 404) {
+                System.out.println("ERROR: The pokemon " + "'" + pokeName + "'" + " can not be found. Please try again.\n");
+                return null;
+            }
+            Gson gson = new Gson();
+            return gson.fromJson(response1.body(), Pokemon.class);
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+}
 
 
 
