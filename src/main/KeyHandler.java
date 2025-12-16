@@ -113,6 +113,10 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.pokedexState) {
             if (code == KeyEvent.VK_P) {
                 gp.gameState = gp.playState;
+                gp.clickH.onOff=false;
+                int reset = 0;
+                gp.originalPokemon.setId(reset);
+                gp.pokedex.pokemonSprite = null;
             }
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = gp.playState;
