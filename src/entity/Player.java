@@ -2,10 +2,8 @@ package entity;
 
 import java.util.Random;
 
-import battleSystem.Battle;
 import main.GamePanel;
 import main.KeyHandler;
-import pokedex.Pokemon;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
