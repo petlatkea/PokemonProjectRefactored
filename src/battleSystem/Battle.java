@@ -335,7 +335,7 @@ public class Battle {
             leerCounter--;
             showMessage(enemyPokemon.getName().toUpperCase() + " used " + move.name + "! \nYour " + playerPokemon.getName().toUpperCase() + "'s attack fell.");
         } else if (Objects.equals(move.name, "Harden") || Objects.equals(move.name, "Defense Curl")) {
-            sound.playSound(41);
+            sound.playSound(43);
             leerCounter--;
             showMessage(enemyPokemon.getName().toUpperCase() + " used " + move.name + "! \nIt´s defense rose.");
         } else if (move.power <= 0) {
