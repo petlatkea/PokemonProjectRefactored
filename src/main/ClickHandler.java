@@ -158,7 +158,7 @@ public class ClickHandler implements MouseListener {
 
         Rectangle r = new Rectangle(rx, ry, rw, rh);
         if (r.contains(x, y)) {
-            clicked = false;   // 🔥 VERY IMPORTANT
+            clicked = false;
             return true;
         }
         return false;
