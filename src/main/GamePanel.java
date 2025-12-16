@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        playMusic();
+        music.playSound(40);
         aSetter.setObject();
         aSetter.setNPC();
         gameState = titleScreenState;
@@ -252,16 +252,6 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
-    public void playMusic() {
-        music.setFile();
-        music.play();
-
-    }
-
-    public void stopMusic() {
-        music.stop();
-    }
-
     public long getDrawCount() {
         return drawCount;
     }
@@ -276,7 +266,7 @@ public class GamePanel extends JPanel implements Runnable {
         Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
         Pokemon enemyPokemon = Pokemon.load("11");
 
-        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH, music);
         gameState = battleState;
         music.updateMusic();
     }
@@ -285,7 +275,7 @@ public class GamePanel extends JPanel implements Runnable {
         Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
         Pokemon enemyPokemon = Pokemon.load("11");
 
-        battle = new Battle(this, playerPokemon, enemyPokemon, clickH);
+        battle = new Battle(this, playerPokemon, enemyPokemon, clickH, music);
         gameState = battleState;
         music.updateMusic();
     }

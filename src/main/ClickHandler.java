@@ -97,6 +97,7 @@ public class ClickHandler implements MouseListener {
         if (mousePressedBox(99, ((gp.screenHeight-200)/2)+4, 192, 192)) {
             if (gp.gameState == gp.starterChoiceState) {
                 gp.playerPokemon = 387;
+                gp.music.playSound(23);
                 gp.gameState = gp.playState;
             }
         }
@@ -105,6 +106,7 @@ public class ClickHandler implements MouseListener {
         if (mousePressedBox(416, ((gp.screenHeight-200)/2)+4, 192, 192)) {
             if (gp.gameState == gp.starterChoiceState) {
                 gp.playerPokemon = 390;
+                gp.music.playSound(24);
                 gp.gameState = gp.playState;
             }
         }
@@ -113,6 +115,7 @@ public class ClickHandler implements MouseListener {
         if (mousePressedBox(733, ((gp.screenHeight-200)/2)+4, 192, 192)) {
             if (gp.gameState == gp.starterChoiceState) {
                 gp.playerPokemon = 393;
+                gp.music.playSound(25);
                 gp.gameState = gp.playState;
             }
         }

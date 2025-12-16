@@ -6,8 +6,9 @@ import java.net.URL;
 import entity.Player;
 
 public class Sound {
-    Clip clip;
-    URL[] soundURL = new URL[30];
+    Clip musicClip;
+    Clip sfxClip;
+    URL[] soundURL = new URL[41];
     Player player;
     GamePanel gp;
     int musicZone = 0;      // Default twin leaf
@@ -61,7 +62,7 @@ public class Sound {
         }
 
         if (gp.gameState == gp.battleState) {
-            stop();
+            stopMusic();
             musicZone = 11;
             setFile();
             play();
@@ -92,14 +93,41 @@ public class Sound {
         soundURL[21] = getClass().getResource("/sound/button.wav");
         soundURL[22] = getClass().getResource("/sound/MachopCry.wav");
 
+        // Starter cries
+        soundURL[23] = getClass().getResource("/sound/turtwigCry.wav");
+        soundURL[24] = getClass().getResource("/sound/ChimcharCry .wav");
+        soundURL[25] = getClass().getResource("/sound/piplupCry.wav");
+
+
+        // Battle sounds
+        soundURL[26] = getClass().getResource("/sound/potion.wav");
+        soundURL[27] = getClass().getResource("/sound/flee.wav");
+
+        // Battle moves
+        soundURL[28] = getClass().getResource("/sound/bite.wav");
+        soundURL[29] = getClass().getResource("/sound/bubblebeam.wav");
+        soundURL[30] = getClass().getResource("/sound/Ember.wav");
+        soundURL[31] = getClass().getResource("/sound/flameWheel.wav");
+        soundURL[32] = getClass().getResource("/sound/hit.wav");
+        soundURL[33] = getClass().getResource("/sound/leer.wav");
+        soundURL[34] = getClass().getResource("/sound/machPunch.wav");
+        soundURL[35] = getClass().getResource("/sound/peck.wav");
+        soundURL[36] = getClass().getResource("/sound/pound.wav");
+        soundURL[37] = getClass().getResource("/sound/razorLeaf.wav");
+        soundURL[38] = getClass().getResource("/sound/tackle.wav");
+        soundURL[39] = getClass().getResource("/sound/thunderbolt.wav");
+
+        soundURL[40] = getClass().getResource("/sound/titleTheme.wav");
+
+
     }
 
     public void setFile() {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[musicZone]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
-            gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            musicClip = AudioSystem.getClip();
+            musicClip.open(ais);
+            gainControl = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume);
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,8 +140,8 @@ public class Sound {
         lastButtonSound = now;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[20]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(ais);
             playEffect(-10f);
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,8 +154,8 @@ public class Sound {
         lastCollisionSoundTime = now;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[21]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(ais);
             if (gp.keyH.enterPressed) {
                 playEffect(-15f);
             }
@@ -142,8 +170,8 @@ public class Sound {
         lastCollisionSoundTime = now;
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[22]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(ais);
             playEffect(-5f);
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,24 +180,42 @@ public class Sound {
 
 
     public void playEffect(float volume) {
-        gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl = (FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(volume);
-        clip.start();
+        sfxClip.start();
+    }
+
+    public void playSound(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(ais);
+            playEffect(-10f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     public void play() {
-        clip.start();
+        musicClip.start();
     }
 
     public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stop() {
-        if (clip != null) {
-            clip.stop();
-            clip.close();
+    public void stopMusic() {
+        if (musicClip != null) {
+            musicClip.stop();
+            musicClip.close();
+        }
+    }
+
+    public void stopSound() {
+        if (sfxClip != null) {
+            sfxClip.stop();
+            sfxClip.close();
         }
     }
 
@@ -186,7 +232,8 @@ public class Sound {
             } else {
                 volume = targetVolume;
                 gainControl.setValue(volume);
-                stop();
+                stopMusic();
+                stopSound();
                 fadingOut = false;
                 setFile();
                 fadeIn();
