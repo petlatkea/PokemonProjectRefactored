@@ -97,12 +97,75 @@ public class Battle {
         }
 
 
-        enemyMoves = new Moves[]{
-                new Moves("Poison Sting", 15),
-                new Moves("Fury Attack", 25),
-                new Moves("Twineedle", 40),
-                new Moves("Bug Bite", 60)
-        };
+
+        enemyMoves = new Moves[4];
+        // ROUTE 201
+        if (enemyPokemon.getId() == 396){
+            enemyMoves[0] = new Moves("Peck", 35);
+            enemyMoves[1] = new Moves("Quick Attack", 40);
+            enemyMoves[2] = new Moves("Wing Attack", 60);
+            enemyMoves[3] = new Moves("Growl", 0);
+        } else if (enemyPokemon.getId() == 399){
+            enemyMoves[0] = new Moves("Tackle", 35);
+            enemyMoves[1] = new Moves("Headbutt", 70);
+            enemyMoves[2] = new Moves("Superpower", 120);
+            enemyMoves[3] = new Moves("Growl", 0);
+        // OPAL SPRINGS
+        } else if (enemyPokemon.getId() == 129) {
+            enemyMoves[0] = new Moves("Splash", 0);
+            enemyMoves[1] = new Moves("Splash", 0);
+            enemyMoves[2] = new Moves("Splash", 0);
+            enemyMoves[3] = new Moves("Hydro Pump", 120);
+        } else if (enemyPokemon.getId() == 54) {
+            enemyMoves[0] = new Moves("Water Gun", 40);
+            enemyMoves[1] = new Moves("Water Pulse", 60);
+            enemyMoves[2] = new Moves("Scratch", 40);
+            enemyMoves[3] = new Moves("Amnesia", 0);
+        // ETERNA FOREST
+        } else if (enemyPokemon.getId() == 315) {
+            enemyMoves[0] = new Moves("Razor Leaf", 55);
+            enemyMoves[1] = new Moves("Magical Lead", 60);
+            enemyMoves[2] = new Moves("Pin Missile", 25);
+            enemyMoves[3] = new Moves("Charm", 0);
+        } else if (enemyPokemon.getId() == 265) {
+            enemyMoves[0] = new Moves("Tackle", 35);
+            enemyMoves[1] = new Moves("Poison Sting", 15);
+            enemyMoves[2] = new Moves("Harden", 0);
+            enemyMoves[3] = new Moves("Growl", 0);
+        // ROUTE 202
+        } else if (enemyPokemon.getId() == 185) {
+            enemyMoves[0] = new Moves("Rock Throw", 50);
+            enemyMoves[1] = new Moves("Faint Attack", 60);
+            enemyMoves[2] = new Moves("Rock Smash", 40);
+            enemyMoves[3] = new Moves("Charm", 0);
+        } else if (enemyPokemon.getId() == 299) {
+            enemyMoves[0] = new Moves("Tackle", 35);
+            enemyMoves[1] = new Moves("Rock Throw", 50);
+            enemyMoves[2] = new Moves("Rock Slide", 75);
+            enemyMoves[3] = new Moves("Harden", 0);
+        // VALLEY
+        } else if (enemyPokemon.getId() == 74) {
+            enemyMoves[0] = new Moves("Rock Throw", 50);
+            enemyMoves[1] = new Moves("Rollout", 30);
+            enemyMoves[2] = new Moves("Rock Blast", 25);
+            enemyMoves[3] = new Moves("Defense Curl", 0);
+        } else if (enemyPokemon.getId() == 436) {
+            enemyMoves[0] = new Moves("Tackle", 35);
+            enemyMoves[1] = new Moves("Confusion", 50);
+            enemyMoves[2] = new Moves("Extrasensory", 100);
+            enemyMoves[3] = new Moves("Harden", 0);
+            // GYM LEADER
+        } else if (enemyPokemon.getId() == 448) {
+            enemyMoves[0] = new Moves("Force Palm", 60);
+            enemyMoves[1] = new Moves("Aura Sphere", 90);
+            enemyMoves[2] = new Moves("Close Combat", 120);
+            enemyMoves[3] = new Moves("Dragon Pulse", 90);
+        } else {
+            enemyMoves[0] = new Moves("Tackle", 40);
+            enemyMoves[1] = new Moves("Bite", 60);
+            enemyMoves[2] = new Moves("Thunderbolt", 90);
+            enemyMoves[3] = new Moves("Growl", 0);
+        }
 
         // === LOAD GRAPHICS ===
         try {
@@ -117,7 +180,7 @@ public class Battle {
             String myPokemonURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/" + gp.playerPokemon + ".png";
             myPokemonPic = ImageIO.read(new URL(myPokemonURL));
             //String enemyPokeURL = enemyPokemon.sprites.front_default;
-            String enemyPokeURL1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png";
+            String enemyPokeURL1 = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + enemyPokemon.getId() + ".png";
             enemyPokemonPic = ImageIO.read(new URL(enemyPokeURL1));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -139,6 +202,7 @@ public class Battle {
         if (isPlayerTurn) {
             handlePlayerInput();
         } else {
+            clickH.clicked = false;
             enemyTurn();
         }
     }
@@ -300,9 +364,12 @@ public class Battle {
         g2.drawImage(enemyGround, 700, 280, 300, 80, null);
 
         // Place Pokémon
-        g2.drawImage(myPokemonPic, 50, 250, 500, 500, null);
-        g2.drawImage(enemyPokemonPic, 720, 160, 250, 250, null);
-
+        drawImageBottomCenterScaled(g2, myPokemonPic, 275, 730, 500, 500);
+        if (enemyPokemon.getId() == 448) {
+            drawImageBottomCenterScaled(g2, enemyPokemonPic, 845, 375, 250, 250);
+        } else{
+            drawImageBottomCenterScaled(g2, enemyPokemonPic, 845, 400, 250, 250);
+        }
         // Enemy info box (top-left)
         g2.drawImage(enemyInfoPanel, 0, 160, 500, 100, null);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20));
@@ -436,5 +503,14 @@ public class Battle {
     public void showMessage(String text) {
         this.message = text;
         this.messageUntil = System.currentTimeMillis() + messageDuration;
+    }
+
+    private void drawImageBottomCenterScaled(Graphics2D g2, BufferedImage img, int centerX, int bottomY, int width, int height) {
+        if (img == null) return;
+
+        int x = centerX - width / 2;
+        int y = bottomY - height;
+
+        g2.drawImage(img, x, y, width, height, null);
     }
 }
