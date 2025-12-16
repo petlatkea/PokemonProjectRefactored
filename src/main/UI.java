@@ -23,8 +23,9 @@ public class UI {
     public String currentDialogue = "";
     public String inputBuffer = "";
     public boolean drawingInput = false;
-    private int grassFadeCounter;
-
+    private int grassFadeCounter = 0;
+    public int grassFadeCounterMax = 90;
+    public boolean enterWild = false;
     // === Area Icons ===
     Image[] areaIcons = new Image[10];
     String[] areaNames = new String[8];
@@ -92,27 +93,38 @@ public class UI {
         areaIcons[6] = setup("/ui/zoneSmallCity");
         areaIcons[7] = setup("/ui/zoneMountain");
 
-        wildIntro[1] = setup("/battleIntro/wildIntro1.png");
+        wildIntro[0] = setup("/battleIntro/wildIntro1");
+        wildIntro[0] = uTool.scaleImage((BufferedImage) wildIntro[0], 1024, 768);
+        wildIntro[1] = setup("/battleIntro/wildIntro2");
         wildIntro[1] = uTool.scaleImage((BufferedImage) wildIntro[1], 1024, 768);
-        wildIntro[2] = setup("/battleIntro/wildIntro2.png");
+        wildIntro[2] = setup("/battleIntro/wildIntro3");
         wildIntro[2] = uTool.scaleImage((BufferedImage) wildIntro[2], 1024, 768);
-        wildIntro[3] = setup("/battleIntro/wildIntro3.png");
+        wildIntro[3] = setup("/battleIntro/wildIntro4");
         wildIntro[3] = uTool.scaleImage((BufferedImage) wildIntro[3], 1024, 768);
-        wildIntro[4] = setup("/battleIntro/wildIntro4.png");
+        wildIntro[4] = setup("/battleIntro/wildIntro5");
         wildIntro[4] = uTool.scaleImage((BufferedImage) wildIntro[4], 1024, 768);
-        wildIntro[5] = setup("/battleIntro/wildIntro5.png");
+        wildIntro[5] = setup("/battleIntro/wildIntro6");
         wildIntro[5] = uTool.scaleImage((BufferedImage) wildIntro[5], 1024, 768);
-        wildIntro[6] = setup("/battleIntro/wildIntro6.png");
+        wildIntro[6] = setup("/battleIntro/wildIntro7");
         wildIntro[6] = uTool.scaleImage((BufferedImage) wildIntro[6], 1024, 768);
-        wildIntro[7] = setup("/battleIntro/wildIntro7.png");
-        wildIntro[7] = uTool.scaleImage((BufferedImage) wildIntro[7], 1024, 768);
     }
+
     public void drawBattleIntro() {
-        for (Image image : wildIntro) {
-            if (grassFadeCounter == 60) {
-                g2.drawImage(image, 0, 0, 1024, 768, null);
-                grassFadeCounter = 0;
-            }
+        enterWild = true;
+        if (getGrassFadeCounter() <= 40) {
+            g2.drawImage(wildIntro[0], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 55) {
+            g2.drawImage(wildIntro[1], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 65) {
+            g2.drawImage(wildIntro[2], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 70) {
+            g2.drawImage(wildIntro[3], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 75) {
+            g2.drawImage(wildIntro[4], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 80) {
+            g2.drawImage(wildIntro[5], 0, 0, 1024, 768, null);
+        } else if (getGrassFadeCounter() <= 90) {
+            g2.drawImage(wildIntro[6], 0, 0, 1024, 768, null);
         }
     }
 
@@ -164,8 +176,12 @@ public class UI {
 
         // PLAY STATE
         if (gp.gameState == gp.playState) {
-            drawPokedexIcon();
-            drawAreaIcons();
+            if (enterWild && gp.battle==null){
+                drawBattleIntro();
+            } else {
+                drawPokedexIcon();
+                drawAreaIcons();
+            }
         }
 
         // PAUSE STATE
@@ -564,7 +580,6 @@ public class UI {
             int cursorX = xName + (inputBuffer.length() * 14);
             g2.drawLine(cursorX, textY - fm.getHeight() + 5, cursorX, textY + 5);
         }
-
     }
 
     public int getXForCenteredText(String text) {
@@ -576,8 +591,19 @@ public class UI {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return targetCenterX - length / 2;
     }
-    public void updateGrassFade(){
-        grassFadeCounter++;
+
+    public void updateGrassFade() {
+        System.out.println(this.grassFadeCounter);
+        if (enterWild) {
+            this.grassFadeCounter++;
+        }
     }
 
+    public int getGrassFadeCounter() {
+        return grassFadeCounter;
+    }
+
+    public void setGrassFadeCounter(int grassFadeCounter) {
+        this.grassFadeCounter = grassFadeCounter;
+    }
 }
