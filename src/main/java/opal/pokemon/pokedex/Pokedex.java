@@ -101,7 +101,7 @@ public class Pokedex {
     }
 
     private String cachePath() {
-        return "src/resources/pokedexPngCache/pokemon_name_" + pokemon.name + ".png";
+        return "pokedexCache/pokemon_name_" + pokemon.name + ".png";
     }
 
     public boolean isSearching() {

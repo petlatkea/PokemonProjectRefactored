@@ -157,7 +157,7 @@ public class Pokemon {
     }
 
     private String cachePath() {
-        return "src/resources/pokedexPngCache/pokemon_name_" + this.name + ".png";
+        return "pokedexcache/pokemon_name_" + this.name + ".png";
     }
 
     public String getPath() {

@@ -3,7 +3,7 @@ package main.java.opal.pokemon.pokedex;
 import java.sql.*;
 
 public class PokedexDatabase {
-    private static final String DB_URL = "jdbc:sqlite:pokemonproject.pokedex.db";
+    private static final String DB_URL = "jdbc:sqlite:pokedex.db";
 
     public static boolean getPokemonByNameOrId(Pokemon p) {
         String sql = "SELECT * FROM pokemon_data WHERE name = ?";
