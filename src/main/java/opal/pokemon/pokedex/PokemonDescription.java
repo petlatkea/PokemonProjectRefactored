@@ -1,0 +1,51 @@
+package main.java.opal.pokemon.pokedex;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class PokemonDescription {
+
+    public static String getDescriptionFromApi(String name)  {
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            String url = "https://pokeapi.co/api/v2/pokemon-species/" + name.toLowerCase();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
+            System.out.println("Description loaded from API");
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            Gson gson = new Gson();
+            PokemonSpecies species = null;
+            try {
+                species = gson.fromJson(response.body(), PokemonSpecies.class);
+            } catch (JsonSyntaxException e) {
+                System.out.println("No data found");
+                return null;
+            }
+            for (FlavorTextEntry entry : species.flavor_text_entries) {
+                if (entry.language.name.equals("en")) {
+                    return entry.flavor_text.replace("\n", " ");
+                }
+            }
+            return "No English description found.";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+}
+
