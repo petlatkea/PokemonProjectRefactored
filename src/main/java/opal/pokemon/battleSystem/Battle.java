@@ -169,12 +169,12 @@ public class Battle {
 
         // === LOAD GRAPHICS ===
         try {
-            battleBG = ImageIO.read(getClass().getResourceAsStream("//battle/battleBG.png"));
-            playerGround = ImageIO.read(getClass().getResourceAsStream("//battle/playerGround.png"));
-            enemyGround = ImageIO.read(getClass().getResourceAsStream("//battle/enemyGround.png"));
-            playerInfoPanel = ImageIO.read(getClass().getResourceAsStream("//battle/myHpBar.png"));
-            enemyInfoPanel = ImageIO.read(getClass().getResourceAsStream("//battle/enemyHpBar.png"));
-            dialogBox = ImageIO.read(getClass().getResourceAsStream("//ui/dialogueBox.png"));
+            battleBG = ImageIO.read(getClass().getResourceAsStream("/images/battle/battleBG.png"));
+            playerGround = ImageIO.read(getClass().getResourceAsStream("/images/battle/playerGround.png"));
+            enemyGround = ImageIO.read(getClass().getResourceAsStream("/images/battle/enemyGround.png"));
+            playerInfoPanel = ImageIO.read(getClass().getResourceAsStream("/images/battle/myHpBar.png"));
+            enemyInfoPanel = ImageIO.read(getClass().getResourceAsStream("/images/battle/enemyHpBar.png"));
+            dialogBox = ImageIO.read(getClass().getResourceAsStream("/images/ui/dialogueBox.png"));
 
             //String myPokeURL = playerPokemon.sprites.front_default;
             String myPokemonURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/" + gp.playerPokemon + ".png";
@@ -513,7 +513,7 @@ public class Battle {
         menuState = mainMenu;
     }
 
-    public void showMessage(String text) {
+    private void showMessage(String text) {
         this.message = text;
         this.messageUntil = System.currentTimeMillis() + messageDuration;
     }
