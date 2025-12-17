@@ -56,7 +56,7 @@ public class UI {
         getAreaNames();
     }
 
-    public void getUIImages() {
+    private void getUIImages() {
         dialogueWindowImage = setup("/images/ui/dialogueBox");
 
         pokedexBoy = setup("/images/pokedexSprites/boy");
@@ -130,7 +130,7 @@ public class UI {
         }
     }
 
-    public void getAreaNames() {
+    private void getAreaNames() {
         areaNames[0] = "Twinleaf Town";
         areaNames[1] = "Route 201";
         areaNames[2] = "Opal Springs";
@@ -141,7 +141,7 @@ public class UI {
         areaNames[7] = " Mt.Coronet";
     }
 
-    public BufferedImage setup(String imagePath) {
+    private BufferedImage setup(String imagePath) {
         BufferedImage image;
 
         try {
@@ -152,7 +152,7 @@ public class UI {
         return image;
     }
 
-    public BufferedImage setup(String imagePath, int scaleX, int scaleY) {
+    private BufferedImage setup(String imagePath, int scaleX, int scaleY) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image;
 
@@ -207,7 +207,7 @@ public class UI {
         }
     }
 
-    public void drawTitleScreen() {
+    private void drawTitleScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
@@ -238,7 +238,7 @@ public class UI {
         }
     }
 
-    public void drawPokedexIcon() {
+    private void drawPokedexIcon() {
         int x = 25;
         int y = 690;
         BufferedImage image = pokedexIcon;
@@ -246,7 +246,7 @@ public class UI {
     }
 
     // ===== STARTERS =====
-    public void drawStartersScreen() {
+    private void drawStartersScreen() {
         int width = gp.screenWidth;
         int height = 200;
         int x = 0;
@@ -261,7 +261,7 @@ public class UI {
     }
 
     // ===== PAUSE =====
-    public void drawPauseScreen() {
+    private void drawPauseScreen() {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80));
 
         String text = "PAUSED";
@@ -272,7 +272,7 @@ public class UI {
     }
 
     // ===== DIALOGUE =====
-    public void drawDialogueScreen() {
+    private void drawDialogueScreen() {
         // WINDOW
         int x = (gp.screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
         int y = gp.screenHeight - (dialogueWindowImage.getHeight() * 4) - (gp.tileSize / 8);
@@ -289,12 +289,12 @@ public class UI {
         }
     }
 
-    public void drawDialogueWindow(int x, int y, BufferedImage image) {
+    private void drawDialogueWindow(int x, int y, BufferedImage image) {
         g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
     }
 
     // ===== AREA ICONS =====
-    public void drawAreaIcons() {
+    private void drawAreaIcons() {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
@@ -360,7 +360,7 @@ public class UI {
     }
 
     // ===== POKEDEX =====
-    public void drawPokedexScreen() {
+    private void drawPokedexScreen() {
         // POKEDEX
         int x = 0;
         int y = 0;
@@ -389,7 +389,7 @@ public class UI {
         }
     }
 
-    public void drawPokedex(int x, int y, BufferedImage image, int genderState) {
+    private void drawPokedex(int x, int y, BufferedImage image, int genderState) {
         try {
             if (genderState == 1) {
                 image = pokedexGirl;
@@ -409,7 +409,7 @@ public class UI {
         }
     }
 
-    public void drawButtons() {
+    private void drawButtons() {
         int pButtonX = 190;
         int buttonY = 576;
         int nButtonX = 398;
@@ -446,7 +446,7 @@ public class UI {
         }
     }
 
-    public void drawPokemonInfo() {
+    private void drawPokemonInfo() {
         int x = 625;
         int y = 340;
         final int lineSpace = 15;
@@ -506,7 +506,7 @@ public class UI {
         drawWrappedText(g2, description, x, y, 258, 12);
     }
 
-    public void drawPokemonSprite() {
+    private void drawPokemonSprite() {
         int pokemonX = 225;
         int pokemonY = 300;
         int pokemonSize = 96;
@@ -556,7 +556,7 @@ public class UI {
         getUIImages();
     }
 
-    public void drawCustomInputBox() {
+    private void drawCustomInputBox() {
         if (!drawingInput) {
             return;
         }
@@ -584,12 +584,12 @@ public class UI {
         }
     }
 
-    public int getXForCenteredText(String text) {
+    private int getXForCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth / 2 - length / 2;
     }
 
-    public int getXForCenteredTextAt(String text, int targetCenterX) {
+    private int getXForCenteredTextAt(String text, int targetCenterX) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return targetCenterX - length / 2;
     }

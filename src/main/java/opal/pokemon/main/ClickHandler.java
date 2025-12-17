@@ -40,7 +40,7 @@ public class ClickHandler implements MouseListener {
         }
     }
 
-    public void handleLeftClick() {
+    private void handleLeftClick() {
 
         // Pressed on podexIcon
         if (mousePressedBox(40, 696, 44, 58) && gp.gameState == gp.playState) {
@@ -128,7 +128,7 @@ public class ClickHandler implements MouseListener {
         }
     }
 
-    public void handleRightClick(){
+    private void handleRightClick(){
         if (gp.gameState == gp.battleState){
             if (gp.battle != null){
                 gp.battle.rightClick();
@@ -160,7 +160,7 @@ public class ClickHandler implements MouseListener {
 
     }
 
-    public boolean mousePressedBox(int worldX, int worldY, int width, int height) {
+    private boolean mousePressedBox(int worldX, int worldY, int width, int height) {
         Rectangle rect = new Rectangle(worldX, worldY, width, height);
         return rect.contains(mouseX, mouseY);
     }
@@ -176,7 +176,7 @@ public class ClickHandler implements MouseListener {
         return false;
     }
 
-    public boolean consumeRightClick() {
+    private boolean consumeRightClick() {
         if (!rightClicked) return false;
         rightClicked = false;
         return true;

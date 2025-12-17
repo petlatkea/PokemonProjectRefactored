@@ -137,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
-    public void update() {
+    private void update() {
         if (gameState == playState) {
             player.update();
             music.updateMusic();

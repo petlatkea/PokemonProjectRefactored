@@ -34,7 +34,7 @@ public class TileManager {
         loadMap("/maps/mapEnvironmentF.csv", mapTileNumEnvironmentF);
     }
 
-    public void getTileImage() {
+    private void getTileImage() {
         Set<Integer> collisionTiles = Set.of(
                 12, 45, 46, 47, 48, 50, 52, 53, 54, 55, 56, 57, 58, 59, 60, 62, 63, 64, 65, 68,
                 69, 72, 73, 74, 77, 78, 81, 82, 83, 90, 92, 93, 94, 95, 96, 97, 98, 99, 101, 102,
@@ -60,7 +60,7 @@ public class TileManager {
         }
     }
 
-    public void setup(int index, String imagePath, boolean collision, boolean isGrass) {
+    private void setup(int index, String imagePath, boolean collision, boolean isGrass) {
 
         UtilityTool uTool = new UtilityTool();
 
@@ -75,7 +75,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String filePath, int[][] mapArray) {
+    private void loadMap(String filePath, int[][] mapArray) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

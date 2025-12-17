@@ -41,14 +41,14 @@ public class Player extends Entity {
         getPlayerImage();
     }
 
-    public void setDefaultValues() {
+    private void setDefaultValues() {
         worldX = (gp.tileSize * 19) + 32;  // WORLD START POS
         worldY = (gp.tileSize * 53) + 16;  // =o=
         speed = 3;
         direction = "down";
     }
 
-    public void getPlayerImage() {
+    private void getPlayerImage() {
         String gender = switch (gp.genderState) {
             case 1 -> "female";
             case 2 -> "male";
@@ -162,7 +162,7 @@ public class Player extends Entity {
         }
     }
 
-    public void interactNPC(int i) {
+    private void interactNPC(int i) {
         if (i != 999) {
             gp.gameState = gp.dialogueState;
             gp.npc[i].speak();

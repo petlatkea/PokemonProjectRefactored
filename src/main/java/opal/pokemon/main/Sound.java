@@ -35,7 +35,7 @@ public class Sound {
     // ============================
     // MUSIC ZONE HANDLING
     // ============================
-    public int getMusicZone() {
+    private int getMusicZone() {
         int x = (player.worldX / gp.tileSize) + 1;
         int y = (player.worldY / gp.tileSize) + 1;
 
@@ -196,7 +196,7 @@ public class Sound {
     }
 
 
-    public void playEffect(float volume) {
+    private void playEffect(float volume) {
         gainControl = (FloatControl) sfxClip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(volume);
         sfxClip.start();
@@ -218,7 +218,7 @@ public class Sound {
         musicClip.start();
     }
 
-    public void loop() {
+    private void loop() {
         musicClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -270,7 +270,7 @@ public class Sound {
         }
     }
 
-    public void fadeIn() {
+    private void fadeIn() {
         fadingIn = true;
         fadingOut = false;
 
@@ -283,7 +283,7 @@ public class Sound {
         loop();
     }
 
-    public void fadeOut() {
+    private void fadeOut() {
         fadingOut = true;
         fadingIn = false;
 
