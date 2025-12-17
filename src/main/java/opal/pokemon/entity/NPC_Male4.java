@@ -39,7 +39,7 @@ public class NPC_Male4 extends Entity {
         dialogues[6] = "You would think with all the Psychic moves \nit can learn that it would be Psychic too";
         dialogues[7] = "But no! its only water type, which also \nmakes it weak to Electric and Grass.";
         dialogues[8] = "Fact number 2: \nPsyducks National Pokedex Nr. is #054";
-        dialogues[9] = "You can look it up yourself if you \nhave a pokemonproject.pokedex on you.";
+        dialogues[9] = "You can look it up yourself if you \nhave a Pokedex on you.";
         dialogues[10] = "Fact number 3: \nA shiny Psyduck is Cyan!";
         dialogues[11] = "I hope to one day see a shiny one myself \nbut for now i can only imagine.";
         dialogues[12] = "Fact number 4: \nWhen a Psyduck reaches lvl 33 it evolves!";
