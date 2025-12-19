@@ -9,8 +9,12 @@ public class GameModel {
     public TileMap environmentBTileMap;
     public TileMap environmentFTileMap;
 
+    private final TileDefinitions tileDefinitions;
+
     public GameModel(GameController controller) {
         this.gameController = controller;
+
+        tileDefinitions = new TileDefinitions();
 
         backgroundTileMap = new TileMap("background", controller.maxWorldCol, controller.maxWorldRow);
         environmentBTileMap = new TileMap("environmentB", controller.maxWorldCol, controller.maxWorldRow);
@@ -19,5 +23,9 @@ public class GameModel {
         backgroundTileMap.loadMap("/maps/mapBackground.csv");
         environmentBTileMap.loadMap("/maps/mapEnvironmentB.csv");
         environmentFTileMap.loadMap("/maps/mapEnvironmentF.csv");
+    }
+
+    public TileType getTileType(int tileId) {
+        return tileDefinitions.getTileType(tileId);
     }
 }

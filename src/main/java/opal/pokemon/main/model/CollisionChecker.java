@@ -4,7 +4,7 @@ import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.main.controller.GameController;
 
 public class CollisionChecker {
-    GameController gp;
+    private GameController gp;
 
 
     public CollisionChecker(GameController gp) {
@@ -13,13 +13,11 @@ public class CollisionChecker {
 
     private boolean isTileColliding(int[][] map, int col, int row) {
         int tileNum = map[col][row];
-        // TODO: Change to Tile entity model
-        return gp.getView().getTileManager().tile[tileNum].collision;
+        return gp.getModel().getTileType(tileNum).isCollision();
     }
     boolean isGrass(int[][] map, int col, int row) {
         int tileNum = map[col][row];
-        // TODO: Change to Tile entity model
-        return gp.getView().getTileManager().tile[tileNum].isGrass;
+        return gp.getModel().getTileType(tileNum).isGrass();
     }
     public void checkGrass(Entity entity){
         int entityWorldX_Center = entity.worldX + entity.solidArea.x + (entity.solidArea.width / 2);

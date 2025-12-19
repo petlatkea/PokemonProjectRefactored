@@ -4,7 +4,6 @@ import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.model.GameModel;
-import main.java.opal.pokemon.main.model.TileMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +16,7 @@ public class GameView extends JPanel {
     private KeyHandler keyH;
     private ClickHandler clickH;
 
-    private TileManager tileM;
-
-    // TODO: Hack!! Fix asap!!
-    public TileManager getTileManager() {
-        return tileM;
-    }
+    private final TileGraphics tileGraphics;
 
     // === DEBUG ===
     private int warmupFrames = 30;
@@ -35,7 +29,7 @@ public class GameView extends JPanel {
         this.controller = gameController;
         this.model = model;
 
-        tileM = new TileManager(controller);
+        tileGraphics = new TileGraphics(controller);
 
         this.setPreferredSize(new Dimension(controller.screenWidth, controller.screenHeight));
         this.setBackground(new java.awt.Color(120, 192, 248));
@@ -76,7 +70,7 @@ public class GameView extends JPanel {
         if (controller.gameState != controller.titleScreenState && controller.gameState != controller.battleState) {
 
             // Background Layer
-            tileM.drawTileMap(g2, model.backgroundTileMap);
+            tileGraphics.drawTileMap(g2, model.backgroundTileMap);
 
             // Object Layer
             for (int i = 0; i < controller.obj.length; i++) {
@@ -86,7 +80,7 @@ public class GameView extends JPanel {
             }
 
             // Environment Behind player
-            tileM.drawTileMap(g2, model.environmentBTileMap);
+            tileGraphics.drawTileMap(g2, model.environmentBTileMap);
 
             // NPCs
             for (int i = 0; i < controller.npc.length; i++) {
@@ -99,7 +93,7 @@ public class GameView extends JPanel {
             controller.player.draw(g2);
 
             // Environment Front of player
-            tileM.drawTileMap(g2, model.environmentFTileMap );
+            tileGraphics.drawTileMap(g2, model.environmentFTileMap );
         } else {
             if (controller.battle != null) {
                 controller.battle.draw(g2);
