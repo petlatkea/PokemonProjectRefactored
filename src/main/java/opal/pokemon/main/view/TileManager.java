@@ -1,37 +1,25 @@
-package main.java.opal.pokemon.tile;
+package main.java.opal.pokemon.main.view;
 
-import main.java.opal.pokemon.entity.Player;
-import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
+import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.model.TileMap;
+import main.java.opal.pokemon.tile.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Set;
 
 public class TileManager {
-    GameController gp;
+    GameController controller;
     public Tile[] tile;
-    public int[][] mapTileNumBackground;
-    public int[][] mapTileNumEnvironmentB;
-    public int[][] mapTileNumEnvironmentF;
-    Player player;
 
-    public TileManager(GameController gp) {
-        this.gp = gp;
+    public TileManager(GameController controller) {
+        this.controller = controller;
 
         tile = new Tile[338];
-        mapTileNumBackground = new int[gp.maxWorldCol][gp.maxWorldRow];
-        mapTileNumEnvironmentB = new int[gp.maxWorldCol][gp.maxWorldRow];
-        mapTileNumEnvironmentF = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/mapBackground.csv", mapTileNumBackground);
-        loadMap("/maps/mapEnvironmentB.csv", mapTileNumEnvironmentB);
-        loadMap("/maps/mapEnvironmentF.csv", mapTileNumEnvironmentF);
     }
 
     private void getTileImage() {
@@ -67,7 +55,7 @@ public class TileManager {
         try {
             tile[index] = new Tile();
             tile[index].image = ImageIO.read(getClass().getResourceAsStream("/images/tiles/" + imagePath + ".png"));
-            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].image = uTool.scaleImage(tile[index].image, controller.tileSize, controller.tileSize);
             tile[index].collision = collision;
             tile[index].isGrass = isGrass;
         } catch (IOException e) {
@@ -75,53 +63,23 @@ public class TileManager {
         }
     }
 
-    private void loadMap(String filePath, int[][] mapArray) {
-        try {
-            InputStream is = getClass().getResourceAsStream(filePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+    // Draw tilemap (previously known as drawLayer)
+    public void drawTileMap(Graphics2D g2, TileMap tileMap) {
+        int cameraLeft = controller.player.worldX - controller.player.screenX;
+        int cameraTop = controller.player.worldY - controller.player.screenY;
+        int cameraRight = cameraLeft + controller.screenWidth;
+        int cameraBottom = cameraTop + controller.screenHeight;
 
-            int col = 0;
-            int row = 0;
+        for (int worldCol = 0; worldCol < controller.maxWorldCol; worldCol++) {
+            for (int worldRow = 0; worldRow < controller.maxWorldRow; worldRow++) {
 
-            while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
-                String line = br.readLine();
-                String[] numbers = line.split(", ");
+                int tileNum = tileMap.map[worldCol][worldRow];
+                int worldX = worldCol * controller.tileSize;
+                int worldY = worldRow * controller.tileSize;
 
-                while (col < gp.maxWorldCol) {
-                    int num = Integer.parseInt(numbers[col]);
-                    mapArray[col][row] = num;
-                    col++;
-                }
-
-            if (col == gp.maxWorldCol) {
-                col = 0;
-                row++;
-            }
-        }
-        br.close();
-    } catch(Exception e){
-        e.printStackTrace();
-    }
-}
-
-
-
-    public void drawLayer(Graphics2D g2, int[][] map) {
-        int cameraLeft = gp.player.worldX - gp.player.screenX;
-        int cameraTop = gp.player.worldY - gp.player.screenY;
-        int cameraRight = cameraLeft + gp.screenWidth;
-        int cameraBottom = cameraTop + gp.screenHeight;
-
-        for (int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
-            for (int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
-
-                int tileNum = map[worldCol][worldRow];
-                int worldX = worldCol * gp.tileSize;
-                int worldY = worldRow * gp.tileSize;
-
-                if (worldX + gp.tileSize >= cameraLeft &&
+                if (worldX + controller.tileSize >= cameraLeft &&
                         worldX <= cameraRight &&
-                        worldY + gp.tileSize >= cameraTop &&
+                        worldY + controller.tileSize >= cameraTop &&
                         worldY <= cameraBottom) {
 
                     int screenX = worldX - cameraLeft;

@@ -4,11 +4,13 @@ import main.java.opal.pokemon.battleSystem.Battle;
 import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.*;
+import main.java.opal.pokemon.main.model.CollisionChecker;
+import main.java.opal.pokemon.main.model.GameModel;
+import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.view.GameView;
 import main.java.opal.pokemon.object.SuperObject;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
-import main.java.opal.pokemon.tile.TileManager;
 
 import java.util.Random;
 
@@ -16,11 +18,18 @@ public class GameController implements Runnable {
 
     // View
     private GameView view;
+    private GameModel model;
 
-    // TODO: Maybe remove asap??
+    // TODO: Remove most usages apart from MainWindow
     public GameView getView() {
         return view;
     }
+
+    // TODO: Get rid of all usages - only used by CollisionChecker it seems
+    public GameModel getModel() {
+        return model;
+    }
+
 
     // === SCREEN SETTINGS ===
     final int originalTileSize = 16;    // 16x16 px
@@ -84,7 +93,9 @@ public class GameController implements Runnable {
 
     // === CONSTRUCTOR ===
     public GameController() {
-        view = new GameView(this);
+        model = new GameModel(this);
+        view = new GameView(this, model);
+
         pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
         aSetter = new AssetSetter(this, view.getClickH());
         ui = new UI(this, view.getClickH(), originalPokemon, pokedex);

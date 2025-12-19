@@ -3,7 +3,8 @@ package main.java.opal.pokemon.main.view;
 import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.GameController;
-import main.java.opal.pokemon.tile.TileManager;
+import main.java.opal.pokemon.main.model.GameModel;
+import main.java.opal.pokemon.main.model.TileMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.awt.*;
 public class GameView extends JPanel {
 
     private final GameController controller;
+    private final GameModel model;
 
     private KeyHandler keyH;
     private ClickHandler clickH;
@@ -18,7 +20,7 @@ public class GameView extends JPanel {
     private TileManager tileM;
 
     // TODO: Hack!! Fix asap!!
-    public TileManager getTileM() {
+    public TileManager getTileManager() {
         return tileM;
     }
 
@@ -29,8 +31,9 @@ public class GameView extends JPanel {
     private long drawCount = 0;
     private int frameSincePrint = 0;
 
-    public GameView(GameController gameController) {
+    public GameView(GameController gameController, GameModel model) {
         this.controller = gameController;
+        this.model = model;
 
         tileM = new TileManager(controller);
 
@@ -73,7 +76,7 @@ public class GameView extends JPanel {
         if (controller.gameState != controller.titleScreenState && controller.gameState != controller.battleState) {
 
             // Background Layer
-            tileM.drawLayer(g2, tileM.mapTileNumBackground);
+            tileM.drawTileMap(g2, model.backgroundTileMap);
 
             // Object Layer
             for (int i = 0; i < controller.obj.length; i++) {
@@ -83,7 +86,7 @@ public class GameView extends JPanel {
             }
 
             // Environment Behind player
-            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
+            tileM.drawTileMap(g2, model.environmentBTileMap);
 
             // NPCs
             for (int i = 0; i < controller.npc.length; i++) {
@@ -96,7 +99,7 @@ public class GameView extends JPanel {
             controller.player.draw(g2);
 
             // Environment Front of player
-            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
+            tileM.drawTileMap(g2, model.environmentFTileMap );
         } else {
             if (controller.battle != null) {
                 controller.battle.draw(g2);
