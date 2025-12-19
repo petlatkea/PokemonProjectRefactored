@@ -65,14 +65,7 @@ public class GameController implements Runnable {
     public Entity[] npc = new Entity[20];
 
     // == GAME STATE ==
-    public int gameState;
-    public final int titleScreenState = 0;
-    public final int playState = 1;
-    public final int pauseState = 2;
-    public final int dialogueState = 3;
-    public final int pokedexState = 4;
-    public final int battleState = 5;
-    public final int starterChoiceState = 6;
+    public GameState gameState;
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;
@@ -114,7 +107,7 @@ public class GameController implements Runnable {
         music.playSound(40);
         aSetter.setObject();
         aSetter.setNPC();
-        gameState = titleScreenState;
+        gameState = GameState.titleScreenState;
     }
 
     public void startGameThread() {
@@ -154,7 +147,7 @@ public class GameController implements Runnable {
 
 
     private void update() {
-        if (gameState == playState) {
+        if (gameState == GameState.playState) {
             player.update();
             music.updateMusic();
             music.updateFade();
@@ -174,11 +167,11 @@ public class GameController implements Runnable {
 
 
         }
-        if (gameState == pauseState) {
+        if (gameState == GameState.pauseState) {
 
         }
 
-        if (gameState == battleState) {
+        if (gameState == GameState.battleState) {
             // Battle screen
             if (battle != null) {
                 battle.update();
@@ -205,7 +198,7 @@ public class GameController implements Runnable {
         Pokemon enemyPokemon = Pokemon.load("448");
 
         battle = new Battle(this, playerPokemon, enemyPokemon, view.getClickH(), music);
-        gameState = battleState;
+        gameState = GameState.battleState;
         music.updateMusic();
     }
 
@@ -263,7 +256,7 @@ public class GameController implements Runnable {
 
         battle = new Battle(this, playerPokemon, enemyPokemon, view.getClickH(), music);
         view.getClickH().clicked = false;
-        gameState = battleState;
+        gameState = GameState.battleState;
         music.updateMusic();
     }
 }

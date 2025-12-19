@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -173,12 +174,12 @@ public class UI {
         g2.setColor(Color.white);
 
         // TITLE SCREEN STATE
-        if (gp.gameState == gp.titleScreenState) {
+        if (gp.gameState == GameState.titleScreenState) {
             drawTitleScreen();
         }
 
         // PLAY STATE
-        if (gp.gameState == gp.playState) {
+        if (gp.gameState == GameState.playState) {
             if (enterWild && gp.battle==null){
                 drawBattleIntro();
             } else {
@@ -188,22 +189,22 @@ public class UI {
         }
 
         // PAUSE STATE
-        if (gp.gameState == gp.pauseState) {
+        if (gp.gameState == GameState.pauseState) {
             drawPauseScreen();
         }
 
         // DIALOGUE STATE
-        if (gp.gameState == gp.dialogueState) {
+        if (gp.gameState == GameState.dialogueState) {
             drawDialogueScreen();
         }
 
         // POKEDEX STATE
-        if (gp.gameState == gp.pokedexState) {
+        if (gp.gameState == GameState.pokedexState) {
             drawPokedexScreen();
         }
 
         // POKEMON CHOICE STATE
-        if (gp.gameState == gp.starterChoiceState) {
+        if (gp.gameState == GameState.starterChoiceState) {
             drawStartersScreen();
         }
     }
@@ -400,7 +401,7 @@ public class UI {
             }
             g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
             if (!clickH.onOffAction) {
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
                 clickH.onOffAction = true;
                 pokemon.name = null;
                 showPokedexStartText = true;

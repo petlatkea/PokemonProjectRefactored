@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,7 +20,7 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
         // USER INPUT POKEDEX
-        if (gp.gameState == gp.pokedexState && gp.ui.drawingInput) {
+        if (gp.gameState == GameState.pokedexState && gp.ui.drawingInput) {
             char key = e.getKeyChar();
             if (Character.isLetterOrDigit(key) || key == ' ') {
                 if (gp.ui.inputBuffer.length() < MAX_INPUT_LENGTH) {
@@ -34,7 +35,7 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // SEARCH
-        if (gp.gameState == gp.pokedexState && gp.ui.drawingInput) {
+        if (gp.gameState == GameState.pokedexState && gp.ui.drawingInput) {
             if (code == KeyEvent.VK_BACK_SPACE) {
                 if (gp.ui.inputBuffer.length() > 0) {
                     gp.ui.inputBuffer = gp.ui.inputBuffer.substring(0, gp.ui.inputBuffer.length() - 1);
@@ -56,17 +57,17 @@ public class KeyHandler implements KeyListener {
         }
 
         // TITLE SCREEN STATE
-        if (gp.gameState == gp.titleScreenState) {
+        if (gp.gameState == GameState.titleScreenState) {
             if (code == KeyEvent.VK_ENTER) {
                 gp.music.stopSound();
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
                 gp.music.setFile();
                 gp.music.play();
             }
         }
 
         // PLAY STATE
-        if (gp.gameState == gp.playState) {
+        if (gp.gameState == GameState.playState) {
             if (code == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -86,36 +87,36 @@ public class KeyHandler implements KeyListener {
                 ePressed = true;
             }
             if (code == KeyEvent.VK_P) {
-                gp.gameState = gp.pokedexState;
+                gp.gameState = GameState.pokedexState;
             }
             if (code == KeyEvent.VK_SHIFT) {
                 shiftPressed = true;
             }
             if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.pauseState;
+                gp.gameState = GameState.pauseState;
             }
         }
 
         // PAUSE STATE
-        else if (gp.gameState == gp.pauseState) {
+        else if (gp.gameState == GameState.pauseState) {
             if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
             }
         }
 
         // DIALOGUE STATE
-        else if (gp.gameState == gp.dialogueState) {
+        else if (gp.gameState == GameState.dialogueState) {
             if (code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
                 gp.buttonSound.playButtonSound();
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
             }
         }
 
         // POKEDEX STATE
-        else if (gp.gameState == gp.pokedexState) {
+        else if (gp.gameState == GameState.pokedexState) {
             if (code == KeyEvent.VK_P) {
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
                 // TODO: Hack!?
                 gp.getView().getClickH().onOff=false;
                 int reset = 0;
@@ -123,12 +124,12 @@ public class KeyHandler implements KeyListener {
                 gp.pokedex.pokemonSprite = null;
             }
             if (code == KeyEvent.VK_ESCAPE) {
-                gp.gameState = gp.playState;
+                gp.gameState = GameState.playState;
             }
         }
 
         // BATTLE STATE
-        else if (gp.gameState == gp.battleState){
+        else if (gp.gameState == GameState.battleState){
             //
             if (code == KeyEvent.VK_SPACE){
                 spacePressed = true;

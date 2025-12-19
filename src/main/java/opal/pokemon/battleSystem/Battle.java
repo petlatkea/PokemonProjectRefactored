@@ -3,6 +3,7 @@ package main.java.opal.pokemon.battleSystem;
 import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.Sound;
+import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
@@ -504,7 +505,7 @@ public class Battle {
     }
 
     public void endBattle() {
-        gp.gameState = gp.playState;
+        gp.gameState = GameState.playState;
         gp.music.stopMusic();
         gp.battle = null;
     }

@@ -2,6 +2,7 @@ package main.java.opal.pokemon.entity;
 
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.KeyHandler;
+import main.java.opal.pokemon.main.controller.GameState;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -164,7 +165,7 @@ public class Player extends Entity {
 
     private void interactNPC(int i) {
         if (i != 999) {
-            gp.gameState = gp.dialogueState;
+            gp.gameState = GameState.dialogueState;
             gp.npc[i].speak();
         } else {
             keyH.ePressed = false;

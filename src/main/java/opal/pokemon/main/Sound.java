@@ -2,6 +2,7 @@ package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -65,7 +66,7 @@ public class Sound {
             fadeOut();
         }
 
-        if (gp.gameState == gp.battleState) {
+        if (gp.gameState == GameState.battleState) {
             stopMusic();
             musicZone = 11;
             setFile();

@@ -3,6 +3,7 @@ package main.java.opal.pokemon.main.view;
 import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.main.model.GameModel;
 
 import javax.swing.*;
@@ -67,7 +68,7 @@ public class GameView extends JPanel {
         // DEBUG
         long drawStart = System.nanoTime();
 
-        if (controller.gameState != controller.titleScreenState && controller.gameState != controller.battleState) {
+        if (controller.gameState != GameState.titleScreenState && controller.gameState != GameState.battleState) {
 
             // Background Layer
             tileGraphics.drawTileMap(g2, model.backgroundTileMap);

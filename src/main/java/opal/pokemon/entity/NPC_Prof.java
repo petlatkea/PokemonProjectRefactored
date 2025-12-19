@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.entity;
 
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 
 public class NPC_Prof extends Entity {
 
@@ -45,7 +46,7 @@ public class NPC_Prof extends Entity {
 
     public void speak() {
         if (dialogues[dialogueIndex] == dialogues[10]) {
-            gp.gameState = gp.starterChoiceState;
+            gp.gameState = GameState.starterChoiceState;
             gp.player.keyH.ePressed = false;
         }
         super.speak();
