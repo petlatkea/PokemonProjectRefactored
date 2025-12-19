@@ -1,7 +1,7 @@
 package main.java.opal.pokemon.battleSystem;
 
 import main.java.opal.pokemon.main.ClickHandler;
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Battle {
 
-    GamePanel gp;
+    GameController gp;
     ClickHandler clickH;
     Sound sound;
 
@@ -57,7 +57,7 @@ public class Battle {
     private int menuState = mainMenu;
 
 
-    public Battle(GamePanel gp, Pokemon playerPokemon, Pokemon enemyPokemon, ClickHandler clickH, Sound sound) {
+    public Battle(GameController gp, Pokemon playerPokemon, Pokemon enemyPokemon, ClickHandler clickH, Sound sound) {
         this.gp = gp;
         this.playerPokemon = playerPokemon;
         this.enemyPokemon = enemyPokemon;

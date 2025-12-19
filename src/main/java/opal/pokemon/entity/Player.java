@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.KeyHandler;
 
 import java.awt.*;
@@ -22,7 +22,7 @@ public class Player extends Entity {
     int orderIndex = 0;
 
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player(GameController gp, KeyHandler keyH) {
         super(gp);
         this.keyH = keyH;
 

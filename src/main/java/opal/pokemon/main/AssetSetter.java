@@ -1,13 +1,14 @@
 package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.entity.*;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.object.OBJ_Pokeball;
 import main.java.opal.pokemon.object.OBJ_Rock;
 
 public class AssetSetter {
     ClickHandler clickH;
-    GamePanel gp;
-    public AssetSetter(GamePanel gp, ClickHandler clickH) {
+    GameController gp;
+    public AssetSetter(GameController gp, ClickHandler clickH) {
         this.gp = gp;
         this.clickH = clickH;
     }

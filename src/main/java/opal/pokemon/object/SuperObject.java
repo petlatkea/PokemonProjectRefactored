@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.object;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public class SuperObject {
     public int solidAreaDefaultY = 0;
     UtilityTool uTool = new UtilityTool();
 
-    public void draw(Graphics2D g2, GamePanel gp) {
+    public void draw(Graphics2D g2, GameController gp) {
         int cameraLeft   = gp.player.worldX - gp.player.screenX;
         int cameraTop    = gp.player.worldY - gp.player.screenY;
         int cameraRight  = cameraLeft + gp.screenWidth;

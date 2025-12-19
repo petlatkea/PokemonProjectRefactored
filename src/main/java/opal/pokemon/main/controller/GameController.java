@@ -1,25 +1,26 @@
-package main.java.opal.pokemon.main;
+package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.battleSystem.Battle;
 import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.entity.Player;
+import main.java.opal.pokemon.main.*;
+import main.java.opal.pokemon.main.view.GameView;
 import main.java.opal.pokemon.object.SuperObject;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
 import main.java.opal.pokemon.tile.TileManager;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GameController implements Runnable {
 
-    // === DEBUG ===
-    private int warmupFrames = 30;
-    private long highestDrawTime = 0;
-    private long totalDrawTime = 0;
-    private long drawCount = 0;
-    private int frameSincePrint = 0;
+    // View
+    private GameView view;
+
+    // TODO: Maybe remove asap??
+    public GameView getView() {
+        return view;
+    }
 
     // === SCREEN SETTINGS ===
     final int originalTileSize = 16;    // 16x16 px
@@ -37,20 +38,20 @@ public class GamePanel extends JPanel implements Runnable {
     public int playerPokemon = 25;
 
     // === SYSTEM ===
-    TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this);
-    public ClickHandler clickH = new ClickHandler(this);
-    Pokemon originalPokemon = new Pokemon();
-    Pokedex pokedex = new Pokedex(this, keyH, originalPokemon);
+
+
+    // TODO: Extract away from public here ...
+    public Pokemon originalPokemon = new Pokemon();
+    public Pokedex pokedex;// = new Pokedex(this, view.getKeyH(), originalPokemon);
 
     public CollisionChecker cChecker = new CollisionChecker(this);
-    public AssetSetter aSetter = new AssetSetter(this, clickH);
-    public UI ui = new UI(this, clickH, originalPokemon, pokedex);
+    public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
+    public UI ui; // = new UI(this, view.getClickH(), originalPokemon, pokedex);
     Random rng = new Random();
     Thread gameThread;
 
     // == ENTITY & OBJECT ===
-    public Player player = new Player(this, keyH);
+    public Player player; // = new Player(this, view.getKeyH());
     public SuperObject[] obj = new SuperObject[10];
     public Entity[] npc = new Entity[20];
 
@@ -69,10 +70,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 100;
 
     // === SOUND ===
-    public Sound music = new Sound(this, player);
-    public Sound collisionSound = new Sound(this, player);
-    public Sound buttonSound = new Sound(this, player);
-    public Sound grassSound = new Sound(this, player);
+    public Sound music;
+    public Sound collisionSound;
+    public Sound buttonSound;
+    public Sound grassSound;
 
 
     // === BATTLE SYSTEM ===
@@ -82,16 +83,18 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     // === CONSTRUCTOR ===
-    public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(new java.awt.Color(120, 192, 248));
-        this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
-        this.addMouseListener(clickH);
-        this.setFocusable(true);
-        this.setOpaque(true);
-        this.setIgnoreRepaint(false);
-        this.setLayout(null);
+    public GameController() {
+        view = new GameView(this);
+        pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
+        aSetter = new AssetSetter(this, view.getClickH());
+        ui = new UI(this, view.getClickH(), originalPokemon, pokedex);
+
+        player = new Player(this, view.getKeyH());
+
+        music = new Sound(this, player);
+        collisionSound = new Sound(this, player);
+        buttonSound = new Sound(this, player);
+        grassSound = new Sound(this, player);
     }
 
     public void setupGame() {
@@ -125,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
                 update();
                 delta--;
                 drawCount++;
-                repaint();
+                view.repaint();
             }
 
 //            if (System.currentTimeMillis() - timer >= 1000) {
@@ -168,104 +171,14 @@ public class GamePanel extends JPanel implements Runnable {
                 battle.update();
             }
 
-            if (keyH.spacePressed && battle != null) {
+            if (view.getKeyH().spacePressed && battle != null) {
                 battle.endBattle();
             }
         }
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-
-
-        // DEBUG
-        long drawStart = System.nanoTime();
-
-
-        if (gameState != titleScreenState && gameState != battleState) {
-
-            // Background Layer
-            tileM.drawLayer(g2, tileM.mapTileNumBackground);
-
-            // Object Layer
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-
-            // Environment Behind player
-            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentB);
-
-            // NPCs
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].draw(g2);
-                }
-            }
-
-            // Player
-            player.draw(g2);
-
-            // Environment Front of player
-            tileM.drawLayer(g2, tileM.mapTileNumEnvironmentF);
-        } else {
-            if (battle != null) {
-                battle.draw(g2);
-            } else {
-                g2.setColor(Color.lightGray);
-                g2.drawString("BATTLE STATE (no battle pokemonproject.object)", 50, 50);
-
-                // probably gonna need to use the g2.draw... function like g2.drawImage();
-            }
-        }
-
-        // UI
-        ui.draw(g2);
-
-
-        // DEBUG
-        long passedTime = System.nanoTime() - drawStart;
-
-        double passedMs = passedTime / 1_000_000.0;
-
-        if (warmupFrames > 0) {
-            warmupFrames--;
-        } else {
-            // TRACK AVG & MAX
-            if (passedTime > highestDrawTime) {
-                highestDrawTime = passedTime;
-            }
-
-            totalDrawTime += passedTime;
-            drawCount++;
-
-            double averageMs = (totalDrawTime / (double) drawCount) / 1_000_000.0;
-            double highestMs = highestDrawTime / 1_000_000.0;
-
-            frameSincePrint++;
-            int printInterval = 30;
-            if (frameSincePrint >= printInterval) {
-//                System.out.printf(
-//                        "Draw: %.3f ms | Highest: %.3f ms | Average: %.3f ms%n",
-//                        passedMs, highestMs, averageMs
-//                );
-//                System.out.println("xPos: " + ((player.worldX/64)+1) + " yPos: " + ((player.worldY/64)+1));
-                frameSincePrint = 0;
-            }
-        }
-
-
-        g2.dispose();
-    }
-
     public long getDrawCount() {
-        return drawCount;
+        return view.getDrawCount();
     }
 
     public void initializeUIComponents() {
@@ -278,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
         Pokemon playerPokemon = Pokemon.load(String.valueOf(this.playerPokemon));
         Pokemon enemyPokemon = Pokemon.load("448");
 
-        battle = new Battle(this, playerPokemon, enemyPokemon, clickH, music);
+        battle = new Battle(this, playerPokemon, enemyPokemon, view.getClickH(), music);
         gameState = battleState;
         music.updateMusic();
     }
@@ -335,8 +248,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Pokemon enemyPokemon = Pokemon.load(enemyID);
 
-        battle = new Battle(this, playerPokemon, enemyPokemon, clickH, music);
-        clickH.clicked = false;
+        battle = new Battle(this, playerPokemon, enemyPokemon, view.getClickH(), music);
+        view.getClickH().clicked = false;
         gameState = battleState;
         music.updateMusic();
     }

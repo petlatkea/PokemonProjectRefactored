@@ -1,10 +1,10 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 
 public class NPC_Male4 extends Entity {
 
-    public NPC_Male4(GamePanel gp) {
+    public NPC_Male4(GameController gp) {
         super(gp);
 
         direction = "down";

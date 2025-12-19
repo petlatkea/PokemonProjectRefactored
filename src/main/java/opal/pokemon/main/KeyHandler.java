@@ -1,15 +1,17 @@
 package main.java.opal.pokemon.main;
 
+import main.java.opal.pokemon.main.controller.GameController;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-    GamePanel gp;
+    GameController gp;
     public boolean upPressed, leftPressed, downPressed, rightPressed, shiftPressed, enterPressed, ePressed, bPressed, spacePressed;
     private int count = 0;
     private final int MAX_INPUT_LENGTH = 15;
 
-    public KeyHandler(GamePanel gp) {
+    public KeyHandler(GameController gp) {
         this.gp = gp;
     }
 
@@ -47,7 +49,8 @@ public class KeyHandler implements KeyListener {
                 if (!input.isEmpty()) {
                     gp.pokedex.search(input);
                 }
-                gp.requestFocusInWindow();
+                // TODO: HACK! Fix asap.
+                gp.getView().requestFocusInWindow();
             }
             return;
         }
@@ -113,7 +116,8 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.pokedexState) {
             if (code == KeyEvent.VK_P) {
                 gp.gameState = gp.playState;
-                gp.clickH.onOff=false;
+                // TODO: Hack!?
+                gp.getView().getClickH().onOff=false;
                 int reset = 0;
                 gp.originalPokemon.setId(reset);
                 gp.pokedex.pokemonSprite = null;

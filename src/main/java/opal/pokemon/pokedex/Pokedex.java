@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.pokedex;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.KeyHandler;
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,14 +19,14 @@ public class Pokedex {
     private String path;
     private volatile boolean isSearching = false;
     public BufferedImage pokemonSprite;
-    private GamePanel gp;
+    private GameController gp;
     Graphics2D g2;
     KeyHandler keyH;
     Pokemon pokemon;
     private BufferedImage pokedexCache;
 
     // Constructor
-    public Pokedex(GamePanel gp, KeyHandler keyH, Pokemon pokemon) {
+    public Pokedex(GameController gp, KeyHandler keyH, Pokemon pokemon) {
         this.gp = gp;
         this.keyH = keyH;
         this.pokemon = pokemon;
@@ -50,7 +50,7 @@ public class Pokedex {
                 isSearching = false;
                 System.out.println("DEBUG: Search Thread Finished.");
                 if (gp != null) {
-                    gp.repaint();
+                    gp.getView().repaint();
                 }
             }
         });

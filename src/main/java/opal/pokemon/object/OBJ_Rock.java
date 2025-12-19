@@ -1,14 +1,14 @@
 package main.java.opal.pokemon.object;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class OBJ_Rock extends SuperObject {
-    GamePanel gp;
+    GameController gp;
 
-    public OBJ_Rock(GamePanel gp) {
+    public OBJ_Rock(GameController gp) {
         this.gp = gp;
 
         name = "Rock";

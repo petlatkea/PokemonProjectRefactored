@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.main;
 
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UI {
-    GamePanel gp;
+    GameController gp;
     Graphics2D g2;
     ClickHandler clickH;
     Pokemon pokemon;
@@ -40,7 +41,7 @@ public class UI {
     int resetter = 0;
     boolean display;
 
-    public UI(GamePanel gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
+    public UI(GameController gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
         this.gp = gp;
         this.clickH = clickH;
         this.pokemon = pokemon;

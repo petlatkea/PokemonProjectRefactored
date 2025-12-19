@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.entity.Player;
+import main.java.opal.pokemon.main.controller.GameController;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -13,7 +14,7 @@ public class Sound {
     Clip sfxClip;
     URL[] soundURL = new URL[44];
     Player player;
-    GamePanel gp;
+    GameController gp;
     int musicZone = 0;      // Default twin leaf
 
     // ===== Fade variables =====
@@ -76,7 +77,7 @@ public class Sound {
     // ============================
     //     MUSIC PLAYBACK
     // ============================
-    public Sound(GamePanel gp, Player player) {
+    public Sound(GameController gp, Player player) {
         this.gp = gp;
         this.player = player;
 
@@ -173,7 +174,7 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[21]);
             sfxClip = AudioSystem.getClip();
             sfxClip.open(ais);
-            if (gp.keyH.enterPressed) {
+            if (gp.getView().getKeyH().enterPressed) {
                 playEffect(-15f);
             }
         } catch (Exception e) {

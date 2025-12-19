@@ -1,11 +1,11 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 
 import java.util.Objects;
 
 public class NPC_Machop extends Entity {
-    public NPC_Machop (GamePanel gp) {
+    public NPC_Machop (GameController gp) {
         super(gp);
 
         direction = "down";

@@ -1,7 +1,7 @@
 package main.java.opal.pokemon.tile;
 
 import main.java.opal.pokemon.entity.Player;
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
 
 import javax.imageio.ImageIO;
@@ -13,14 +13,14 @@ import java.io.InputStreamReader;
 import java.util.Set;
 
 public class TileManager {
-    GamePanel gp;
+    GameController gp;
     public Tile[] tile;
     public int[][] mapTileNumBackground;
     public int[][] mapTileNumEnvironmentB;
     public int[][] mapTileNumEnvironmentF;
     Player player;
 
-    public TileManager(GamePanel gp) {
+    public TileManager(GameController gp) {
         this.gp = gp;
 
         tile = new Tile[338];

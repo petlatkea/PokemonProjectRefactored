@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
 
 import javax.imageio.ImageIO;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-    GamePanel gp;
+    GameController gp;
     public int worldX, worldY;
     public int speed;
 
@@ -28,7 +28,7 @@ public class Entity {
     String[] dialogues = new String[25];
     int dialogueIndex = 0;
 
-    public Entity (GamePanel gp) {
+    public Entity (GameController gp) {
         this.gp = gp;
     }
 

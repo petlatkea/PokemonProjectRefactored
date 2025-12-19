@@ -1,12 +1,14 @@
 package main.java.opal.pokemon.main;
 
+import main.java.opal.pokemon.main.controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
-    GamePanel gp;
+    GameController gp;
     boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
     public boolean clicked = false;
     public boolean leftClicked = false;
@@ -14,7 +16,7 @@ public class ClickHandler implements MouseListener {
     private int mouseX;
     private int mouseY;
 
-    public ClickHandler(GamePanel gp) {
+    public ClickHandler(GameController gp) {
         this.gp = gp;
         onOffAction = true;
     }
@@ -57,7 +59,7 @@ public class ClickHandler implements MouseListener {
                 searching = true;
                 gp.ui.drawingInput = true;
                 gp.ui.inputBuffer = "";
-                gp.repaint();
+                gp.getView().repaint();
             }
         }
 
@@ -94,7 +96,7 @@ public class ClickHandler implements MouseListener {
         // Pressed on Dialogue
         if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254 * 4, 46 * 4)) {
             if (gp.gameState == gp.dialogueState) {
-                gp.keyH.enterPressed = true;
+                gp.getView().getKeyH().enterPressed = true;
                 gp.buttonSound.playButtonSound();
                 gp.gameState = gp.playState;
             }

@@ -1,27 +1,19 @@
 package main.java.opal.pokemon;
 
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.view.MainWindow;
 
 import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Pokemon Opal");
+        GameController controller = new GameController();
+        MainWindow window = new MainWindow(controller);
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
-
-        window.pack();
-
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-
-        gamePanel.initializeUIComponents();
-        gamePanel.setupGame();
-        gamePanel.startGameThread();
+        // TODO: Move UI to ui ...
+        controller.initializeUIComponents();
+        controller.setupGame();
+        controller.startGameThread();
 
     }
 }

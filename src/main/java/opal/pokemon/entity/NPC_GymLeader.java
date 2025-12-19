@@ -1,13 +1,13 @@
 package main.java.opal.pokemon.entity;
 
 import main.java.opal.pokemon.main.ClickHandler;
-import main.java.opal.pokemon.main.GamePanel;
+import main.java.opal.pokemon.main.controller.GameController;
 
 
 public class NPC_GymLeader extends Entity {
     ClickHandler clickH;
 
-    public NPC_GymLeader(GamePanel gp, ClickHandler clickH) {
+    public NPC_GymLeader(GameController gp, ClickHandler clickH) {
         super(gp);
         this.clickH = clickH;
 
