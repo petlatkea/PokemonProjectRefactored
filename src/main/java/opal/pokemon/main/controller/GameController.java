@@ -53,7 +53,7 @@ public class GameController implements Runnable {
     public Pokemon originalPokemon = new Pokemon();
     public Pokedex pokedex;// = new Pokedex(this, view.getKeyH(), originalPokemon);
 
-    public CollisionChecker cChecker = new CollisionChecker(this);
+    public CollisionChecker cChecker; // = new CollisionChecker(this);
     public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
     public UI ui; // = new UI(this, view.getClickH(), originalPokemon, pokedex);
     Random rng = new Random();
@@ -95,6 +95,8 @@ public class GameController implements Runnable {
     public GameController() {
         model = new GameModel(this);
         view = new GameView(this, model);
+
+        cChecker = new CollisionChecker(this, model);
 
         pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
         aSetter = new AssetSetter(this, view.getClickH());

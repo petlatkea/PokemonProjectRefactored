@@ -4,28 +4,33 @@ import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.main.controller.GameController;
 
 public class CollisionChecker {
-    private GameController gp;
+    // TODO: Try to get rid of the controller here!
+    private final GameController gp;
+    private GameModel model;
 
 
-    public CollisionChecker(GameController gp) {
+    public CollisionChecker(GameController gp, GameModel model) {
         this.gp = gp;
+        this.model = model;
     }
 
-    private boolean isTileColliding(int[][] map, int col, int row) {
-        int tileNum = map[col][row];
-        return gp.getModel().getTileType(tileNum).isCollision();
+    private boolean isTileColliding(TileMap map, int col, int row) {
+        int tileNum = map.getTileType(col, row);
+        return model.getTileType(tileNum).isCollision();
     }
-    boolean isGrass(int[][] map, int col, int row) {
-        int tileNum = map[col][row];
-        return gp.getModel().getTileType(tileNum).isGrass();
+
+    boolean isGrass(TileMap map, int col, int row) {
+        int tileNum = map.getTileType(col,row);
+        return model.getTileType(tileNum).isGrass();
     }
+
     public void checkGrass(Entity entity){
         int entityWorldX_Center = entity.worldX + entity.solidArea.x + (entity.solidArea.width / 2);
         int entityWorldY_Bottom = entity.worldY + entity.solidArea.y + entity.solidArea.height;
 
         int entityCol = entityWorldX_Center / gp.tileSize;
         int entityRow = entityWorldY_Bottom / gp.tileSize;
-        boolean walksInGrass = isGrass(gp.getModel().backgroundTileMap.map, entityCol, entityRow);
+        boolean walksInGrass = isGrass(model.backgroundTileMap, entityCol, entityRow);
 
         if(walksInGrass){
             gp.grassSound.playGrassStep();
@@ -52,14 +57,14 @@ public class CollisionChecker {
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
 
                 boolean collidingBackground =
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityRightCol, entityTopRow);
+                        isTileColliding(model.backgroundTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.backgroundTileMap, entityRightCol, entityTopRow);
                 boolean collidingEnvironmentB =
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityRightCol, entityTopRow);
+                        isTileColliding(model.environmentBTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.environmentBTileMap, entityRightCol, entityTopRow);
                 boolean collidingEnvironmentF =
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityRightCol, entityTopRow);
+                        isTileColliding(model.environmentFTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.environmentFTileMap, entityRightCol, entityTopRow);
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
@@ -71,14 +76,14 @@ public class CollisionChecker {
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
 
                 boolean collidingBackground =
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityLeftCol, entityBottomRow);
+                        isTileColliding(model.backgroundTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.backgroundTileMap, entityLeftCol, entityBottomRow);
                 boolean collidingEnvironmentB =
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityLeftCol, entityBottomRow);
+                        isTileColliding(model.environmentBTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.environmentBTileMap, entityLeftCol, entityBottomRow);
                 boolean collidingEnvironmentF =
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityLeftCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityLeftCol, entityBottomRow);
+                        isTileColliding(model.environmentFTileMap, entityLeftCol, entityTopRow) ||
+                        isTileColliding(model.environmentFTileMap, entityLeftCol, entityBottomRow);
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
@@ -89,14 +94,14 @@ public class CollisionChecker {
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
 
                 boolean collidingBackground =
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityLeftCol, entityBottomRow) ||
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.backgroundTileMap, entityLeftCol, entityBottomRow) ||
+                        isTileColliding(model.backgroundTileMap, entityRightCol, entityBottomRow);
                 boolean collidingEnvironmentB =
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityLeftCol, entityBottomRow) ||
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.environmentBTileMap, entityLeftCol, entityBottomRow) ||
+                        isTileColliding(model.environmentBTileMap, entityRightCol, entityBottomRow);
                 boolean collidingEnvironmentF =
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityLeftCol, entityBottomRow) ||
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.environmentFTileMap, entityLeftCol, entityBottomRow) ||
+                        isTileColliding(model.environmentFTileMap, entityRightCol, entityBottomRow);
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
@@ -108,14 +113,14 @@ public class CollisionChecker {
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
 
                 boolean collidingBackground =
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityRightCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().backgroundTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.backgroundTileMap, entityRightCol, entityTopRow) ||
+                        isTileColliding(model.backgroundTileMap, entityRightCol, entityBottomRow);
                 boolean collidingEnvironmentB =
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityRightCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentBTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.environmentBTileMap, entityRightCol, entityTopRow) ||
+                        isTileColliding(model.environmentBTileMap, entityRightCol, entityBottomRow);
                 boolean collidingEnvironmentF =
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityRightCol, entityTopRow) ||
-                        isTileColliding(gp.getModel().environmentFTileMap.map, entityRightCol, entityBottomRow);
+                        isTileColliding(model.environmentFTileMap, entityRightCol, entityTopRow) ||
+                        isTileColliding(model.environmentFTileMap, entityRightCol, entityBottomRow);
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;

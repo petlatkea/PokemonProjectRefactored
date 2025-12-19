@@ -18,6 +18,10 @@ public class TileMap {
         this.map = new int[cols][rows];
     }
 
+    public int getTileType(int col, int row) {
+        return map[col][row];
+    }
+
     public void loadMap(String filePath) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
