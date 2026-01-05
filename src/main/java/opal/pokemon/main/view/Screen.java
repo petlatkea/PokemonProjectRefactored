@@ -5,6 +5,8 @@ import main.java.opal.pokemon.main.controller.ScreenController;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * a Screen is a "sub-view" that displays a single screen, e.g. play, battle, battleintro, etc.
@@ -16,10 +18,24 @@ import java.awt.image.BufferedImage;
  *    class to, well, draw the entire screen.
  */
 public abstract class Screen {
+
+    // keep the same Font available for all extending classes
+    public static Font pkmnFont;
+
     protected final ScreenController controller;
 
     public Screen(ScreenController controller) {
         this.controller = controller;
+
+        // only initialize font once
+        if (pkmnFont == null) {
+            try {
+                InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
+                pkmnFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            } catch (FontFormatException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
