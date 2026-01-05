@@ -29,12 +29,12 @@ public class BattleScreen extends Screen {
     }
 
     public void loadImages() {
-            battleBG = setup("/images/battle/battleBG.png");
-            playerGround = setup("/images/battle/playerGround.png");
-            enemyGround = setup("/images/battle/enemyGround.png");
-            playerInfoPanel = setup("/images/battle/myHpBar.png");
-            enemyInfoPanel = setup("/images/battle/enemyHpBar.png");
-            dialogBox = setup("/images/ui/dialogueBox.png");
+        battleBG = setup("/images/battle/battleBG");
+        playerGround = setup("/images/battle/playerGround");
+        enemyGround = setup("/images/battle/enemyGround");
+        playerInfoPanel = setup("/images/battle/myHpBar");
+        enemyInfoPanel = setup("/images/battle/enemyHpBar");
+        dialogBox = setup("/images/ui/dialogueBox");
     }
 
     public void setPlayerAndEnemyGraphics(Pokemon playerPokemon, Pokemon enemyPokemon) {
