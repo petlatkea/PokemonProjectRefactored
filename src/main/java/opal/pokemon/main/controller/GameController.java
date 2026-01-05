@@ -90,6 +90,7 @@ public class GameController implements Runnable {
     public ScreenController battleIntroController;
     public ScreenController startersController;
     public ScreenController pauseController;
+    public ScreenController dialogueController;
 
 
     // === CONSTRUCTOR ===
@@ -99,6 +100,7 @@ public class GameController implements Runnable {
         battleIntroController = new BattleIntroController(this);
         startersController = new StartersController(this);
         pauseController = new PauseController(this);
+        dialogueController = new DialogueController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);

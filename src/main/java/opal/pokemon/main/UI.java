@@ -23,11 +23,11 @@ public class UI {
     Pokemon pokemon;
     Pokedex pokedex;
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, opal;
+    public BufferedImage pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, opal;
 
     public Font pkmnFont;
     private boolean showPokedexStartText = true;
-    public String currentDialogue = "";
+
     public String inputBuffer = "";
     public boolean drawingInput = false;
 
@@ -45,6 +45,7 @@ public class UI {
     private Screen battleIntroScreen;
     private Screen startersScreen;
     private Screen pauseScreen;
+    private Screen dialogueScreen;
 
 
     public UI(GameController gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
@@ -71,10 +72,12 @@ public class UI {
         startersScreen.init();
         pauseScreen = gp.pauseController.getScreen();
         pauseScreen.init();
+        dialogueScreen = gp.dialogueController.getScreen();
+        dialogueScreen.init();
     }
 
     private void getUIImages() {
-        dialogueWindowImage = setup("/images/ui/dialogueBox");
+
 
         pokedexBoy = setup("/images/pokedexSprites/boy");
         pokedexGirl = setup("/images/pokedexSprites/girl");
@@ -147,7 +150,7 @@ public class UI {
             }
             case GameState.battleIntroState -> battleIntroScreen.drawScreen(g2);
             case GameState.pauseState -> pauseScreen.drawScreen(g2);
-            case GameState.dialogueState -> drawDialogueScreen();
+            case GameState.dialogueState -> dialogueScreen.drawScreen(g2);
             case GameState.pokedexState ->  drawPokedexScreen();
             case GameState.starterChoiceState -> startersScreen.drawScreen(g2);
         }
@@ -158,28 +161,6 @@ public class UI {
         int y = 690;
         BufferedImage image = pokedexIcon;
         g2.drawImage(image, x, y, image.getWidth() * 2, image.getHeight() * 2, null);
-    }
-
-    // ===== DIALOGUE =====
-    private void drawDialogueScreen() {
-        // WINDOW
-        int x = (gp.screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
-        int y = gp.screenHeight - (dialogueWindowImage.getHeight() * 4) - (gp.tileSize / 8);
-        drawDialogueWindow(x, y, dialogueWindowImage);
-
-        // TEXT
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26));
-        x += gp.tileSize - 5;
-        y += gp.tileSize + 10;
-        g2.setColor(Color.black);
-        for (String line : currentDialogue.split("\n")) {
-            g2.drawString(line, x, y);
-            y += 55;
-        }
-    }
-
-    private void drawDialogueWindow(int x, int y, BufferedImage image) {
-        g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
     }
 
     // ===== AREA ICONS =====

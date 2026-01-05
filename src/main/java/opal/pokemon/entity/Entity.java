@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.entity;
 
+import main.java.opal.pokemon.main.controller.DialogueController;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
 
@@ -37,7 +38,8 @@ public class Entity {
         if (dialogues[dialogueIndex] == null) {
             dialogueIndex = 0;
         }
-        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        // TODO: This is a bit nasty - move that into the controller in some other way!
+        ((DialogueController)gp.dialogueController).currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
 
         switch(gp.player.direction) {

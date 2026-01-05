@@ -162,6 +162,7 @@ public class Player extends Entity {
 
     private void interactNPC(int i) {
         if (i != 999) {
+            // TODO: Change to let DialogueController handle this a bit smarter ...
             gp.gameState = GameState.dialogueState;
             gp.npc[i].speak();
         } else {
