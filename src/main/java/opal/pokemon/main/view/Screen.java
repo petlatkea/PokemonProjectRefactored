@@ -54,4 +54,10 @@ public abstract class Screen {
 
     public abstract void drawScreen(Graphics2D g2);
 
+    // Text helpers
+    public int getXForCenteredText(Graphics2D g2, String text) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return controller.getGameController().screenWidth / 2 - length / 2;
+    }
+
 }
