@@ -89,6 +89,7 @@ public class GameController implements Runnable {
     public ScreenController titleScreenController;
     public ScreenController battleIntroController;
     public ScreenController startersController;
+    public ScreenController pauseController;
 
 
     // === CONSTRUCTOR ===
@@ -97,6 +98,7 @@ public class GameController implements Runnable {
         titleScreenController = new TitleController(this);
         battleIntroController = new BattleIntroController(this);
         startersController = new StartersController(this);
+        pauseController = new PauseController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
@@ -186,9 +188,8 @@ public class GameController implements Runnable {
             battleIntroController.update();
         }
 
-
         if (gameState == GameState.pauseState) {
-
+            pauseController.update();
         }
 
         if (gameState == GameState.battleState) {

@@ -23,7 +23,7 @@ public class UI {
     Pokemon pokemon;
     Pokedex pokedex;
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, titleScreenBackground, logo, opal, rowan, lucas, dawn;
+    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, opal;
 
     public Font pkmnFont;
     private boolean showPokedexStartText = true;
@@ -44,6 +44,7 @@ public class UI {
     private Screen titleScreen;
     private Screen battleIntroScreen;
     private Screen startersScreen;
+    private Screen pauseScreen;
 
 
     public UI(GameController gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
@@ -68,7 +69,8 @@ public class UI {
         battleIntroScreen.init();
         startersScreen = gp.startersController.getScreen();
         startersScreen.init();
-
+        pauseScreen = gp.pauseController.getScreen();
+        pauseScreen.init();
     }
 
     private void getUIImages() {
@@ -144,7 +146,7 @@ public class UI {
                     drawAreaIcons();
             }
             case GameState.battleIntroState -> battleIntroScreen.drawScreen(g2);
-            case GameState.pauseState -> drawPauseScreen();
+            case GameState.pauseState -> pauseScreen.drawScreen(g2);
             case GameState.dialogueState -> drawDialogueScreen();
             case GameState.pokedexState ->  drawPokedexScreen();
             case GameState.starterChoiceState -> startersScreen.drawScreen(g2);
@@ -156,17 +158,6 @@ public class UI {
         int y = 690;
         BufferedImage image = pokedexIcon;
         g2.drawImage(image, x, y, image.getWidth() * 2, image.getHeight() * 2, null);
-    }
-
-    // ===== PAUSE =====
-    private void drawPauseScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80));
-
-        String text = "PAUSED";
-
-        int x = getXForCenteredText(text);
-        int y = gp.screenHeight / 2;
-        g2.drawString(text, x, y);
     }
 
     // ===== DIALOGUE =====
