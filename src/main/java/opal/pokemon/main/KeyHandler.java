@@ -117,8 +117,8 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == GameState.pokedexState) {
             if (code == KeyEvent.VK_P) {
                 gp.gameState = GameState.playState;
-                // TODO: Hack!?
-                gp.getView().getClickH().onOff=false;
+                // TODO: Hack!? - Transfer to pokedex controller, once it also handles keys
+//                gp.getView().getClickH().onOff=false;
                 int reset = 0;
                 gp.originalPokemon.setId(reset);
                 gp.pokedex.pokemonSprite = null;

@@ -1,8 +1,6 @@
 package main.java.opal.pokemon.main;
 
-import main.java.opal.pokemon.main.controller.BattleController;
 import main.java.opal.pokemon.main.controller.GameController;
-import main.java.opal.pokemon.main.controller.GameState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,17 +8,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
-    GameController gp;
-    public boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
+
+    private GameController controller;
+
     public boolean clicked = false;
     public boolean leftClicked = false;
     public boolean rightClicked = false;
     private int mouseX;
     private int mouseY;
 
-    public ClickHandler(GameController gp) {
-        this.gp = gp;
-        onOffAction = true;
+    public ClickHandler(GameController controller) {
+        this.controller = controller;
     }
 
     @Override
@@ -45,111 +43,19 @@ public class ClickHandler implements MouseListener {
     }
 
     private void handleLeftClick() {
-
-        // Pressed on podexIcon
-        if (mousePressedBox(40, 696, 44, 58) && gp.gameState == GameState.playState) {
-            if (gp.gameState != GameState.pokedexState) {
-                gp.gameState = GameState.pokedexState;
-            } else if (gp.gameState == GameState.pokedexState) {
-                gp.gameState = GameState.playState;
-            }
-        }
-        // Pressed on Pokedex Search Button
-        if (mousePressedBox(245, 565, 147, 64)) {
-            if (gp.gameState == GameState.pokedexState) {
-                searchButtonPressed = true;
-                searching = true;
-                gp.ui.drawingInput = true;
-                gp.ui.inputBuffer = "";
-                gp.getView().repaint();
-            }
-        }
-
-        //Pressed on Pokedex left button
-        if (mousePressedBox(190, 576, 45, 45)) {
-            if (gp.gameState == GameState.pokedexState) {
-                previousButtonPressed = true;
-                String input = String.valueOf((gp.originalPokemon.getId() - 1));
-                if (!input.isEmpty()) {
-                    gp.pokedex.search(input);
-                }
-            }
-        }
-        //Pressed on Pokedex right button
-        if (mousePressedBox(398, 576, 45, 45)) {
-            if (gp.gameState == GameState.pokedexState) {
-                nextButtonPressed = true;
-                String input = String.valueOf((gp.originalPokemon.getId() + 1));
-                if (!input.isEmpty()) {
-                    gp.pokedex.search(input);
-                }
-            }
-        }
-        // Pressed on Pokedex ON/OFF button
-        if (mousePressedBox(605, 220, 66, 60)) {
-            if (gp.gameState == GameState.pokedexState) {
-                onOff = true;
-                int reset = 0;
-                gp.originalPokemon.setId(reset);
-                gp.pokedex.pokemonSprite = null;
-            }
-        }
-
-        // Pressed on Dialogue
-        if (mousePressedBox((gp.screenWidth - (254 * 4)) / 2, gp.screenHeight - (46 * 4) - (gp.tileSize / 8), 254 * 4, 46 * 4)) {
-            if (gp.gameState == GameState.dialogueState) {
-                gp.getView().getKeyH().enterPressed = true;
-                gp.buttonSound.playButtonSound();
-                gp.gameState = GameState.playState;
-            }
-        }
-
-        // Pressed on Turtwig
-        if (mousePressedBox(99, ((gp.screenHeight-200)/2)+4, 192, 192)) {
-            if (gp.gameState == GameState.starterChoiceState) {
-                gp.playerPokemon = 387;
-                gp.music.playSound(23);
-                gp.gameState = GameState.playState;
-            }
-        }
-
-        // Pressed on Chimchar
-        if (mousePressedBox(416, ((gp.screenHeight-200)/2)+4, 192, 192)) {
-            if (gp.gameState == GameState.starterChoiceState) {
-                gp.playerPokemon = 390;
-                gp.music.playSound(24);
-                gp.gameState = GameState.playState;
-            }
-        }
-
-        // Pressed on Chimchar
-        if (mousePressedBox(733, ((gp.screenHeight-200)/2)+4, 192, 192)) {
-            if (gp.gameState == GameState.starterChoiceState) {
-                gp.playerPokemon = 393;
-                gp.music.playSound(25);
-                gp.gameState = GameState.playState;
-            }
-        }
+        // when a left click happens, notify the controller - with the coordinates as an object
+        controller.leftClick(new MouseClick(mouseX, mouseY));
     }
 
-    private void handleRightClick(){
-        if (gp.gameState == GameState.battleState){
-            ((BattleController)gp.battleController).rightClick();
-        }
+    private void handleRightClick() {
+        // when a right click happens, notify the controller - with the coordinates as an object
+        controller.rightClick(new MouseClick(mouseX, mouseY));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        searchButtonPressed = false;
-        previousButtonPressed = false;
-        nextButtonPressed = false;
-        onOff = false;
-
-        if (!onOff && mousePressedBox(605,220,66,60)){
-            onOffAction = false;
-        }
-
-
+        // and when the mouse is released, also notify the controller
+        controller.mouseReleased(new MouseClick(mouseX, mouseY));
     }
 
     @Override
@@ -160,11 +66,6 @@ public class ClickHandler implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    private boolean mousePressedBox(int worldX, int worldY, int width, int height) {
-        Rectangle rect = new Rectangle(worldX, worldY, width, height);
-        return rect.contains(mouseX, mouseY);
     }
 
     public boolean consumeLeftClick(int x, int y, int w, int h) {

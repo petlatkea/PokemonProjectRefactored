@@ -3,6 +3,7 @@ package main.java.opal.pokemon.main.controller;
 import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.AssetSetter;
+import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.main.UI;
 import main.java.opal.pokemon.main.model.CollisionChecker;
@@ -109,8 +110,8 @@ public class GameController implements Runnable {
 
         // TODO: Make pokedexController include Pokedex!
         pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
-        ((PokedexController)pokedexController).setPokemon(originalPokemon);
-        ((PokedexController)pokedexController).setPokedex(pokedex);
+        ((PokedexController) pokedexController).setPokemon(originalPokemon);
+        ((PokedexController) pokedexController).setPokedex(pokedex);
 
 
         aSetter = new AssetSetter(this, view.getClickH());
@@ -170,27 +171,47 @@ public class GameController implements Runnable {
 
     private void update() {
         // update the appropriate subcontrollers - depending on the gamestate
-        if(gameState == GameState.titleScreenState) {
-            titleScreenController.update();
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.update();
+            case playState -> overWorldController.update();
+            case starterChoiceState -> startersController.update();
+            case pokedexState -> pokedexController.update();
+            case battleIntroState -> battleIntroController.update();
+            case battleState -> battleController.update();
+            case pauseState -> pauseController.update();
         }
-        if (gameState == GameState.playState) {
-            overWorldController.update();
-        }
+    }
 
-        if(gameState == GameState.starterChoiceState) {
-            startersController.update(); // does nothing for the moment, but will probably be needed later
+    public void leftClick(MouseClick mouseClick) {
+        // receive mouse-click, and send to the appropriate sub-controller
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.handleLeftClick(mouseClick);
+            case playState -> overWorldController.handleLeftClick(mouseClick);
+            case starterChoiceState -> startersController.handleLeftClick(mouseClick);
+            case pokedexState -> pokedexController.handleLeftClick(mouseClick);
+            case battleIntroState -> battleIntroController.handleLeftClick(mouseClick);
+            case battleState -> battleController.handleLeftClick(mouseClick);
+            case pauseState -> pauseController.handleLeftClick(mouseClick);
         }
+    }
 
-        if(gameState == GameState.battleIntroState){
-            battleIntroController.update();
+    public void rightClick(MouseClick mouseClick) {
+        // receive RIGHT mouse-click, and send to the appropriate sub-controller
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.handleRightClick(mouseClick);
+            case playState -> overWorldController.handleRightClick(mouseClick);
+            case starterChoiceState -> startersController.handleRightClick(mouseClick);
+            case pokedexState -> pokedexController.handleRightClick(mouseClick);
+            case battleIntroState -> battleIntroController.handleRightClick(mouseClick);
+            case battleState -> battleController.handleRightClick(mouseClick);
+            case pauseState -> pauseController.handleRightClick(mouseClick);
         }
+    }
 
-        if (gameState == GameState.pauseState) {
-            pauseController.update();
-        }
-
-        if (gameState == GameState.battleState) {
-            battleController.update();
+    public void mouseReleased(MouseClick mouseClick) {
+        // called whenever the mouse is released - the only one interested is the pokedex
+        if (gameState == GameState.pokedexState) {
+            pokedexController.handleMouseReleased(mouseClick);
         }
     }
 
@@ -199,10 +220,10 @@ public class GameController implements Runnable {
     }
 
     public void startGymBattle() {
-        ((BattleController)battleController).startGymBattle();
+        ((BattleController) battleController).startGymBattle();
     }
 
     public void startWildBattle() {
-        ((BattleController)battleController).startWildBattle();
+        ((BattleController) battleController).startWildBattle();
     }
 }

@@ -14,8 +14,6 @@ import java.awt.image.BufferedImage;
 public class PokedexScreen extends Screen {
     private PokedexController controller;
 
-    private ClickHandler clickH;
-
     private boolean showPokedexStartText = true;
 
     private BufferedImage pokedexBoy, pokedexGirl, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff;
@@ -28,8 +26,6 @@ public class PokedexScreen extends Screen {
     @Override
     public void init() {
         loadImages();
-        // TODO: Nasty stuff - make the controller handle its own clicks!
-        clickH = controller.getGameController().getView().getClickH();
     }
 
     public void loadImages() {
@@ -72,7 +68,7 @@ public class PokedexScreen extends Screen {
             g2.drawString("Search for a Pokémon by", 667, 450);
             g2.drawString("name or number", 697, 465);
         }
-        if (clickH.searching) {
+        if (controller.searching) {
             drawCustomInputBox();
         }
     }
@@ -86,9 +82,9 @@ public class PokedexScreen extends Screen {
                 image = pokedexBoy;
             }
             g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
-            if (!clickH.onOffAction) {
+            if (!controller.onOffAction) {
                 controller.getGameController().gameState = GameState.playState;
-                clickH.onOffAction = true;
+                controller.onOffAction = true;
                 controller.getPokemon().name = null;
                 showPokedexStartText = true;
             }
@@ -110,24 +106,24 @@ public class PokedexScreen extends Screen {
         int onOffW = 76;
         int onOffH = 70;
 
-        if (clickH.previousButtonPressed) {
+        if (controller.previousButtonPressed) {
             g2.drawImage(previousButtonPressed, pButtonX, buttonY, size, size, null);
         } else {
             g2.drawImage(previousButtonReleased, pButtonX, buttonY, size, size, null);
         }
 
-        if (clickH.searchButtonPressed) {
+        if (controller.searchButtonPressed) {
             g2.drawImage(searchButtonPressed, sButtonX, buttonY - 11, width, height, null);
         } else {
             g2.drawImage(searchButtonReleased, sButtonX, buttonY - 11, width, height, null);
         }
 
-        if (clickH.nextButtonPressed) {
+        if (controller.nextButtonPressed) {
             g2.drawImage(nextButtonPressed, nButtonX, buttonY, size, size, null);
         } else {
             g2.drawImage(nextButtonReleased, nButtonX, buttonY, size, size, null);
         }
-        if (clickH.onOff) {
+        if (controller.onOff) {
             g2.drawImage(onOffButtonOff, onOffX, onOffY, onOffW, onOffH, null);
         } else {
             g2.drawImage(onOffButtonOn, onOffX, onOffY, onOffW, onOffH, null);
