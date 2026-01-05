@@ -19,6 +19,10 @@ public abstract class ScreenController {
         this.gameController = gameController;
     }
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
     public Screen getScreen() {
         return screen;
     }

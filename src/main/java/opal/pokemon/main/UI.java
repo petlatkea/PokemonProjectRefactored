@@ -22,7 +22,7 @@ public class UI {
     Pokemon pokemon;
     Pokedex pokedex;
     UtilityTool uTool = new UtilityTool();
-    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, titleScreenBackground, logo, opal, rowan, lucas, dawn, turtwig, chimchar, piplup;
+    public BufferedImage dialogueWindowImage, pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, titleScreenBackground, logo, opal, rowan, lucas, dawn;
 
     public Font pkmnFont;
     private boolean showPokedexStartText = true;
@@ -44,6 +44,7 @@ public class UI {
 
     // SCREENS
     private Screen battleIntroScreen;
+    private Screen startersScreen;
 
 
     public UI(GameController gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
@@ -64,6 +65,8 @@ public class UI {
         // initialise screens - by getting them from the controller one at a time.
         battleIntroScreen = gp.battleIntroController.getScreen();
         battleIntroScreen.init();
+        startersScreen = gp.startersController.getScreen();
+        startersScreen.init();
 
     }
 
@@ -89,13 +92,6 @@ public class UI {
         rowan = setup("/images/titleScreen/rowan");
         lucas = setup("/images/titleScreen/lucas");
         dawn = setup("/images/titleScreen/dawn");
-
-        turtwig = setup("/images/starterPokemon/turtwig");
-        turtwig = uTool.scaleImage(turtwig, 192, 192);
-        chimchar = setup("/images/starterPokemon/chimchar");
-        chimchar = uTool.scaleImage(chimchar, 192, 192);
-        piplup = setup("/images/starterPokemon/piplup");
-        piplup = uTool.scaleImage(piplup, 192, 192);
 
         areaIcons[0] = setup("/images/ui/zoneVillage");
         areaIcons[1] = setup("/images/ui/zoneOcean");
@@ -158,7 +154,7 @@ public class UI {
             case GameState.pauseState -> drawPauseScreen();
             case GameState.dialogueState -> drawDialogueScreen();
             case GameState.pokedexState ->  drawPokedexScreen();
-            case GameState.starterChoiceState -> drawStartersScreen();
+            case GameState.starterChoiceState -> startersScreen.drawScreen(g2);
         }
     }
 
@@ -198,21 +194,6 @@ public class UI {
         int y = 690;
         BufferedImage image = pokedexIcon;
         g2.drawImage(image, x, y, image.getWidth() * 2, image.getHeight() * 2, null);
-    }
-
-    // ===== STARTERS =====
-    private void drawStartersScreen() {
-        int width = gp.screenWidth;
-        int height = 200;
-        int x = 0;
-        int y = (gp.screenHeight - height) / 2;
-        Color c = new Color(50, 50, 50, 150);
-        g2.setColor(c);
-        g2.fillRect(x, y, width, height);
-
-        g2.drawImage(turtwig, 99, y + 4, null);
-        g2.drawImage(chimchar, 416, y + 4, null);
-        g2.drawImage(piplup, 733, y + 4, null);
     }
 
     // ===== PAUSE =====

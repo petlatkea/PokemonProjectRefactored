@@ -86,12 +86,14 @@ public class GameController implements Runnable {
 
     // sub-controllers
     public ScreenController battleIntroController;
+    public ScreenController startersController;
 
 
     // === CONSTRUCTOR ===
     public GameController() {
         // create sub-controllers first
         battleIntroController = new BattleIntroController(this);
+        startersController = new StartersController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
@@ -168,6 +170,10 @@ public class GameController implements Runnable {
             }
 
 
+        }
+
+        if(gameState == GameState.starterChoiceState) {
+            startersController.update(); // does nothing for the moment, but will probably be needed later
         }
 
         if(gameState == GameState.battleIntroState){
