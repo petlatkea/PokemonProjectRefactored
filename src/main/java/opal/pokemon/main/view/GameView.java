@@ -95,15 +95,6 @@ public class GameView extends JPanel {
 
             // Environment Front of player
             tileGraphics.drawTileMap(g2, model.environmentFTileMap );
-        } else {
-            if (controller.battle != null) {
-                controller.battle.draw(g2);
-            } else {
-                g2.setColor(Color.lightGray);
-                g2.drawString("BATTLE STATE (no battle pokemonproject.object)", 50, 50);
-
-                // probably gonna need to use the g2.draw... function like g2.drawImage();
-            }
         }
 
         // UI

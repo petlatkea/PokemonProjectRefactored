@@ -19,11 +19,7 @@ import java.io.InputStream;
 public class UI {
     GameController gp;
     Graphics2D g2;
-//    ClickHandler clickH;
-//    Pokemon pokemon;
-//    Pokedex pokedex;
-//    UtilityTool uTool = new UtilityTool();
-   // public BufferedImage pokedexBoy, pokedexGirl, pokedexIcon, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff, opal;
+
     public BufferedImage pokedexIcon;
 
     public Font pkmnFont;
@@ -44,6 +40,7 @@ public class UI {
     // SCREENS
     private Screen titleScreen;
     private Screen battleIntroScreen;
+    private Screen battleScreen;
     private Screen startersScreen;
     private Screen pauseScreen;
     private Screen dialogueScreen;
@@ -52,9 +49,6 @@ public class UI {
 
     public UI(GameController gp) {
         this.gp = gp;
-//        this.clickH = clickH;
-//        this.pokemon = pokemon;
-//        this.pokedex = pokedex;
 
         InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
         try {
@@ -70,6 +64,8 @@ public class UI {
         titleScreen.init();
         battleIntroScreen = gp.battleIntroController.getScreen();
         battleIntroScreen.init();
+        battleScreen = gp.battleController.getScreen();
+        battleScreen.init();
         startersScreen = gp.startersController.getScreen();
         startersScreen.init();
         pauseScreen = gp.pauseController.getScreen();
@@ -143,6 +139,7 @@ public class UI {
                     drawAreaIcons();
             }
             case GameState.battleIntroState -> battleIntroScreen.drawScreen(g2);
+            case GameState.battleState ->  battleScreen.drawScreen(g2);
             case GameState.pauseState -> pauseScreen.drawScreen(g2);
             case GameState.dialogueState -> dialogueScreen.drawScreen(g2);
             case GameState.pokedexState -> pokedexScreen.drawScreen(g2);
@@ -221,35 +218,6 @@ public class UI {
             g2.drawImage(areaIcons[currentArea], iconX, animatedIconY, iconWidth, iconHeight, null);
             g2.drawString(areaNames[currentArea], nameX, animatedIconY + 70);
         }
-    }
-
-    // NOTE: Duplicated in Screen - remove from here as soon as no more usages of this version!
-    public int drawWrappedText(Graphics2D g2, String text, int startX, int startY, int maxLineWidth, int lineSpacing) {
-        FontMetrics fm = g2.getFontMetrics();
-        String[] words = text.split(" ");
-        String currentLine = "";
-        int y = startY;
-
-        for (String word : words) {
-            String potentialLine = currentLine.isEmpty() ? word : currentLine + " " + word;
-            int potentialWidth = fm.stringWidth(potentialLine);
-
-            if (potentialWidth <= maxLineWidth) {
-                currentLine = potentialLine;
-            } else {
-                if (!currentLine.isEmpty()) {
-                    g2.drawString(currentLine, startX, y);
-                    y += lineSpacing;
-                }
-                currentLine = word;
-            }
-        }
-        if (!currentLine.isEmpty()) {
-            g2.drawString(currentLine, startX, y);
-            y += lineSpacing;
-        }
-
-        return y;
     }
 
     public void inputSetup() {

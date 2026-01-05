@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.main;
 
+import main.java.opal.pokemon.main.controller.BattleController;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
 
@@ -133,9 +134,7 @@ public class ClickHandler implements MouseListener {
 
     private void handleRightClick(){
         if (gp.gameState == GameState.battleState){
-            if (gp.battle != null){
-                gp.battle.rightClick();
-            }
+            ((BattleController)gp.battleController).rightClick();
         }
     }
 
