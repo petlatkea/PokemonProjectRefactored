@@ -29,7 +29,7 @@ public class DialogueScreen extends Screen {
         // WINDOW
         int x = (controller.getGameController().screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
         int y = controller.getGameController().screenHeight - (dialogueWindowImage.getHeight() * 4) - (controller.getGameController().tileSize / 8);
-        drawDialogueWindow(g2, x, y, dialogueWindowImage);
+        drawDialogueWindow(x, y, dialogueWindowImage);
 
         // TEXT
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26));
@@ -45,7 +45,7 @@ public class DialogueScreen extends Screen {
         }
     }
 
-    private void drawDialogueWindow(Graphics2D g2, int x, int y, BufferedImage image) {
+    private void drawDialogueWindow(int x, int y, BufferedImage image) {
         g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
     }
 }

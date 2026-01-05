@@ -52,16 +52,16 @@ public class PokedexScreen extends Screen {
         // POKEDEX
         int x = 0;
         int y = 0;
-        drawPokedex(g2, x, y, pokedexGirl, controller.getGameController().genderState);
+        drawPokedex(x, y, pokedexGirl, controller.getGameController().genderState);
 
         // BUTTONS
-        drawButtons(g2);
+        drawButtons();
 
         // INFO
         if (controller.getPokemon().name != null) {
             showPokedexStartText = false;
-            drawPokemonSprite(g2);
-            drawPokemonInfo(g2);
+            drawPokemonSprite();
+            drawPokemonInfo();
         }
         if (showPokedexStartText) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12));
@@ -73,11 +73,11 @@ public class PokedexScreen extends Screen {
             g2.drawString("name or number", 697, 465);
         }
         if (clickH.searching) {
-            drawCustomInputBox(g2);
+            drawCustomInputBox();
         }
     }
 
-    private void drawPokedex(Graphics2D g2, int x, int y, BufferedImage image, int genderState) {
+    private void drawPokedex(int x, int y, BufferedImage image, int genderState) {
         try {
             if (genderState == 1) {
                 image = pokedexGirl;
@@ -97,7 +97,7 @@ public class PokedexScreen extends Screen {
         }
     }
 
-    private void drawButtons(Graphics2D g2) {
+    private void drawButtons() {
         int pButtonX = 190;
         int buttonY = 576;
         int nButtonX = 398;
@@ -134,7 +134,7 @@ public class PokedexScreen extends Screen {
         }
     }
 
-    private void drawPokemonInfo(Graphics2D g2) {
+    private void drawPokemonInfo() {
         int x = 625;
         int y = 340;
         final int lineSpace = 15;
@@ -155,7 +155,7 @@ public class PokedexScreen extends Screen {
         }
 
         // Name
-        int xName = getXForCenteredTextAt(g2, pokemon.getName(), 720);
+        int xName = getXForCenteredTextAt(pokemon.getName(), 720);
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12));
         g2.drawString(pokemon.getName().toUpperCase(), xName, 675);
 
@@ -193,10 +193,10 @@ public class PokedexScreen extends Screen {
         g2.drawString("DESCRIPTION: ", x, y);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 9));
         y += lineSpace;
-        drawWrappedText(g2, description, x, y, 258, 12);
+        drawWrappedText(description, x, y, 258, 12);
     }
 
-    private void drawPokemonSprite(Graphics2D g2) {
+    private void drawPokemonSprite() {
         int pokemonX = 225;
         int pokemonY = 300;
         int pokemonSize = 96;
@@ -206,7 +206,7 @@ public class PokedexScreen extends Screen {
         }
     }
 
-    private void drawCustomInputBox(Graphics2D g2) {
+    private void drawCustomInputBox() {
         // TODO: Fix 'drawingInput' and make local to this controller!
         if (!controller.getGameController().ui.drawingInput) {
             return;
@@ -226,7 +226,7 @@ public class PokedexScreen extends Screen {
         int textX = boxX + 10;
         int textY = boxY + boxHeight - 12;
         // TODO: Fix 'inputBuffer' and make local to this controller!
-        int xName = getXForCenteredTextAt(g2, controller.getGameController().ui.inputBuffer, 743);
+        int xName = getXForCenteredTextAt(controller.getGameController().ui.inputBuffer, 743);
         g2.drawString(controller.getGameController().ui.inputBuffer.toUpperCase(), xName, textY);
 
         if (controller.getGameController().getDrawCount() % 60 < 30) {

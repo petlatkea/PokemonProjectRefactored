@@ -19,15 +19,19 @@ import java.io.InputStream;
  */
 public abstract class Screen {
 
-    // keep the same Font available for all extending classes
-    public static Font pkmnFont;
+    // keep the same two Fonts available for all extending classes
+    public static Font pkmnFont, stndFont;
 
+    // and keep a local Graphics2D context for convenience - set by the draw method on every frame
+    protected Graphics2D g2;
+
+    // always keep a reference to the controller for this screen
     protected final ScreenController controller;
 
     public Screen(ScreenController controller) {
         this.controller = controller;
 
-        // only initialize font once
+        // only initialize fonts once - so all screens use the same
         if (pkmnFont == null) {
             try {
                 InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
@@ -36,6 +40,11 @@ public abstract class Screen {
                 throw new RuntimeException(e);
             }
         }
+
+        if (stndFont == null) {
+            stndFont = new Font("Dialog", Font.PLAIN, 12);
+        }
+
     }
 
 
@@ -52,20 +61,27 @@ public abstract class Screen {
 
     public abstract void init();
 
+    public void draw(Graphics2D g2) {
+        this.g2 = g2;
+        g2.setColor(Color.white);
+        g2.setFont(pkmnFont);
+        drawScreen(g2);
+    }
+
     public abstract void drawScreen(Graphics2D g2);
 
     // Text helpers
-    public int getXForCenteredText(Graphics2D g2, String text) {
+    public int getXForCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return controller.getGameController().screenWidth / 2 - length / 2;
     }
 
-    public int getXForCenteredTextAt(Graphics2D g2, String text, int targetCenterX) {
+    public int getXForCenteredTextAt(String text, int targetCenterX) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return targetCenterX - length / 2;
     }
 
-    public int drawWrappedText(Graphics2D g2, String text, int startX, int startY, int maxLineWidth, int lineSpacing) {
+    public int drawWrappedText(String text, int startX, int startY, int maxLineWidth, int lineSpacing) {
         FontMetrics fm = g2.getFontMetrics();
         String[] words = text.split(" ");
         String currentLine = "";

@@ -16,9 +16,6 @@ public class BattleScreen extends Screen {
     // === Pictures ===
     private BufferedImage battleBG, playerGround, enemyGround, myPokemonPic, enemyPokemonPic, playerInfoPanel, enemyInfoPanel, dialogBox;
 
-    // Font
-    private final Font standardFont = new Font("Dialog", Font.PLAIN, 12);
-
     public BattleScreen(BattleController controller) {
         super(controller);
     }
@@ -54,7 +51,7 @@ public class BattleScreen extends Screen {
         Battle battle = ((BattleController)controller).getBattle();
 
         // Set Battle font to DIALOG - the standard font, and NOT the custom Pokemon font used by other screens
-        g2.setFont(standardFont);
+        g2.setFont(stndFont);
 
         // Clear background
         g2.setColor(new Color(200, 230, 255));
@@ -66,11 +63,11 @@ public class BattleScreen extends Screen {
         g2.drawImage(enemyGround, 700, 280, 300, 80, null);
 
         // Place Pokémon
-        drawImageBottomCenterScaled(g2, myPokemonPic, 275, 730, 500, 500);
+        drawImageBottomCenterScaled(myPokemonPic, 275, 730, 500, 500);
         if (battle.enemyPokemon.getId() == 448) {
-            drawImageBottomCenterScaled(g2, enemyPokemonPic, 845, 375, 250, 250);
+            drawImageBottomCenterScaled(enemyPokemonPic, 845, 375, 250, 250);
         } else{
-            drawImageBottomCenterScaled(g2, enemyPokemonPic, 845, 400, 250, 250);
+            drawImageBottomCenterScaled(enemyPokemonPic, 845, 400, 250, 250);
         }
         // Enemy info box (top-left)
         g2.drawImage(enemyInfoPanel, 0, 160, 500, 100, null);
@@ -111,7 +108,7 @@ public class BattleScreen extends Screen {
         // Message Text
         g2.setColor(Color.BLACK);
 
-        drawWrappedText(g2, battle.message, 50, 620, 550, 25);
+        drawWrappedText(battle.message, 50, 620, 550, 25);
 
         // MAIN MENU / MOVE UI bottom-right
         int menuRightX = 630;
@@ -181,7 +178,7 @@ public class BattleScreen extends Screen {
         }
     }
 
-    private void drawImageBottomCenterScaled(Graphics2D g2, BufferedImage img, int centerX, int bottomY, int width, int height) {
+    private void drawImageBottomCenterScaled(BufferedImage img, int centerX, int bottomY, int width, int height) {
         if (img == null) return;
 
         int x = centerX - width / 2;

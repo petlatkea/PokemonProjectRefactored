@@ -31,9 +31,6 @@ public class TitleScreen extends Screen {
     }
 
     public void drawScreen(Graphics2D g2) {
-        g2.setFont(pkmnFont);
-        g2.setColor(Color.white);
-
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 

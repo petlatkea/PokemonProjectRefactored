@@ -21,7 +21,7 @@ public class PauseScreen extends Screen {
 
         String text = "PAUSED";
 
-        int x = getXForCenteredText(g2, text);
+        int x = getXForCenteredText(text);
         int y = controller.getGameController().screenHeight / 2;
         g2.drawString(text, x, y);
     }

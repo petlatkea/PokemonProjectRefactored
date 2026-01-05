@@ -56,12 +56,12 @@ public class OverWorldScreen extends Screen {
 
     @Override
     public void drawScreen(Graphics2D g2) {
-        drawPokedexIcon(g2);
-        drawAreaIcons(g2);
+        drawPokedexIcon();
+        drawAreaIcons();
     }
 
     // ===== AREA ICONS =====
-    private void drawAreaIcons(Graphics2D g2) {
+    private void drawAreaIcons() {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
@@ -126,7 +126,7 @@ public class OverWorldScreen extends Screen {
         }
     }
 
-    private void drawPokedexIcon(Graphics2D g2) {
+    private void drawPokedexIcon() {
         int x = 25;
         int y = 690;
         BufferedImage image = pokedexIcon;

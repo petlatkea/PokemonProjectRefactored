@@ -11,10 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UI {
-    GameController gp;
-    Graphics2D g2;
-
-    public Font pkmnFont;
+    private GameController gp;
 
     // TODO: Move to PokedexController
     public String inputBuffer = "";
@@ -33,13 +30,6 @@ public class UI {
 
     public UI(GameController gp) {
         this.gp = gp;
-
-        InputStream is = getClass().getResourceAsStream("/font/pkmnFont.ttf");
-        try {
-            pkmnFont = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException(e);
-        }
 
         // initialise screens - by getting them from the controller one at a time.
         titleScreen = gp.titleScreenController.getScreen();
@@ -61,20 +51,15 @@ public class UI {
     }
 
     public void draw(Graphics2D g2) {
-        this.g2 = g2;
-
-        g2.setFont(pkmnFont);
-        g2.setColor(Color.white);
-
         switch(gp.gameState) {
-            case GameState.titleScreenState -> titleScreen.drawScreen(g2);
-            case GameState.playState -> overWorldScreen.drawScreen(g2);
-            case GameState.battleIntroState -> battleIntroScreen.drawScreen(g2);
-            case GameState.battleState ->  battleScreen.drawScreen(g2);
-            case GameState.pauseState -> pauseScreen.drawScreen(g2);
-            case GameState.dialogueState -> dialogueScreen.drawScreen(g2);
-            case GameState.pokedexState -> pokedexScreen.drawScreen(g2);
-            case GameState.starterChoiceState -> startersScreen.drawScreen(g2);
+            case GameState.titleScreenState -> titleScreen.draw(g2);
+            case GameState.playState -> overWorldScreen.draw(g2);
+            case GameState.battleIntroState -> battleIntroScreen.draw(g2);
+            case GameState.battleState ->  battleScreen.draw(g2);
+            case GameState.pauseState -> pauseScreen.draw(g2);
+            case GameState.dialogueState -> dialogueScreen.draw(g2);
+            case GameState.pokedexState -> pokedexScreen.draw(g2);
+            case GameState.starterChoiceState -> startersScreen.draw(g2);
         }
     }
 }
