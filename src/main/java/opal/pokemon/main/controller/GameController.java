@@ -151,14 +151,7 @@ public class GameController implements Runnable {
             player.update();
             music.updateMusic();
             music.updateFade();
-            ui.updateGrassFade();
-             if(ui.enterWild){
-                 if (ui.getGrassFadeCounter()>=ui.grassFadeCounterMax){
-                     ui.enterWild = false;
-                     ui.setGrassFadeCounter(0);
-                     startWildBattle();
-                 }
-             }
+
             for (int i = 0; i < npc.length; i++) {
                 if (npc[i] != null) {
                     npc[i].update();
@@ -167,6 +160,17 @@ public class GameController implements Runnable {
 
 
         }
+
+        if(gameState == GameState.battleIntroState){
+            ui.updateGrassFade();
+                if (ui.getGrassFadeCounter()>=ui.grassFadeCounterMax){
+                    ui.setGrassFadeCounter(0);
+                    System.out.println("done with battle intro - going into battle");
+                    startWildBattle();
+                }
+        }
+
+
         if (gameState == GameState.pauseState) {
 
         }

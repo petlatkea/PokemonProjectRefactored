@@ -149,11 +149,8 @@ public class Player extends Entity {
                 if (isGrassOn && hasChecked == false) {
                     chance = random.nextInt(10);
                     if (chance == 1) {
-                        gp.ui.drawBattleIntro();
-                        if (gp.ui.getGrassFadeCounter() > 100) {
-                            gp.startWildBattle();
-                            gp.ui.setGrassFadeCounter(0);
-                        }
+                        // this changes from playstate into batlestate - but not until the battleintro has completed
+                        gp.gameState = GameState.battleIntroState;
                     } else {
                         hasChecked = true;
                     }

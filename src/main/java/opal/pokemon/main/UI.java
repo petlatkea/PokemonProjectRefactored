@@ -29,7 +29,7 @@ public class UI {
     public boolean drawingInput = false;
     private int grassFadeCounter = 0;
     public int grassFadeCounterMax = 90;
-    public boolean enterWild = false;
+
     // === Area Icons ===
     Image[] areaIcons = new Image[10];
     String[] areaNames = new String[8];
@@ -114,7 +114,6 @@ public class UI {
     }
 
     public void drawBattleIntro() {
-        enterWild = true;
         if (getGrassFadeCounter() <= 40) {
             g2.drawImage(wildIntro[0], 0, 0, 1024, 768, null);
         } else if (getGrassFadeCounter() <= 55) {
@@ -176,13 +175,10 @@ public class UI {
         switch(gp.gameState) {
             case GameState.titleScreenState -> drawTitleScreen();
             case GameState.playState -> {
-                if (enterWild && gp.battle==null){
-                    drawBattleIntro();
-                } else {
                     drawPokedexIcon();
                     drawAreaIcons();
-                }
             }
+            case GameState.battleIntroState -> drawBattleIntro();
             case GameState.pauseState -> drawPauseScreen();
             case GameState.dialogueState -> drawDialogueScreen();
             case GameState.pokedexState ->  drawPokedexScreen();
@@ -578,9 +574,7 @@ public class UI {
     }
 
     public void updateGrassFade() {
-        if (enterWild) {
             this.grassFadeCounter++;
-        }
     }
 
     public int getGrassFadeCounter() {
