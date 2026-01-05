@@ -2,10 +2,11 @@ package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.entity.Player;
-import main.java.opal.pokemon.main.*;
+import main.java.opal.pokemon.main.AssetSetter;
+import main.java.opal.pokemon.main.Sound;
+import main.java.opal.pokemon.main.UI;
 import main.java.opal.pokemon.main.model.CollisionChecker;
 import main.java.opal.pokemon.main.model.GameModel;
-import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.view.GameView;
 import main.java.opal.pokemon.object.SuperObject;
 import main.java.opal.pokemon.pokedex.Pokedex;
@@ -79,6 +80,7 @@ public class GameController implements Runnable {
 
     // sub-controllers
     public ScreenController titleScreenController;
+    public ScreenController overWorldController;
     public ScreenController battleIntroController;
     public ScreenController battleController;
     public ScreenController startersController;
@@ -91,6 +93,7 @@ public class GameController implements Runnable {
     public GameController() {
         // create sub-controllers first
         titleScreenController = new TitleController(this);
+        overWorldController = new OverWorldController(this);
         battleIntroController = new BattleIntroController(this);
         battleController = new BattleController(this);
         startersController = new StartersController(this);
@@ -114,6 +117,7 @@ public class GameController implements Runnable {
         ui = new UI(this); //, view.getClickH(), originalPokemon, pokedex);
 
         player = new Player(this, view.getKeyH());
+        ((OverWorldController) overWorldController).setPlayer(player);
 
         music = new Sound(this, player);
         collisionSound = new Sound(this, player);
@@ -170,17 +174,7 @@ public class GameController implements Runnable {
             titleScreenController.update();
         }
         if (gameState == GameState.playState) {
-            player.update();
-            music.updateMusic();
-            music.updateFade();
-
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].update();
-                }
-            }
-
-
+            overWorldController.update();
         }
 
         if(gameState == GameState.starterChoiceState) {
@@ -202,12 +196,6 @@ public class GameController implements Runnable {
 
     public long getDrawCount() {
         return view.getDrawCount();
-    }
-
-    public void initializeUIComponents() {
-        if (ui != null) {
-            ui.inputSetup();
-        }
     }
 
     public void startGymBattle() {

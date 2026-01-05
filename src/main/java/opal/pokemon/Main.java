@@ -10,8 +10,6 @@ public class Main {
         GameController controller = new GameController();
         MainWindow window = new MainWindow(controller);
 
-        // TODO: Move UI to ui ...
-        controller.initializeUIComponents();
         controller.setupGame();
         controller.startGameThread();
 
