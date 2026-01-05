@@ -2,6 +2,8 @@ package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
+import main.java.opal.pokemon.main.view.BattleIntroScreen;
+import main.java.opal.pokemon.main.view.Screen;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -27,13 +29,11 @@ public class UI {
     public String currentDialogue = "";
     public String inputBuffer = "";
     public boolean drawingInput = false;
-    private int grassFadeCounter = 0;
-    public int grassFadeCounterMax = 90;
 
     // === Area Icons ===
     Image[] areaIcons = new Image[10];
     String[] areaNames = new String[8];
-    Image[] wildIntro = new Image[7];
+
     private int currentArea = -1;
     private long areaDisplayStartTime = 0;
     private static final long AREA_DISPLAY_DURATION = 3000; // 3 seconds
@@ -41,6 +41,10 @@ public class UI {
 
     int resetter = 0;
     boolean display;
+
+    // SCREENS
+    private Screen battleIntroScreen;
+
 
     public UI(GameController gp, ClickHandler clickH, Pokemon pokemon, Pokedex pokedex) {
         this.gp = gp;
@@ -56,6 +60,11 @@ public class UI {
         }
         getUIImages();
         getAreaNames();
+
+        // initialise screens - by getting them from the controller one at a time.
+        battleIntroScreen = gp.battleIntroController.getScreen();
+        battleIntroScreen.init();
+
     }
 
     private void getUIImages() {
@@ -96,39 +105,6 @@ public class UI {
         areaIcons[5] = setup("/images/ui/zoneOcean");
         areaIcons[6] = setup("/images/ui/zoneSmallCity");
         areaIcons[7] = setup("/images/ui/zoneMountain");
-
-        wildIntro[0] = setup("/images/battleIntro/wildIntro1");
-        wildIntro[0] = uTool.scaleImage((BufferedImage) wildIntro[0], 1024, 768);
-        wildIntro[1] = setup("/images/battleIntro/wildIntro2");
-        wildIntro[1] = uTool.scaleImage((BufferedImage) wildIntro[1], 1024, 768);
-        wildIntro[2] = setup("/images/battleIntro/wildIntro3");
-        wildIntro[2] = uTool.scaleImage((BufferedImage) wildIntro[2], 1024, 768);
-        wildIntro[3] = setup("/images/battleIntro/wildIntro4");
-        wildIntro[3] = uTool.scaleImage((BufferedImage) wildIntro[3], 1024, 768);
-        wildIntro[4] = setup("/images/battleIntro/wildIntro5");
-        wildIntro[4] = uTool.scaleImage((BufferedImage) wildIntro[4], 1024, 768);
-        wildIntro[5] = setup("/images/battleIntro/wildIntro6");
-        wildIntro[5] = uTool.scaleImage((BufferedImage) wildIntro[5], 1024, 768);
-        wildIntro[6] = setup("/images/battleIntro/wildIntro7");
-        wildIntro[6] = uTool.scaleImage((BufferedImage) wildIntro[6], 1024, 768);
-    }
-
-    public void drawBattleIntro() {
-        if (getGrassFadeCounter() <= 40) {
-            g2.drawImage(wildIntro[0], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 55) {
-            g2.drawImage(wildIntro[1], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 65) {
-            g2.drawImage(wildIntro[2], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 70) {
-            g2.drawImage(wildIntro[3], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 75) {
-            g2.drawImage(wildIntro[4], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 80) {
-            g2.drawImage(wildIntro[5], 0, 0, 1024, 768, null);
-        } else if (getGrassFadeCounter() <= 90) {
-            g2.drawImage(wildIntro[6], 0, 0, 1024, 768, null);
-        }
     }
 
     private void getAreaNames() {
@@ -178,7 +154,7 @@ public class UI {
                     drawPokedexIcon();
                     drawAreaIcons();
             }
-            case GameState.battleIntroState -> drawBattleIntro();
+            case GameState.battleIntroState -> battleIntroScreen.drawScreen(g2);
             case GameState.pauseState -> drawPauseScreen();
             case GameState.dialogueState -> drawDialogueScreen();
             case GameState.pokedexState ->  drawPokedexScreen();
@@ -571,17 +547,5 @@ public class UI {
     private int getXForCenteredTextAt(String text, int targetCenterX) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return targetCenterX - length / 2;
-    }
-
-    public void updateGrassFade() {
-            this.grassFadeCounter++;
-    }
-
-    public int getGrassFadeCounter() {
-        return grassFadeCounter;
-    }
-
-    public void setGrassFadeCounter(int grassFadeCounter) {
-        this.grassFadeCounter = grassFadeCounter;
     }
 }

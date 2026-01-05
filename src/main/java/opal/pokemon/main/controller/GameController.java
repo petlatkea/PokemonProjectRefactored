@@ -84,8 +84,16 @@ public class GameController implements Runnable {
     // === FPS ===
     int FPS = 60;
 
+    // sub-controllers
+    public ScreenController battleIntroController;
+
+
     // === CONSTRUCTOR ===
     public GameController() {
+        // create sub-controllers first
+        battleIntroController = new BattleIntroController(this);
+
+        // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
         view = new GameView(this, model);
 
@@ -147,6 +155,7 @@ public class GameController implements Runnable {
 
 
     private void update() {
+        // update the appropriate subcontrollers - depending on the gamestate
         if (gameState == GameState.playState) {
             player.update();
             music.updateMusic();
@@ -162,12 +171,7 @@ public class GameController implements Runnable {
         }
 
         if(gameState == GameState.battleIntroState){
-            ui.updateGrassFade();
-                if (ui.getGrassFadeCounter()>=ui.grassFadeCounterMax){
-                    ui.setGrassFadeCounter(0);
-                    System.out.println("done with battle intro - going into battle");
-                    startWildBattle();
-                }
+            battleIntroController.update();
         }
 
 
