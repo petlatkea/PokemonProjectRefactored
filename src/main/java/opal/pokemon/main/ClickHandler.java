@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 
 public class ClickHandler implements MouseListener {
     GameController gp;
-    boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
+    public boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOff, onOffAction;
     public boolean clicked = false;
     public boolean leftClicked = false;
     public boolean rightClicked = false;

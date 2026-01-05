@@ -91,6 +91,7 @@ public class GameController implements Runnable {
     public ScreenController startersController;
     public ScreenController pauseController;
     public ScreenController dialogueController;
+    public ScreenController pokedexController;
 
 
     // === CONSTRUCTOR ===
@@ -101,6 +102,7 @@ public class GameController implements Runnable {
         startersController = new StartersController(this);
         pauseController = new PauseController(this);
         dialogueController = new DialogueController(this);
+        pokedexController = new PokedexController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
@@ -108,9 +110,14 @@ public class GameController implements Runnable {
 
         cChecker = new CollisionChecker(this, model);
 
+        // TODO: Make pokedexController include Pokedex!
         pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
+        ((PokedexController)pokedexController).setPokemon(originalPokemon);
+        ((PokedexController)pokedexController).setPokedex(pokedex);
+
+
         aSetter = new AssetSetter(this, view.getClickH());
-        ui = new UI(this, view.getClickH(), originalPokemon, pokedex);
+        ui = new UI(this); //, view.getClickH(), originalPokemon, pokedex);
 
         player = new Player(this, view.getKeyH());
 
