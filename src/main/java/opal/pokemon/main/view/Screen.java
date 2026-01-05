@@ -60,4 +60,37 @@ public abstract class Screen {
         return controller.getGameController().screenWidth / 2 - length / 2;
     }
 
+    public int getXForCenteredTextAt(Graphics2D g2, String text, int targetCenterX) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return targetCenterX - length / 2;
+    }
+
+    public int drawWrappedText(Graphics2D g2, String text, int startX, int startY, int maxLineWidth, int lineSpacing) {
+        FontMetrics fm = g2.getFontMetrics();
+        String[] words = text.split(" ");
+        String currentLine = "";
+        int y = startY;
+
+        for (String word : words) {
+            String potentialLine = currentLine.isEmpty() ? word : currentLine + " " + word;
+            int potentialWidth = fm.stringWidth(potentialLine);
+
+            if (potentialWidth <= maxLineWidth) {
+                currentLine = potentialLine;
+            } else {
+                if (!currentLine.isEmpty()) {
+                    g2.drawString(currentLine, startX, y);
+                    y += lineSpacing;
+                }
+                currentLine = word;
+            }
+        }
+        if (!currentLine.isEmpty()) {
+            g2.drawString(currentLine, startX, y);
+            y += lineSpacing;
+        }
+
+        return y;
+    }
+
 }
