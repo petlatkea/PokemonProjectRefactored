@@ -13,6 +13,7 @@ import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
 import java.util.Random;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class GameController implements Runnable {
 
@@ -85,6 +86,7 @@ public class GameController implements Runnable {
     int FPS = 60;
 
     // sub-controllers
+    public ScreenController titleScreenController;
     public ScreenController battleIntroController;
     public ScreenController startersController;
 
@@ -92,6 +94,7 @@ public class GameController implements Runnable {
     // === CONSTRUCTOR ===
     public GameController() {
         // create sub-controllers first
+        titleScreenController = new TitleController(this);
         battleIntroController = new BattleIntroController(this);
         startersController = new StartersController(this);
 
@@ -158,6 +161,9 @@ public class GameController implements Runnable {
 
     private void update() {
         // update the appropriate subcontrollers - depending on the gamestate
+        if(gameState == GameState.titleScreenState) {
+            titleScreenController.update();
+        }
         if (gameState == GameState.playState) {
             player.update();
             music.updateMusic();

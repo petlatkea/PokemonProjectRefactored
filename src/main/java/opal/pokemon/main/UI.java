@@ -4,6 +4,7 @@ import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.main.view.BattleIntroScreen;
 import main.java.opal.pokemon.main.view.Screen;
+import main.java.opal.pokemon.main.view.TitleScreen;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -39,10 +40,8 @@ public class UI {
     private static final long AREA_DISPLAY_DURATION = 3000; // 3 seconds
     int animatedIconY = -200;
 
-    int resetter = 0;
-    boolean display;
-
     // SCREENS
+    private Screen titleScreen;
     private Screen battleIntroScreen;
     private Screen startersScreen;
 
@@ -63,6 +62,8 @@ public class UI {
         getAreaNames();
 
         // initialise screens - by getting them from the controller one at a time.
+        titleScreen = gp.titleScreenController.getScreen();
+        titleScreen.init();
         battleIntroScreen = gp.battleIntroController.getScreen();
         battleIntroScreen.init();
         startersScreen = gp.startersController.getScreen();
@@ -84,14 +85,6 @@ public class UI {
         nextButtonPressed = setup("/images/pokedexSprites/directionRedRight");
         onOffButtonOn = setup("/images/pokedexSprites/onOffButtonOn");
         onOffButtonOff = setup("/images/pokedexSprites/onOffButtonOff");
-
-
-        titleScreenBackground = setup("/images/titleScreen/background");
-        logo = setup("/images/titleScreen/logo");
-        opal = setup("/images/titleScreen/opal");
-        rowan = setup("/images/titleScreen/rowan");
-        lucas = setup("/images/titleScreen/lucas");
-        dawn = setup("/images/titleScreen/dawn");
 
         areaIcons[0] = setup("/images/ui/zoneVillage");
         areaIcons[1] = setup("/images/ui/zoneOcean");
@@ -145,7 +138,7 @@ public class UI {
         g2.setColor(Color.white);
 
         switch(gp.gameState) {
-            case GameState.titleScreenState -> drawTitleScreen();
+            case GameState.titleScreenState -> titleScreen.drawScreen(g2);
             case GameState.playState -> {
                     drawPokedexIcon();
                     drawAreaIcons();
@@ -155,37 +148,6 @@ public class UI {
             case GameState.dialogueState -> drawDialogueScreen();
             case GameState.pokedexState ->  drawPokedexScreen();
             case GameState.starterChoiceState -> startersScreen.drawScreen(g2);
-        }
-    }
-
-    private void drawTitleScreen() {
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
-        g2.setColor(Color.BLACK);
-
-        g2.drawImage(titleScreenBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
-        g2.drawImage(logo, (gp.screenWidth / 2) - 350, 25, 700, 250, null);
-
-        if (!display) {
-            g2.drawString("Press enter to start", gp.screenWidth / 2 - 150, gp.screenHeight / 2 + 100);
-        }
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16));
-        g2.drawString("Made By: Andreas, Jakob, Theis & Bertram", 25, 750);
-        g2.drawImage(opal, gp.screenWidth / 2 - 150, 250, 350, 150, null);
-        g2.drawImage(rowan, 750, 400, 94 * 2, 139 * 2, null);
-        g2.drawImage(lucas, 100, 400, 56 * 2, 123 * 2, null);
-        g2.drawImage(dawn, 200, 450, 63 * 2, 125 * 2, null);
-
-        resetter += 1;
-
-        if (resetter < 75) {
-            display = false;
-        }
-        if (resetter > 75) {
-            display = true;
-        }
-        if (resetter > 150) {
-            resetter = 0;
         }
     }
 
