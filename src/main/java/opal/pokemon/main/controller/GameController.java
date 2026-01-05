@@ -65,7 +65,7 @@ public class GameController implements Runnable {
     public Entity[] npc = new Entity[20];
 
     // == GAME STATE ==
-    public GameState gameState;
+    public GameState gameState = GameState.titleScreenState;
 
     // === WORLD SETTINGS ===
     public final int maxWorldCol = 100;

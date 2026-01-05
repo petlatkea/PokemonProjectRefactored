@@ -173,39 +173,20 @@ public class UI {
         g2.setFont(pkmnFont);
         g2.setColor(Color.white);
 
-        // TITLE SCREEN STATE
-        if (gp.gameState == GameState.titleScreenState) {
-            drawTitleScreen();
-        }
-
-        // PLAY STATE
-        if (gp.gameState == GameState.playState) {
-            if (enterWild && gp.battle==null){
-                drawBattleIntro();
-            } else {
-                drawPokedexIcon();
-                drawAreaIcons();
+        switch(gp.gameState) {
+            case GameState.titleScreenState -> drawTitleScreen();
+            case GameState.playState -> {
+                if (enterWild && gp.battle==null){
+                    drawBattleIntro();
+                } else {
+                    drawPokedexIcon();
+                    drawAreaIcons();
+                }
             }
-        }
-
-        // PAUSE STATE
-        if (gp.gameState == GameState.pauseState) {
-            drawPauseScreen();
-        }
-
-        // DIALOGUE STATE
-        if (gp.gameState == GameState.dialogueState) {
-            drawDialogueScreen();
-        }
-
-        // POKEDEX STATE
-        if (gp.gameState == GameState.pokedexState) {
-            drawPokedexScreen();
-        }
-
-        // POKEMON CHOICE STATE
-        if (gp.gameState == GameState.starterChoiceState) {
-            drawStartersScreen();
+            case GameState.pauseState -> drawPauseScreen();
+            case GameState.dialogueState -> drawDialogueScreen();
+            case GameState.pokedexState ->  drawPokedexScreen();
+            case GameState.starterChoiceState -> drawStartersScreen();
         }
     }
 

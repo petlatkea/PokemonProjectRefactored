@@ -6,6 +6,7 @@ public enum GameState {
     pauseState,
     dialogueState,
     pokedexState,
+    battleIntroState,
     battleState,
     starterChoiceState
 }
