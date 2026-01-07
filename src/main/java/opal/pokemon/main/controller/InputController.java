@@ -31,6 +31,7 @@ public class InputController {
             case KeyEvent.VK_P -> controls.pokedexPressed = true;
             case KeyEvent.VK_ESCAPE -> controls.escapePressed = true;
             case KeyEvent.VK_ENTER -> controls.enterPressed = true;
+            case KeyEvent.VK_SPACE -> controls.spacePressed = true;
         }
         // inform game-controller that a key is pressed
         gameController.keyPressed(keyCode);
@@ -48,6 +49,7 @@ public class InputController {
             case KeyEvent.VK_P -> controls.pokedexPressed = false;
             case KeyEvent.VK_ESCAPE -> controls.escapePressed = false;
             case KeyEvent.VK_ENTER -> controls.enterPressed = false;
+            case KeyEvent.VK_SPACE -> controls.spacePressed = false;
         }
 
         // inform game-controller that a key is released

@@ -2,6 +2,7 @@ package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.battleSystem.Battle;
 import main.java.opal.pokemon.main.MouseClick;
+import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.view.BattleScreen;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
@@ -21,9 +22,15 @@ public class BattleController extends ScreenController {
     public void update() {
         if(battle != null) {
             battle.update();
+        } else {
+            System.err.println("NO BATTLE for BattleController");
         }
+    }
 
-        if (gameController.getControls().spacePressed && battle != null) {
+    @Override
+    public void keyPressed(int keyCode) {
+        Controls controls = gameController.getControls();
+        if (controls.spacePressed) {
             battle.endBattle();
         }
     }

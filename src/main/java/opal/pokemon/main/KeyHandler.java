@@ -142,7 +142,7 @@ public class KeyHandler implements KeyListener {
                 gp.gameState = GameState.playState;
             }
         }
-
+ /*
         // BATTLE STATE
         else if (gp.gameState == GameState.battleState){
             //
@@ -150,6 +150,8 @@ public class KeyHandler implements KeyListener {
                 gp.getControls().spacePressed = true;
             }
         }
+
+  */
     }
 
     @Override
