@@ -112,6 +112,7 @@ public class KeyHandler implements KeyListener {
         }
 
         // DIALOGUE STATE
+        /*
         else if (gp.gameState == GameState.dialogueState) {
             if (code == KeyEvent.VK_ENTER) {
                 System.out.println("Press ENTER on dialogue");
@@ -123,6 +124,7 @@ public class KeyHandler implements KeyListener {
                 // ... really this should all be handled by the dialogue-controller!
             }
         }
+         */
 
         // POKEDEX STATE
         else if (gp.gameState == GameState.pokedexState) {

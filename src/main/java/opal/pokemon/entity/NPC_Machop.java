@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.entity;
 
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 
 import java.util.Objects;
 
@@ -29,8 +30,8 @@ public class NPC_Machop extends Entity {
     }
 
     public void speak() {
-        if (Objects.equals(dialogues[dialogueIndex], dialogues[1])) {
-            gp.getControls().ePressed = false;
+        if (Objects.equals(dialogues[dialogueIndex], dialogues[2])) {
+            gp.gameState = GameState.playState;
         }
         super.speak();
         gp.music.machopSound();

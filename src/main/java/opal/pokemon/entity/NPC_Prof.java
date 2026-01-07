@@ -45,9 +45,8 @@ public class NPC_Prof extends Entity {
     }
 
     public void speak() {
-        if (dialogues[dialogueIndex] == dialogues[10]) {
+        if (dialogues[dialogueIndex] == dialogues[11]) {
             gp.gameState = GameState.starterChoiceState;
-            gp.getControls().ePressed = false;
         }
         super.speak();
     }

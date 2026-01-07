@@ -32,6 +32,8 @@ public class InputController {
             case KeyEvent.VK_ESCAPE -> controls.escapePressed = true;
             case KeyEvent.VK_ENTER -> controls.enterPressed = true;
         }
+        // inform game-controller that a key is pressed
+        gameController.keyPressed(keyCode);
     }
 
     public void keyReleased(int keyCode) {
@@ -47,5 +49,8 @@ public class InputController {
             case KeyEvent.VK_ESCAPE -> controls.escapePressed = false;
             case KeyEvent.VK_ENTER -> controls.enterPressed = false;
         }
+
+        // inform game-controller that a key is released
+        gameController.keyReleased(keyCode);
     }
 }

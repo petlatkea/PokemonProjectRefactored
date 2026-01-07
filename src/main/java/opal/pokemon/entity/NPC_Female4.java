@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.entity;
 
 import main.java.opal.pokemon.main.controller.GameController;
+import main.java.opal.pokemon.main.controller.GameState;
 
 public class NPC_Female4 extends Entity {
 
@@ -39,8 +40,8 @@ public class NPC_Female4 extends Entity {
     }
 
     public void speak() {
-        if (dialogues[dialogueIndex] == dialogues[5]) {
-            gp.getControls().ePressed = false;
+        if (dialogues[dialogueIndex] == dialogues[6]) {
+            gp.gameState = GameState.playState;
         }
         super.speak();
     }

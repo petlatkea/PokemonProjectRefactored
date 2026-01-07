@@ -39,4 +39,8 @@ public abstract class ScreenController {
     public void handleMouseReleased(MouseClick mouseClick) {
     }
 
+    public void keyPressed(int keyCode) {}
+
+    public void keyReleased(int keyCode) {}
+
 }

@@ -174,12 +174,25 @@ public class GameController implements Runnable {
         }
     }
 
+    /**
+     * All of these "methods" basically just re-delegates to the controller that
+     * matches the current state:
+     * - update
+     * - leftClick
+     * - rightClick
+     * - keyPressed
+     * - keyReleased
+     *
+     * of course there is a better way of handling this, rather than all this repetition,
+     * but for now, this is what works, so that's what we do :)
+     */
 
     private void update() {
         // update the appropriate subcontrollers - depending on the gamestate
         switch (gameState) {
             case titleScreenState -> titleScreenController.update();
             case playState -> overWorldController.update();
+            case dialogueState -> dialogueController.update();
             case starterChoiceState -> startersController.update();
             case pokedexState -> pokedexController.update();
             case battleIntroState -> battleIntroController.update();
@@ -193,6 +206,7 @@ public class GameController implements Runnable {
         switch (gameState) {
             case titleScreenState -> titleScreenController.handleLeftClick(mouseClick);
             case playState -> overWorldController.handleLeftClick(mouseClick);
+            case dialogueState -> dialogueController.handleLeftClick(mouseClick);
             case starterChoiceState -> startersController.handleLeftClick(mouseClick);
             case pokedexState -> pokedexController.handleLeftClick(mouseClick);
             case battleIntroState -> battleIntroController.handleLeftClick(mouseClick);
@@ -206,6 +220,7 @@ public class GameController implements Runnable {
         switch (gameState) {
             case titleScreenState -> titleScreenController.handleRightClick(mouseClick);
             case playState -> overWorldController.handleRightClick(mouseClick);
+            case dialogueState -> dialogueController.handleRightClick(mouseClick);
             case starterChoiceState -> startersController.handleRightClick(mouseClick);
             case pokedexState -> pokedexController.handleRightClick(mouseClick);
             case battleIntroState -> battleIntroController.handleRightClick(mouseClick);
@@ -218,6 +233,32 @@ public class GameController implements Runnable {
         // called whenever the mouse is released - the only one interested is the pokedex
         if (gameState == GameState.pokedexState) {
             pokedexController.handleMouseReleased(mouseClick);
+        }
+    }
+
+    public void keyPressed(int keyCode) {
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.keyPressed(keyCode);
+            case playState -> overWorldController.keyPressed(keyCode);
+            case dialogueState ->  dialogueController.keyPressed(keyCode);
+            case starterChoiceState -> startersController.keyPressed(keyCode);
+            case pokedexState -> pokedexController.keyPressed(keyCode);
+            case battleIntroState -> battleIntroController.keyPressed(keyCode);
+            case battleState -> battleController.keyPressed(keyCode);
+            case pauseState -> pauseController.keyPressed(keyCode);
+        }
+    }
+
+    public void keyReleased(int keyCode) {
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.keyPressed(keyCode);
+            case playState -> overWorldController.keyPressed(keyCode);
+            case dialogueState ->  dialogueController.keyPressed(keyCode);
+            case starterChoiceState -> startersController.keyPressed(keyCode);
+            case pokedexState -> pokedexController.keyPressed(keyCode);
+            case battleIntroState -> battleIntroController.keyPressed(keyCode);
+            case battleState -> battleController.keyPressed(keyCode);
+            case pauseState -> pauseController.keyPressed(keyCode);
         }
     }
 

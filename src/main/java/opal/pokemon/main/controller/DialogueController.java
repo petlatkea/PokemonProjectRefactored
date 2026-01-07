@@ -2,11 +2,13 @@ package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.main.MouseClick;
+import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.view.DialogueScreen;
 
 public class DialogueController extends ScreenController {
 
     public String currentDialogue = "";
+    private Entity currentNPC = null;
 
     public DialogueController(GameController gameController) {
         super(gameController);
@@ -20,6 +22,19 @@ public class DialogueController extends ScreenController {
     }
 
     @Override
+    public void keyPressed(int keyCode) {
+        Controls controls = gameController.getControls();
+        // check if it is ENTER or E
+        if (controls.enterPressed || controls.ePressed) {
+            // make NPC speak - if we have one
+            if (currentNPC != null) {
+                gameController.buttonSound.playButtonSound();
+                currentNPC.speak();
+            }
+        }
+    }
+
+    @Override
     public void handleLeftClick(MouseClick mouseClick) {
         // Pressed on Dialogue
         // TODO: Not sure if this is supposed to work - nothing seems to happen ...
@@ -28,5 +43,15 @@ public class DialogueController extends ScreenController {
             gameController.buttonSound.playButtonSound();
             gameController.gameState = GameState.playState;
         }
+    }
+
+    public void setNpc(Entity npc) {
+        System.out.println("setNpc in DialogueController to " + npc.toString());
+        // set this NPC
+        this.currentNPC = npc;
+        // and initialize speak
+        this.currentNPC.speak();
+        // Play Sound now??
+        gameController.buttonSound.playButtonSound(); // TODO: Decide if sound should play for the first dialogue, or only for subsequent button-presses
     }
 }

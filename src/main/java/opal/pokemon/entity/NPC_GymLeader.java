@@ -41,8 +41,8 @@ public class NPC_GymLeader extends Entity {
     }
 
     public void speak() {
-        if (dialogues[dialogueIndex] == dialogues[3]) {
-            gp.getControls().ePressed = false;
+        if (dialogues[dialogueIndex] == dialogues[4]) {
+            // TODO: Answer Yes or No??
             gp.startGymBattle();
         }
         super.speak();

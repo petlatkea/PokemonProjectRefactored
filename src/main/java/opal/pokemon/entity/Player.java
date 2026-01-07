@@ -1,8 +1,8 @@
 package main.java.opal.pokemon.entity;
 
+import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.DialogueController;
 import main.java.opal.pokemon.main.controller.GameController;
-import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.GameState;
 
 import java.awt.*;
@@ -74,10 +74,14 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // NOTE: Only activates the first interaction - since the key is released afterwards
+        // Check if 'E' is pressed - so far only used for speaking with NPCs
         if (gp.getControls().ePressed) {
+            // Find the NPC to enter dialogue with ...
             int npcIndex = gp.cChecker.checkEntityInteraction(this, gp.npc);
-            interactNPC(npcIndex);
+            // if there is an NPC (other than 999 == no NPC) - interact with it
+            if (npcIndex != 999) {
+                interactNPC(npcIndex);
+            }
         }
 
         if (moving == false) {
@@ -162,14 +166,13 @@ public class Player extends Entity {
         }
     }
 
-    private void interactNPC(int i) {
-        if (i != 999) {
-            // TODO: Change to let DialogueController handle this a bit smarter ...
-            gp.gameState = GameState.dialogueState;
-            gp.npc[i].speak();
-        } else {
-            gp.getControls().ePressed = false;
-        }
+    private void interactNPC(int npcIndex) {
+        // Find NPC object (Entity)
+        Entity npc = gp.npc[npcIndex];
+        // setup the dialogue-controller with this NPC
+        ((DialogueController) gp.dialogueController).setNpc(npc);
+        // and change the state do Dialogue
+        gp.gameState = GameState.dialogueState;
     }
 
     public void draw(Graphics2D g2) {

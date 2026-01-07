@@ -175,9 +175,7 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[21]);
             sfxClip = AudioSystem.getClip();
             sfxClip.open(ais);
-            if (gp.getControls().enterPressed) {
-                playEffect(-15f);
-            }
+            playEffect(-15f);
         } catch (Exception e) {
             e.printStackTrace();
         }
