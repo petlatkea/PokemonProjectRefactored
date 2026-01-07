@@ -54,7 +54,7 @@ public class NPC_Male4 extends Entity {
 
     public void speak() {
         if (dialogues[dialogueIndex] == dialogues[19]) {
-            gp.player.keyH.ePressed = false;
+            gp.getControls().ePressed = false;
         }
         super.speak();
     }

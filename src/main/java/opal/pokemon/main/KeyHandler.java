@@ -2,18 +2,22 @@ package main.java.opal.pokemon.main;
 
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
+import main.java.opal.pokemon.main.controller.InputController;
+import main.java.opal.pokemon.main.model.Controls;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-    GameController gp;
-    public boolean upPressed, leftPressed, downPressed, rightPressed, shiftPressed, enterPressed, ePressed, bPressed, spacePressed;
+    private InputController inputController;
+
+    private GameController gp;
     private int count = 0;
     private final int MAX_INPUT_LENGTH = 15;
 
     public KeyHandler(GameController gp) {
         this.gp = gp;
+        this.inputController = gp.inputController;
     }
 
     @Override
@@ -33,6 +37,8 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+
+        inputController.keyPressed(e.getKeyCode());
 
         // SEARCH
         if (gp.gameState == GameState.pokedexState && gp.ui.drawingInput) {
@@ -67,35 +73,36 @@ public class KeyHandler implements KeyListener {
         }
 
         // PLAY STATE
+        /*
         if (gp.gameState == GameState.playState) {
             if (code == KeyEvent.VK_W) {
-                upPressed = true;
+                controls.upPressed = true;
             }
             if (code == KeyEvent.VK_A) {
-                leftPressed = true;
+                controls.leftPressed = true;
             }
             if (code == KeyEvent.VK_S) {
-                downPressed = true;
+                controls.downPressed = true;
             }
             if (code == KeyEvent.VK_D) {
-                rightPressed = true;
+                controls.rightPressed = true;
             }
             if (code == KeyEvent.VK_B){
-                bPressed = true;
+                controls.bPressed = true;
             }
             if (code == KeyEvent.VK_E) {
-                ePressed = true;
+                controls.ePressed = true;
             }
             if (code == KeyEvent.VK_P) {
                 gp.gameState = GameState.pokedexState;
             }
             if (code == KeyEvent.VK_SHIFT) {
-                shiftPressed = true;
+                controls.shiftPressed = true;
             }
             if (code == KeyEvent.VK_ESCAPE) {
                 gp.gameState = GameState.pauseState;
             }
-        }
+        } */
 
         // PAUSE STATE
         else if (gp.gameState == GameState.pauseState) {
@@ -107,9 +114,13 @@ public class KeyHandler implements KeyListener {
         // DIALOGUE STATE
         else if (gp.gameState == GameState.dialogueState) {
             if (code == KeyEvent.VK_ENTER) {
-                enterPressed = true;
+                System.out.println("Press ENTER on dialogue");
+                gp.getControls().enterPressed = true;
                 gp.buttonSound.playButtonSound();
                 gp.gameState = GameState.playState;
+                // NOTE: This makes the dialogue exit to playstate on every bit of dialogue
+                //       and then the Player expects it to continue, because the 'e' key is released manually
+                // ... really this should all be handled by the dialogue-controller!
             }
         }
 
@@ -132,39 +143,39 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == GameState.battleState){
             //
             if (code == KeyEvent.VK_SPACE){
-                spacePressed = true;
+                gp.getControls().spacePressed = true;
             }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int code = e.getKeyCode();
-
+        inputController.keyReleased(e.getKeyCode());
+        /*
         if (code == KeyEvent.VK_W) {
-            upPressed = false;
+            controls.upPressed = false;
         }
         if (code == KeyEvent.VK_A) {
-            leftPressed = false;
+            controls.leftPressed = false;
         }
         if (code == KeyEvent.VK_B){
-            bPressed = false;
+            controls.bPressed = false;
         }
         if (code == KeyEvent.VK_S) {
-            downPressed = false;
+            controls.downPressed = false;
         }
         if (code == KeyEvent.VK_D) {
-            rightPressed = false;
+            controls.rightPressed = false;
         }
         if (code == KeyEvent.VK_SHIFT) {
-            shiftPressed = false;
+            controls.shiftPressed = false;
         }
         if (code == KeyEvent.VK_SPACE){
-            spacePressed = false;
+            controls.spacePressed = false;
         }
         if (code == KeyEvent.VK_ENTER){
-            enterPressed = false;
+            controls.enterPressed = false;
         }
-
+*/
     }
 }

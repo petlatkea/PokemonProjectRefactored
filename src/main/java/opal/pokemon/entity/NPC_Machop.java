@@ -30,7 +30,7 @@ public class NPC_Machop extends Entity {
 
     public void speak() {
         if (Objects.equals(dialogues[dialogueIndex], dialogues[1])) {
-            gp.player.keyH.ePressed = false;
+            gp.getControls().ePressed = false;
         }
         super.speak();
         gp.music.machopSound();

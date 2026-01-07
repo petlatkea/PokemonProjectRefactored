@@ -38,7 +38,7 @@ public class NPC_Female2 extends Entity {
 
     public void speak() {
         if (dialogues[dialogueIndex] == dialogues[3]) {
-            gp.player.keyH.ePressed = false;
+            gp.getControls().ePressed = false;
         }
         super.speak();
     }

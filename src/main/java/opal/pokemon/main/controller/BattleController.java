@@ -3,7 +3,6 @@ package main.java.opal.pokemon.main.controller;
 import main.java.opal.pokemon.battleSystem.Battle;
 import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.view.BattleScreen;
-import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
 import java.util.Random;
@@ -24,7 +23,7 @@ public class BattleController extends ScreenController {
             battle.update();
         }
 
-        if (gameController.getView().getKeyH().spacePressed && battle != null) {
+        if (gameController.getControls().spacePressed && battle != null) {
             battle.endBattle();
         }
     }

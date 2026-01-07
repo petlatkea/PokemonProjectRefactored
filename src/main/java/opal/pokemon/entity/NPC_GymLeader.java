@@ -42,7 +42,7 @@ public class NPC_GymLeader extends Entity {
 
     public void speak() {
         if (dialogues[dialogueIndex] == dialogues[3]) {
-            gp.player.keyH.ePressed = false;
+            gp.getControls().ePressed = false;
             gp.startGymBattle();
         }
         super.speak();

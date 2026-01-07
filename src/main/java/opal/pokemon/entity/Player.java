@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.entity;
 
+import main.java.opal.pokemon.main.controller.DialogueController;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.GameState;
@@ -73,24 +74,25 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyH.ePressed) {
+        // NOTE: Only activates the first interaction - since the key is released afterwards
+        if (gp.getControls().ePressed) {
             int npcIndex = gp.cChecker.checkEntityInteraction(this, gp.npc);
             interactNPC(npcIndex);
         }
 
         if (moving == false) {
-            if (keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
-                if (keyH.upPressed) {
+            if (gp.getControls().upPressed || gp.getControls().leftPressed || gp.getControls().downPressed || gp.getControls().rightPressed) {
+                if (gp.getControls().upPressed) {
                     direction = "up";
-                } else if (keyH.leftPressed) {
+                } else if (gp.getControls().leftPressed) {
                     direction = "left";
-                } else if (keyH.downPressed) {
+                } else if (gp.getControls().downPressed) {
                     direction = "down";
-                } else if (keyH.rightPressed) {
+                } else if (gp.getControls().rightPressed) {
                     direction = "right";
                 }
 
-                sprinting = keyH.shiftPressed;
+                sprinting = gp.getControls().shiftPressed;
 
                 moving = true;
                 hasChecked = false;
@@ -166,7 +168,7 @@ public class Player extends Entity {
             gp.gameState = GameState.dialogueState;
             gp.npc[i].speak();
         } else {
-            keyH.ePressed = false;
+            gp.getControls().ePressed = false;
         }
     }
 

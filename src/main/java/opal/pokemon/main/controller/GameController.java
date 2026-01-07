@@ -7,6 +7,7 @@ import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.main.UI;
 import main.java.opal.pokemon.main.model.CollisionChecker;
+import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.model.GameModel;
 import main.java.opal.pokemon.main.view.GameView;
 import main.java.opal.pokemon.object.SuperObject;
@@ -89,6 +90,8 @@ public class GameController implements Runnable {
     public ScreenController dialogueController;
     public ScreenController pokedexController;
 
+    // custom controllers
+    public final InputController inputController;
 
     // === CONSTRUCTOR ===
     public GameController() {
@@ -101,6 +104,9 @@ public class GameController implements Runnable {
         pauseController = new PauseController(this);
         dialogueController = new DialogueController(this);
         pokedexController = new PokedexController(this);
+
+        // then create custom controllers
+        inputController = new InputController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
@@ -225,5 +231,9 @@ public class GameController implements Runnable {
 
     public void startWildBattle() {
         ((BattleController) battleController).startWildBattle();
+    }
+
+    public Controls getControls() {
+        return inputController.getControls();
     }
 }
