@@ -1,8 +1,6 @@
 package main.java.opal.pokemon.main.view;
 
-import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.UtilityTool;
-import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.main.controller.PokedexController;
 import main.java.opal.pokemon.pokedex.EntryStats;
 import main.java.opal.pokemon.pokedex.Pokemon;
@@ -13,8 +11,6 @@ import java.awt.image.BufferedImage;
 
 public class PokedexScreen extends Screen {
     private PokedexController controller;
-
-    private boolean showPokedexStartText = true;
 
     private BufferedImage pokedexBoy, pokedexGirl, searchButtonReleased, searchButtonPressed, previousButtonReleased, nextButtonReleased, previousButtonPressed, nextButtonPressed, onOffButtonOn, onOffButtonOff;
 
@@ -55,11 +51,11 @@ public class PokedexScreen extends Screen {
 
         // INFO
         if (controller.getPokemon().name != null) {
-            showPokedexStartText = false;
+            controller.dontShowStartText();
             drawPokemonSprite();
             drawPokemonInfo();
         }
-        if (showPokedexStartText) {
+        if (controller.shouldShowStartText()) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 12));
             g2.setColor(Color.black);
             g2.drawString("PÓKEDEX", 695, 396);
@@ -74,23 +70,13 @@ public class PokedexScreen extends Screen {
     }
 
     private void drawPokedex(int x, int y, BufferedImage image, int genderState) {
-        try {
-            if (genderState == 1) {
-                image = pokedexGirl;
-            }
-            if (genderState == 2) {
-                image = pokedexBoy;
-            }
-            g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
-            if (!controller.onOffAction) {
-                controller.getGameController().gameState = GameState.playState;
-                controller.onOffAction = true;
-                controller.getPokemon().name = null;
-                showPokedexStartText = true;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if (genderState == 1) {
+            image = pokedexGirl;
         }
+        if (genderState == 2) {
+            image = pokedexBoy;
+        }
+        g2.drawImage(image, x, y, image.getWidth() * 4, image.getHeight() * 4, null);
     }
 
     private void drawButtons() {
@@ -123,7 +109,7 @@ public class PokedexScreen extends Screen {
         } else {
             g2.drawImage(nextButtonReleased, nButtonX, buttonY, size, size, null);
         }
-        if (controller.onOff) {
+        if (controller.onOffButtonPressed) {
             g2.drawImage(onOffButtonOff, onOffX, onOffY, onOffW, onOffH, null);
         } else {
             g2.drawImage(onOffButtonOn, onOffX, onOffY, onOffW, onOffH, null);
@@ -231,5 +217,4 @@ public class PokedexScreen extends Screen {
             g2.drawLine(cursorX, textY - fm.getHeight() + 5, cursorX, textY + 5);
         }
     }
-
 }

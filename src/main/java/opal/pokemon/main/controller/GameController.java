@@ -182,7 +182,7 @@ public class GameController implements Runnable {
      * - rightClick
      * - keyPressed
      * - keyReleased
-     *
+     * <p>
      * of course there is a better way of handling this, rather than all this repetition,
      * but for now, this is what works, so that's what we do :)
      */
@@ -240,7 +240,7 @@ public class GameController implements Runnable {
         switch (gameState) {
             case titleScreenState -> titleScreenController.keyPressed(keyCode);
             case playState -> overWorldController.keyPressed(keyCode);
-            case dialogueState ->  dialogueController.keyPressed(keyCode);
+            case dialogueState -> dialogueController.keyPressed(keyCode);
             case starterChoiceState -> startersController.keyPressed(keyCode);
             case pokedexState -> pokedexController.keyPressed(keyCode);
             case battleIntroState -> battleIntroController.keyPressed(keyCode);
@@ -253,7 +253,7 @@ public class GameController implements Runnable {
         switch (gameState) {
             case titleScreenState -> titleScreenController.keyReleased(keyCode);
             case playState -> overWorldController.keyReleased(keyCode);
-            case dialogueState ->  dialogueController.keyReleased(keyCode);
+            case dialogueState -> dialogueController.keyReleased(keyCode);
             case starterChoiceState -> startersController.keyReleased(keyCode);
             case pokedexState -> pokedexController.keyReleased(keyCode);
             case battleIntroState -> battleIntroController.keyReleased(keyCode);
@@ -264,6 +264,11 @@ public class GameController implements Runnable {
 
     public long getDrawCount() {
         return view.getDrawCount();
+    }
+
+    // Helper-methods for changing state
+    public void openPokedex() {
+        ((PokedexController) pokedexController).openPokedex();
     }
 
     public void startGymBattle() {

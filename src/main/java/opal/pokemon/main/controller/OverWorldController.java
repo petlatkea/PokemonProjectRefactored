@@ -37,7 +37,7 @@ public class OverWorldController extends ScreenController {
         Controls controls = gameController.getControls();
 
         if (controls.pokedexPressed) {
-            gameController.gameState =  GameState.pokedexState;
+            gameController.openPokedex();
         } else if(controls.escapePressed) {
             gameController.gameState =  GameState.pauseState;
         }
@@ -47,7 +47,7 @@ public class OverWorldController extends ScreenController {
     public void handleLeftClick(MouseClick mouseClick) {
         // pokedex icon
         if (mouseClick.insideBox(40, 696, 44, 58)) {
-            gameController.gameState = GameState.pokedexState;
+            gameController.openPokedex();
         }
     }
 }
