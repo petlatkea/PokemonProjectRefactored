@@ -6,9 +6,9 @@ import java.awt.event.KeyEvent;
 
 public class InputController {
 
-    private GameController gameController;
+    private final GameController gameController;
 
-    private Controls controls;
+    private final Controls controls;
 
     public InputController(GameController controller) {
         this.gameController = controller;
@@ -17,6 +17,10 @@ public class InputController {
 
     public Controls getControls() {
         return controls;
+    }
+
+    public void keyTyped(char character) {
+        gameController.keyTyped(character);
     }
 
     public void keyPressed(int keyCode) {

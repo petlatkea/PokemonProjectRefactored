@@ -233,6 +233,19 @@ public class GameController implements Runnable {
         }
     }
 
+    public void keyTyped(char character) {
+        switch (gameState) {
+            case titleScreenState -> titleScreenController.keyTyped(character);
+            case playState -> overWorldController.keyTyped(character);
+            case dialogueState -> dialogueController.keyTyped(character);
+            case starterChoiceState -> startersController.keyTyped(character);
+            case pokedexState -> pokedexController.keyTyped(character);
+            case battleIntroState -> battleIntroController.keyTyped(character);
+            case battleState -> battleController.keyTyped(character);
+            case pauseState -> pauseController.keyTyped(character);
+        }
+    }
+
     public void keyPressed(int keyCode) {
         switch (gameState) {
             case titleScreenState -> titleScreenController.keyPressed(keyCode);
@@ -279,4 +292,6 @@ public class GameController implements Runnable {
     public Controls getControls() {
         return inputController.getControls();
     }
+
+
 }

@@ -6,6 +6,8 @@ import main.java.opal.pokemon.main.view.PokedexScreen;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
+import java.awt.event.KeyEvent;
+
 public class PokedexController extends ScreenController {
 
     public Pokedex pokedex;
@@ -60,6 +62,7 @@ public class PokedexController extends ScreenController {
         this.drawingInput = drawingInput;
     }
 
+    private final int MAX_INPUT_LENGTH = 15;
     private String inputBuffer = "";
 
     public String getInputBuffer() {
@@ -150,9 +153,38 @@ public class PokedexController extends ScreenController {
     }
 
     @Override
+    public void keyTyped(char key) {
+        if (isDrawingInput()) {
+            if (Character.isLetterOrDigit(key) || key == ' ') {
+                if (getInputBuffer().length() < MAX_INPUT_LENGTH) {
+                    setInputBuffer(getInputBuffer() + key);
+                }
+            }
+        }
+    }
+
+    @Override
     public void keyPressed(int keyCode) {
-        // ignore keypresses if drawing input
-        if (!isDrawingInput()) {
+        // accept all keypresses when drawing input
+        if (isDrawingInput()) {
+            if (keyCode == KeyEvent.VK_BACK_SPACE) {
+                if (getInputBuffer().length() > 0) {
+                    setInputBuffer(getInputBuffer().substring(0, getInputBuffer().length() - 1));
+                }
+            } else if (keyCode == KeyEvent.VK_ENTER) {
+                String input = getInputBuffer().trim();
+
+                setInputBuffer("");
+                setDrawingInput(false);
+
+                if (!input.isEmpty()) {
+                    pokedex.search(input);
+                }
+                // TODO: HACK! Fix asap.
+                gameController.getView().requestFocusInWindow();
+            }
+        } else {
+            // respond to keys that might close the pokedex, if not drawing input
             Controls controls = gameController.getControls();
             // Only accept pokedex-keypresses if the key was previously released
             // but accept escape-keypresses all the time
