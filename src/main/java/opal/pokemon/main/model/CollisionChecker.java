@@ -290,38 +290,38 @@ public class CollisionChecker {
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-        gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+        gp.getPlayer().solidArea.x = gp.getPlayer().worldX + gp.getPlayer().solidArea.x;
+        gp.getPlayer().solidArea.y = gp.getPlayer().worldY + gp.getPlayer().solidArea.y;
 
         switch (entity.direction) {
             case "up":
                 entity.solidArea.y -= entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.getPlayer().solidArea)) {
                     entity.collisionOn = true;
                 }
                 break;
             case "down":
                 entity.solidArea.y += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.getPlayer().solidArea)) {
                     entity.collisionOn = true;
                 }
                 break;
             case "left":
                 entity.solidArea.x -= entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.getPlayer().solidArea)) {
                     entity.collisionOn = true;
                 }
                 break;
             case "right":
                 entity.solidArea.x += entity.speed;
-                if (entity.solidArea.intersects(gp.player.solidArea)) {
+                if (entity.solidArea.intersects(gp.getPlayer().solidArea)) {
                     entity.collisionOn = true;
                 }
                 break;
         }
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;
-        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+        gp.getPlayer().solidArea.x = gp.getPlayer().solidAreaDefaultX;
+        gp.getPlayer().solidArea.y = gp.getPlayer().solidAreaDefaultY;
     }
 }

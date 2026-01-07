@@ -58,7 +58,6 @@ public class GameController implements Runnable {
     Thread gameThread;
 
     // == ENTITY & OBJECT ===
-    public Player player; // = new Player(this, view.getKeyH());
     public SuperObject[] obj = new SuperObject[10];
     public Entity[] npc = new Entity[20];
 
@@ -120,13 +119,10 @@ public class GameController implements Runnable {
 
         aSetter = new AssetSetter(this, view.getClickH());
 
-        player = new Player(this, view.getKeyH());
-        ((OverWorldController) overWorldController).setPlayer(player);
-
-        music = new Sound(this, player);
-        collisionSound = new Sound(this, player);
-        buttonSound = new Sound(this, player);
-        grassSound = new Sound(this, player);
+        music = new Sound(this);
+        collisionSound = new Sound(this);
+        buttonSound = new Sound(this);
+        grassSound = new Sound(this);
     }
 
     public void setupGame() {
@@ -274,6 +270,10 @@ public class GameController implements Runnable {
 
     public long getDrawCount() {
         return view.getDrawCount();
+    }
+
+    public Player getPlayer() {
+        return ((OverWorldController)overWorldController).getPlayer();
     }
 
     // Helper-methods for changing state

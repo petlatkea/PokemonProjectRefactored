@@ -17,8 +17,8 @@ public class SuperObject {
     UtilityTool uTool = new UtilityTool();
 
     public void draw(Graphics2D g2, GameController gp) {
-        int cameraLeft   = gp.player.worldX - gp.player.screenX;
-        int cameraTop    = gp.player.worldY - gp.player.screenY;
+        int cameraLeft   = gp.getPlayer().worldX - gp.getPlayer().screenX;
+        int cameraTop    = gp.getPlayer().worldY - gp.getPlayer().screenY;
         int cameraRight  = cameraLeft + gp.screenWidth;
         int cameraBottom = cameraTop  + gp.screenHeight;
 

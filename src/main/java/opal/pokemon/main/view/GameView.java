@@ -17,8 +17,6 @@ public class GameView extends JPanel {
     private KeyHandler keyH;
     private ClickHandler clickH;
 
-    private final TileGraphics tileGraphics;
-
     // SCREENS
     private Screen titleScreen;
     private Screen overWorldScreen;
@@ -47,14 +45,13 @@ public class GameView extends JPanel {
         clickH = new ClickHandler(controller);
         this.addMouseListener(clickH);
 
-        tileGraphics = new TileGraphics(controller);
-
+        // screens
         initializeScreens();
 
+        // window settings
         this.setPreferredSize(new Dimension(controller.screenWidth, controller.screenHeight));
         this.setBackground(new java.awt.Color(120, 192, 248));
         this.setDoubleBuffered(true);
-
 
         this.setFocusable(true);
         this.setOpaque(true);
@@ -99,41 +96,10 @@ public class GameView extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 
-
         // DEBUG
         long drawStart = System.nanoTime();
 
-        if (controller.gameState != GameState.titleScreenState && controller.gameState != GameState.battleState) {
-
-            // Background Layer
-            tileGraphics.drawTileMap(g2, model.backgroundTileMap);
-
-            // Object Layer
-            for (int i = 0; i < controller.obj.length; i++) {
-                if (controller.obj[i] != null) {
-                    controller.obj[i].draw(g2, controller);
-                }
-            }
-
-            // Environment Behind player
-            tileGraphics.drawTileMap(g2, model.environmentBTileMap);
-
-            // NPCs
-            for (int i = 0; i < controller.npc.length; i++) {
-                if (controller.npc[i] != null) {
-                    controller.npc[i].draw(g2);
-                }
-            }
-
-            // Player
-            controller.player.draw(g2);
-
-            // Environment Front of player
-            tileGraphics.drawTileMap(g2, model.environmentFTileMap );
-        }
-
         drawScreens(g2);
-
 
         // DEBUG
         long passedTime = System.nanoTime() - drawStart;
@@ -170,9 +136,20 @@ public class GameView extends JPanel {
     }
 
     private void drawScreens(Graphics2D g2) {
+        // always draw the overWorldScreen before anything else
+        // - unless state is title, battle or battleIntro
+        switch(controller.gameState) {
+            case GameState.titleScreenState,
+                 GameState.battleIntroState,
+                 GameState.battleState: // don't draw overworld
+                break;
+            default:
+                overWorldScreen.draw(g2);
+        }
+
+        // then draw the screen for the current state
         switch(controller.gameState) {
             case GameState.titleScreenState -> titleScreen.draw(g2);
-            case GameState.playState -> overWorldScreen.draw(g2);
             case GameState.battleIntroState -> battleIntroScreen.draw(g2);
             case GameState.battleState ->  battleScreen.draw(g2);
             case GameState.pauseState -> pauseScreen.draw(g2);

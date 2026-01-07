@@ -12,17 +12,18 @@ public class OverWorldController extends ScreenController {
     public OverWorldController(GameController gameController) {
         super(gameController);
         // create model and view - but skip model until actually needed
+        player = new Player(gameController);
         screen = new OverWorldScreen(this);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
     public void update() {
         player.update();
-        gameController.music.updateMusic();
+        gameController.music.updateMusic(player); // NOTE: used for updating the music for the zone
         gameController.music.updateFade();
 
         for (int i = 0; i < gameController.npc.length; i++) {

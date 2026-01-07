@@ -44,8 +44,8 @@ public class TileGraphics {
 
     // Draw tilemap (previously known as drawLayer)
     public void drawTileMap(Graphics2D g2, TileMap tileMap) {
-        int cameraLeft = controller.player.worldX - controller.player.screenX;
-        int cameraTop = controller.player.worldY - controller.player.screenY;
+        int cameraLeft = controller.getPlayer().worldX - controller.getPlayer().screenX;
+        int cameraTop = controller.getPlayer().worldY - controller.getPlayer().screenY;
         int cameraRight = cameraLeft + controller.screenWidth;
         int cameraBottom = cameraTop + controller.screenHeight;
 

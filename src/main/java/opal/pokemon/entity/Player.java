@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Player extends Entity {
-    KeyHandler keyH;
     private Random random = new Random();
     public final int screenX;
     public final int screenY;
@@ -24,9 +23,8 @@ public class Player extends Entity {
     int orderIndex = 0;
 
 
-    public Player(GameController gp, KeyHandler keyH) {
+    public Player(GameController gp) {
         super(gp);
-        this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - (entitySize / 2);
         screenY = gp.screenHeight / 2 - (entitySize / 2);

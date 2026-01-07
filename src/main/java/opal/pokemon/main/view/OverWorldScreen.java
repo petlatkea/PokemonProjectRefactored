@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.main.view;
 
+import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.main.controller.OverWorldController;
 
 import java.awt.*;
@@ -21,6 +22,7 @@ public class OverWorldScreen extends Screen {
 
     public OverWorldScreen(OverWorldController controller) {
         super(controller);
+        tileGraphics = new TileGraphics(controller.getGameController());
     }
 
     @Override
@@ -56,8 +58,53 @@ public class OverWorldScreen extends Screen {
 
     @Override
     public void drawScreen(Graphics2D g2) {
-        drawPokedexIcon();
-        drawAreaIcons();
+        drawBackground();
+        drawObjects();
+        drawEnvironmentBehindPlayer();
+        drawNPCs();
+        drawPlayer();
+        drawEnvironmentInFrontOfPlayer();
+
+        // only draw pokedex and area icons if gamestate is play
+        if(controller.getGameController().gameState == GameState.playState) {
+            drawPokedexIcon();
+            drawAreaIcons();
+        }
+    }
+
+    // ===== TILE Background =====
+    private TileGraphics tileGraphics;
+
+    private void drawBackground() {
+        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().backgroundTileMap);
+    }
+
+    private void drawObjects() {
+        for (int i = 0; i < controller.getGameController().obj.length; i++) {
+            if (controller.getGameController().obj[i] != null) {
+                controller.getGameController().obj[i].draw(g2, controller.getGameController());
+            }
+        }
+    }
+
+    private void drawEnvironmentBehindPlayer() {
+        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().environmentBTileMap);
+    }
+
+    private void drawNPCs() {
+        for (int i = 0; i < controller.getGameController().npc.length; i++) {
+            if (controller.getGameController().npc[i] != null) {
+                controller.getGameController().npc[i].draw(g2);
+            }
+        }
+    }
+
+    private void drawPlayer() {
+        ((OverWorldController)controller).getPlayer().draw(g2);
+    }
+
+    private void drawEnvironmentInFrontOfPlayer() {
+        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().environmentFTileMap );
     }
 
     // ===== AREA ICONS =====
@@ -65,8 +112,8 @@ public class OverWorldScreen extends Screen {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
-        int x = (controller.getGameController().player.worldX / controller.getGameController().tileSize) + 1;
-        int y = (controller.getGameController().player.worldY / controller.getGameController().tileSize) + 1;
+        int x = (((OverWorldController)controller).getPlayer().worldX / controller.getGameController().tileSize) + 1;
+        int y = (((OverWorldController)controller).getPlayer().worldY / controller.getGameController().tileSize) + 1;
 
         long elapsed = System.currentTimeMillis() - areaDisplayStartTime;
 

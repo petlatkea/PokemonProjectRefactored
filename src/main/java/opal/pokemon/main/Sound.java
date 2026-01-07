@@ -14,7 +14,6 @@ public class Sound {
     Clip musicClip;
     Clip sfxClip;
     URL[] soundURL = new URL[44];
-    Player player;
     GameController gp;
     int musicZone = 0;      // Default twin leaf
 
@@ -37,7 +36,7 @@ public class Sound {
     // ============================
     // MUSIC ZONE HANDLING
     // ============================
-    private int getMusicZone() {
+    private int getMusicZone(Player player) {
         int x = (player.worldX / gp.tileSize) + 1;
         int y = (player.worldY / gp.tileSize) + 1;
 
@@ -58,13 +57,8 @@ public class Sound {
         else return 1;
     }
 
+    // NOTE: Only used by battle controller
     public void updateMusic() {
-        int newZone = getMusicZone();
-
-        if (newZone != musicZone) {
-            musicZone = newZone;
-            fadeOut();
-        }
 
         if (gp.gameState == GameState.battleState) {
             stopMusic();
@@ -75,12 +69,21 @@ public class Sound {
         }
     }
 
+    // NOTE: Only used by overworld controller - to change music for the zone
+    public void updateMusic(Player player) {
+        int newZone = getMusicZone(player);
+
+        if (newZone != musicZone) {
+            musicZone = newZone;
+            fadeOut();
+        }
+    }
+
     // ============================
     //     MUSIC PLAYBACK
     // ============================
-    public Sound(GameController gp, Player player) {
+    public Sound(GameController gp) {
         this.gp = gp;
-        this.player = player;
 
         soundURL[0] = getClass().getResource("/sound/TwinleafTown.wav");
         soundURL[1] = getClass().getResource("/sound/Route201.wav");
