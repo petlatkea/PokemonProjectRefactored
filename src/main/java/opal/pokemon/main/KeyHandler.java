@@ -62,6 +62,7 @@ public class KeyHandler implements KeyListener {
             return;
         }
 
+        /*
         // TITLE SCREEN STATE
         if (gp.gameState == GameState.titleScreenState) {
             if (code == KeyEvent.VK_ENTER) {
@@ -70,7 +71,7 @@ public class KeyHandler implements KeyListener {
                 gp.music.setFile();
                 gp.music.play();
             }
-        }
+        }*/
 
         // PLAY STATE
         /*
