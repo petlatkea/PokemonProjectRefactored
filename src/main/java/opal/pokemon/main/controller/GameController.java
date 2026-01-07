@@ -251,14 +251,14 @@ public class GameController implements Runnable {
 
     public void keyReleased(int keyCode) {
         switch (gameState) {
-            case titleScreenState -> titleScreenController.keyPressed(keyCode);
-            case playState -> overWorldController.keyPressed(keyCode);
-            case dialogueState ->  dialogueController.keyPressed(keyCode);
-            case starterChoiceState -> startersController.keyPressed(keyCode);
-            case pokedexState -> pokedexController.keyPressed(keyCode);
-            case battleIntroState -> battleIntroController.keyPressed(keyCode);
-            case battleState -> battleController.keyPressed(keyCode);
-            case pauseState -> pauseController.keyPressed(keyCode);
+            case titleScreenState -> titleScreenController.keyReleased(keyCode);
+            case playState -> overWorldController.keyReleased(keyCode);
+            case dialogueState ->  dialogueController.keyReleased(keyCode);
+            case starterChoiceState -> startersController.keyReleased(keyCode);
+            case pokedexState -> pokedexController.keyReleased(keyCode);
+            case battleIntroState -> battleIntroController.keyReleased(keyCode);
+            case battleState -> battleController.keyReleased(keyCode);
+            case pauseState -> pauseController.keyReleased(keyCode);
         }
     }
 

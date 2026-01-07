@@ -2,6 +2,7 @@ package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.MouseClick;
+import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.view.OverWorldScreen;
 
 public class OverWorldController extends ScreenController {
@@ -28,6 +29,17 @@ public class OverWorldController extends ScreenController {
             if (gameController.npc[i] != null) {
                 gameController.npc[i].update();
             }
+        }
+    }
+
+    @Override
+    public void keyPressed(int keyCode) {
+        Controls controls = gameController.getControls();
+
+        if (controls.pokedexPressed) {
+            gameController.gameState =  GameState.pokedexState;
+        } else if(controls.escapePressed) {
+            gameController.gameState =  GameState.pauseState;
         }
     }
 
