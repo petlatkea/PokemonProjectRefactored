@@ -189,8 +189,7 @@ public class PokedexScreen extends Screen {
     }
 
     private void drawCustomInputBox() {
-        // TODO: Fix 'drawingInput' and make local to this controller!
-        if (!controller.getGameController().ui.drawingInput) {
+        if (!controller.isDrawingInput()) {
             return;
         }
 
@@ -207,13 +206,13 @@ public class PokedexScreen extends Screen {
 
         int textX = boxX + 10;
         int textY = boxY + boxHeight - 12;
-        // TODO: Fix 'inputBuffer' and make local to this controller!
-        int xName = getXForCenteredTextAt(controller.getGameController().ui.inputBuffer, 743);
-        g2.drawString(controller.getGameController().ui.inputBuffer.toUpperCase(), xName, textY);
+
+        int xName = getXForCenteredTextAt(controller.getInputBuffer(), 743);
+        g2.drawString(controller.getInputBuffer().toUpperCase(), xName, textY);
 
         if (controller.getGameController().getDrawCount() % 60 < 30) {
             FontMetrics fm = g2.getFontMetrics();
-            int cursorX = xName + (controller.getGameController().ui.inputBuffer.length() * 14);
+            int cursorX = xName + (controller.getInputBuffer().length() * 14);
             g2.drawLine(cursorX, textY - fm.getHeight() + 5, cursorX, textY + 5);
         }
     }

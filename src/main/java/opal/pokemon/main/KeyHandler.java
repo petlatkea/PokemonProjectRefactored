@@ -3,7 +3,7 @@ package main.java.opal.pokemon.main;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.main.controller.InputController;
-import main.java.opal.pokemon.main.model.Controls;
+import main.java.opal.pokemon.main.controller.PokedexController;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -24,11 +24,11 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
 
         // USER INPUT POKEDEX
-        if (gp.gameState == GameState.pokedexState && gp.ui.drawingInput) {
+        if (gp.gameState == GameState.pokedexState && ((PokedexController)gp.pokedexController).isDrawingInput()) {
             char key = e.getKeyChar();
             if (Character.isLetterOrDigit(key) || key == ' ') {
-                if (gp.ui.inputBuffer.length() < MAX_INPUT_LENGTH) {
-                    gp.ui.inputBuffer += key;
+                if (((PokedexController)gp.pokedexController).getInputBuffer().length() < MAX_INPUT_LENGTH) {
+                    ((PokedexController)gp.pokedexController).setInputBuffer(((PokedexController)gp.pokedexController).getInputBuffer() + key);
                 }
             }
         }
@@ -41,17 +41,17 @@ public class KeyHandler implements KeyListener {
         inputController.keyPressed(e.getKeyCode());
 
         // SEARCH
-        if (gp.gameState == GameState.pokedexState && gp.ui.drawingInput) {
+        if (gp.gameState == GameState.pokedexState && ((PokedexController)gp.pokedexController).isDrawingInput()) {
             if (code == KeyEvent.VK_BACK_SPACE) {
-                if (gp.ui.inputBuffer.length() > 0) {
-                    gp.ui.inputBuffer = gp.ui.inputBuffer.substring(0, gp.ui.inputBuffer.length() - 1);
+                if (((PokedexController)gp.pokedexController).getInputBuffer().length() > 0) {
+                    ((PokedexController)gp.pokedexController).setInputBuffer(((PokedexController)gp.pokedexController).getInputBuffer().substring(0, ((PokedexController)gp.pokedexController).getInputBuffer().length() - 1));
                 }
             }
             if (code == KeyEvent.VK_ENTER) {
-                String input = gp.ui.inputBuffer.trim();
+                String input = ((PokedexController)gp.pokedexController).getInputBuffer().trim();
 
-                gp.ui.inputBuffer = "";
-                gp.ui.drawingInput = false;
+                ((PokedexController)gp.pokedexController).setInputBuffer("");
+                ((PokedexController)gp.pokedexController).setDrawingInput(false);
 
                 if (!input.isEmpty()) {
                     gp.pokedex.search(input);

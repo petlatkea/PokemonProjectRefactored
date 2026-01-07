@@ -5,7 +5,6 @@ import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.Sound;
-import main.java.opal.pokemon.main.UI;
 import main.java.opal.pokemon.main.model.CollisionChecker;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.model.GameModel;
@@ -55,7 +54,6 @@ public class GameController implements Runnable {
 
     public CollisionChecker cChecker; // = new CollisionChecker(this);
     public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
-    public UI ui; // = new UI(this, view.getClickH(), originalPokemon, pokedex);
 
     Thread gameThread;
 
@@ -121,7 +119,6 @@ public class GameController implements Runnable {
 
 
         aSetter = new AssetSetter(this, view.getClickH());
-        ui = new UI(this); //, view.getClickH(), originalPokemon, pokedex);
 
         player = new Player(this, view.getKeyH());
         ((OverWorldController) overWorldController).setPlayer(player);

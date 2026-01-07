@@ -19,6 +19,16 @@ public class GameView extends JPanel {
 
     private final TileGraphics tileGraphics;
 
+    // SCREENS
+    private Screen titleScreen;
+    private Screen overWorldScreen;
+    private Screen battleIntroScreen;
+    private Screen battleScreen;
+    private Screen startersScreen;
+    private Screen pauseScreen;
+    private Screen dialogueScreen;
+    private Screen pokedexScreen;
+
     // === DEBUG ===
     private int warmupFrames = 30;
     private long highestDrawTime = 0;
@@ -30,18 +40,22 @@ public class GameView extends JPanel {
         this.controller = gameController;
         this.model = model;
 
+        // input controllers
+        keyH = new KeyHandler(controller);
+        this.addKeyListener(keyH);
+
+        clickH = new ClickHandler(controller);
+        this.addMouseListener(clickH);
+
         tileGraphics = new TileGraphics(controller);
+
+        initializeScreens();
 
         this.setPreferredSize(new Dimension(controller.screenWidth, controller.screenHeight));
         this.setBackground(new java.awt.Color(120, 192, 248));
         this.setDoubleBuffered(true);
 
-        keyH = new KeyHandler(controller);
-        this.addKeyListener(keyH);
 
-        clickH = new ClickHandler(controller);
-
-        this.addMouseListener(clickH);
         this.setFocusable(true);
         this.setOpaque(true);
         this.setIgnoreRepaint(false);
@@ -56,9 +70,30 @@ public class GameView extends JPanel {
         return clickH;
     }
 
+    private void initializeScreens() {
+        // initialise screens - by getting them from the controller one at a time.
+        titleScreen = controller.titleScreenController.getScreen();
+        titleScreen.init();
+        overWorldScreen = controller.overWorldController.getScreen();
+        overWorldScreen.init();
+        battleIntroScreen = controller.battleIntroController.getScreen();
+        battleIntroScreen.init();
+        battleScreen = controller.battleController.getScreen();
+        battleScreen.init();
+        startersScreen = controller.startersController.getScreen();
+        startersScreen.init();
+        pauseScreen = controller.pauseController.getScreen();
+        pauseScreen.init();
+        dialogueScreen = controller.dialogueController.getScreen();
+        dialogueScreen.init();
+        pokedexScreen = controller.pokedexController.getScreen();
+        pokedexScreen.init();
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // initialize g2
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
@@ -97,8 +132,7 @@ public class GameView extends JPanel {
             tileGraphics.drawTileMap(g2, model.environmentFTileMap );
         }
 
-        // UI
-        controller.ui.draw(g2);
+        drawScreens(g2);
 
 
         // DEBUG
@@ -132,8 +166,20 @@ public class GameView extends JPanel {
             }
         }
 
-
         g2.dispose();
+    }
+
+    private void drawScreens(Graphics2D g2) {
+        switch(controller.gameState) {
+            case GameState.titleScreenState -> titleScreen.draw(g2);
+            case GameState.playState -> overWorldScreen.draw(g2);
+            case GameState.battleIntroState -> battleIntroScreen.draw(g2);
+            case GameState.battleState ->  battleScreen.draw(g2);
+            case GameState.pauseState -> pauseScreen.draw(g2);
+            case GameState.dialogueState -> dialogueScreen.draw(g2);
+            case GameState.pokedexState -> pokedexScreen.draw(g2);
+            case GameState.starterChoiceState -> startersScreen.draw(g2);
+        }
     }
 
     public long getDrawCount() {

@@ -48,10 +48,33 @@ public class PokedexController extends ScreenController {
         return pokemon;
     }
 
+    // statuses for when receiving text input in the search - needs improvement!
+
+    private boolean drawingInput = false;
+
+    public boolean isDrawingInput() {
+        return drawingInput;
+    }
+
+    public void setDrawingInput(boolean drawingInput) {
+        this.drawingInput = drawingInput;
+    }
+
+    private String inputBuffer = "";
+
+    public String getInputBuffer() {
+        return inputBuffer;
+    }
+
+    public void setInputBuffer(String inputBuffer) {
+        this.inputBuffer = inputBuffer;
+    }
+
+
     // opens the pokedex - ie. initializes it for initial display
     // - and changes state to the pokedexState
     public void openPokedex() {
-        System.out.println("Opening Pokedex");
+//        System.out.println("Opening Pokedex");
         onOffButtonPressed = false;
         closingPokedex = false;
         showPokedexStartText = true;
@@ -63,8 +86,7 @@ public class PokedexController extends ScreenController {
     // - but actually only begins to close it - waits for release of a key
     //   or mouse to finish closing it
     private void closePokedex() {
-        System.out.println("Closing Pokedex");
-
+//        System.out.println("Closing Pokedex");
         onOffButtonPressed = true;
         int reset = 0;
         gameController.originalPokemon.setId(reset);
@@ -86,8 +108,8 @@ public class PokedexController extends ScreenController {
         if (mouseClick.insideBox(245, 565, 147, 64)) {
             searchButtonPressed = true;
             searching = true;
-            gameController.ui.drawingInput = true;
-            gameController.ui.inputBuffer = "";
+            setDrawingInput(true);
+            setInputBuffer("");
             gameController.getView().repaint();
         }
 
@@ -122,31 +144,36 @@ public class PokedexController extends ScreenController {
         nextButtonPressed = false;
         onOffButtonPressed = false;
 
-        if(closingPokedex) {
+        if (closingPokedex) {
             finishClosingPokedex();
         }
     }
 
     @Override
     public void keyPressed(int keyCode) {
-        Controls controls = gameController.getControls();
-        // Only accept pokedex-keypresses if the key was previously released
-        // but accept escape-keypresses all the time
-        if (controls.escapePressed || (controls.pokedexPressed && pokedexKeyReleased)) {
-            pokedexKeyReleased = false;
-            closePokedex();
+        // ignore keypresses if drawing input
+        if (!isDrawingInput()) {
+            Controls controls = gameController.getControls();
+            // Only accept pokedex-keypresses if the key was previously released
+            // but accept escape-keypresses all the time
+            if (controls.escapePressed || (controls.pokedexPressed && pokedexKeyReleased)) {
+                pokedexKeyReleased = false;
+                closePokedex();
+            }
         }
     }
 
     @Override
     public void keyReleased(int keyCode) {
-        System.out.println("keyReleased: " + keyCode);
-        Controls controls = gameController.getControls();
-        // if pokedex-key is released - mark it as released
-        if (!controls.pokedexPressed && !controls.escapePressed) {
-            pokedexKeyReleased = true;
-            if(closingPokedex) {
-                finishClosingPokedex();
+        // ignore keypresses when drawing input
+        if (!isDrawingInput()) {
+            Controls controls = gameController.getControls();
+            // if pokedex-key is released - mark it as released
+            if (!controls.pokedexPressed && !controls.escapePressed) {
+                pokedexKeyReleased = true;
+                if (closingPokedex) {
+                    finishClosingPokedex();
+                }
             }
         }
     }
