@@ -6,12 +6,15 @@ import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.view.OverWorldScreen;
+import main.java.opal.pokemon.object.SuperObject;
 
 public class OverWorldController extends ScreenController {
 
     // TODO: Split player and NPCs into model, view and controllers, and add separately
     private Player player;
     public Entity[] npc = new Entity[20];
+    public SuperObject[] obj = new SuperObject[10];
+
     // TODO: Make this part of the model-initialization for the overworld - setting all the NPCs
     private AssetSetter assetSetter;
 
@@ -21,8 +24,8 @@ public class OverWorldController extends ScreenController {
         player = new Player(gameController);
         screen = new OverWorldScreen(this);
 
-        assetSetter = new AssetSetter(gameController, null);
-        assetSetter.setObject();
+        assetSetter = new AssetSetter(gameController);
+        assetSetter.setObject(obj);
         assetSetter.setNPC(npc);
     }
 

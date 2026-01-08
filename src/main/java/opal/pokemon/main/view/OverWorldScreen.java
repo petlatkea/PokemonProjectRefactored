@@ -80,9 +80,9 @@ public class OverWorldScreen extends Screen {
     }
 
     private void drawObjects() {
-        for (int i = 0; i < controller.getGameController().obj.length; i++) {
-            if (controller.getGameController().obj[i] != null) {
-                controller.getGameController().obj[i].draw(g2, controller.getGameController());
+        for (int i = 0; i < ((OverWorldController)controller).obj.length; i++) {
+            if (((OverWorldController)controller).obj[i] != null) {
+                ((OverWorldController)controller).obj[i].draw(g2, controller.getGameController());
             }
         }
     }

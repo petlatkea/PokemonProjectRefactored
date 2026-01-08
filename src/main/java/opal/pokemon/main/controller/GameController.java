@@ -1,15 +1,12 @@
 package main.java.opal.pokemon.main.controller;
 
-import main.java.opal.pokemon.entity.Entity;
 import main.java.opal.pokemon.entity.Player;
-import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.main.model.CollisionChecker;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.model.GameModel;
 import main.java.opal.pokemon.main.view.GameView;
-import main.java.opal.pokemon.object.SuperObject;
 import main.java.opal.pokemon.pokedex.Pokedex;
 import main.java.opal.pokemon.pokedex.Pokemon;
 
@@ -47,19 +44,13 @@ public class GameController implements Runnable {
 
     // === SYSTEM ===
 
-
     // TODO: Extract away from public here ...
     public Pokemon originalPokemon = new Pokemon();
     public Pokedex pokedex;// = new Pokedex(this, view.getKeyH(), originalPokemon);
 
     public CollisionChecker cChecker; // = new CollisionChecker(this);
-//    public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
 
     Thread gameThread;
-
-    // == ENTITY & OBJECT ===
-    public SuperObject[] obj = new SuperObject[10];
-
 
     // == GAME STATE ==
     public GameState gameState = GameState.titleScreenState;
@@ -115,9 +106,6 @@ public class GameController implements Runnable {
         pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
         ((PokedexController) pokedexController).setPokemon(originalPokemon);
         ((PokedexController) pokedexController).setPokedex(pokedex);
-
-
-//        aSetter = new AssetSetter(this, view.getClickH());
 
         music = new Sound(this);
         collisionSound = new Sound(this);
@@ -272,7 +260,7 @@ public class GameController implements Runnable {
     }
 
     public Player getPlayer() {
-        return ((OverWorldController)overWorldController).getPlayer();
+        return ((OverWorldController) overWorldController).getPlayer();
     }
 
     // Helper-methods for changing state

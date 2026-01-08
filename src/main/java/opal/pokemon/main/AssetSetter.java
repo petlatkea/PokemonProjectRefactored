@@ -4,46 +4,45 @@ import main.java.opal.pokemon.entity.*;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.object.OBJ_Pokeball;
 import main.java.opal.pokemon.object.OBJ_Rock;
+import main.java.opal.pokemon.object.SuperObject;
 
 public class AssetSetter {
-    ClickHandler clickH;
     GameController gp;
-    public AssetSetter(GameController gp, ClickHandler clickH) {
+    public AssetSetter(GameController gp) {
         this.gp = gp;
-        this.clickH = clickH;
     }
 
-    public void setObject() {
-        gp.obj[0] = new OBJ_Pokeball(gp);
-        gp.obj[0].worldX = 18 * gp.tileSize;
-        gp.obj[0].worldY = 35 * gp.tileSize;
-        gp.obj[0].collision = true;
+    public void setObject(SuperObject[] obj) {
+        obj[0] = new OBJ_Pokeball(gp);
+        obj[0].worldX = 18 * gp.tileSize;
+        obj[0].worldY = 35 * gp.tileSize;
+        obj[0].collision = true;
 
-        gp.obj[1] = new OBJ_Pokeball(gp);
-        gp.obj[1].worldX = 41 * gp.tileSize;
-        gp.obj[1].worldY = 5 * gp.tileSize;
-        gp.obj[1].collision = true;
+        obj[1] = new OBJ_Pokeball(gp);
+        obj[1].worldX = 41 * gp.tileSize;
+        obj[1].worldY = 5 * gp.tileSize;
+        obj[1].collision = true;
 
-        gp.obj[2] = new OBJ_Pokeball(gp);
-        gp.obj[2].worldX = 91 * gp.tileSize;
-        gp.obj[2].worldY = 31 * gp.tileSize;
-        gp.obj[0].collision = true;
+        obj[2] = new OBJ_Pokeball(gp);
+        obj[2].worldX = 91 * gp.tileSize;
+        obj[2].worldY = 31 * gp.tileSize;
+        obj[0].collision = true;
 
-        gp.obj[3] = new OBJ_Pokeball(gp);
-        gp.obj[3].worldX = 31 * gp.tileSize;
-        gp.obj[3].worldY = 62 * gp.tileSize;
-        gp.obj[3].collision = true;
+        obj[3] = new OBJ_Pokeball(gp);
+        obj[3].worldX = 31 * gp.tileSize;
+        obj[3].worldY = 62 * gp.tileSize;
+        obj[3].collision = true;
 
-        gp.obj[4] = new OBJ_Pokeball(gp);
-        gp.obj[4].worldX = 7 * gp.tileSize;
-        gp.obj[4].worldY = 71 * gp.tileSize;
-        gp.obj[4].collision = true;
+        obj[4] = new OBJ_Pokeball(gp);
+        obj[4].worldX = 7 * gp.tileSize;
+        obj[4].worldY = 71 * gp.tileSize;
+        obj[4].collision = true;
 
 
-        gp.obj[5] = new OBJ_Rock(gp);
-        gp.obj[5].worldX = 86 * gp.tileSize;
-        gp.obj[5].worldY = 89 * gp.tileSize;
-        gp.obj[5].collision = true;
+        obj[5] = new OBJ_Rock(gp);
+        obj[5].worldX = 86 * gp.tileSize;
+        obj[5].worldY = 89 * gp.tileSize;
+        obj[5].collision = true;
     }
 
 
