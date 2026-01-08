@@ -20,15 +20,13 @@ public class Pokedex {
     private volatile boolean isSearching = false;
     public BufferedImage pokemonSprite;
     private GameController gp;
-    Graphics2D g2;
-    KeyHandler keyH;
+
     Pokemon pokemon;
     private BufferedImage pokedexCache;
 
     // Constructor
-    public Pokedex(GameController gp, KeyHandler keyH, Pokemon pokemon) {
+    public Pokedex(GameController gp, Pokemon pokemon) {
         this.gp = gp;
-        this.keyH = keyH;
         this.pokemon = pokemon;
     }
 

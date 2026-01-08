@@ -7,8 +7,6 @@ import main.java.opal.pokemon.main.model.CollisionChecker;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.model.GameModel;
 import main.java.opal.pokemon.main.view.GameView;
-import main.java.opal.pokemon.pokedex.Pokedex;
-import main.java.opal.pokemon.pokedex.Pokemon;
 
 public class GameController implements Runnable {
 
@@ -26,7 +24,6 @@ public class GameController implements Runnable {
         return model;
     }
 
-
     // === SCREEN SETTINGS ===
     final int originalTileSize = 16;    // 16x16 px
     public final int ScaleMultiplier = 4;
@@ -43,11 +40,6 @@ public class GameController implements Runnable {
     public int playerPokemon = 25;
 
     // === SYSTEM ===
-
-    // TODO: Extract away from public here ...
-    public Pokemon originalPokemon = new Pokemon();
-    public Pokedex pokedex;// = new Pokedex(this, view.getKeyH(), originalPokemon);
-
     public CollisionChecker cChecker; // = new CollisionChecker(this);
 
     Thread gameThread;
@@ -101,11 +93,6 @@ public class GameController implements Runnable {
         view = new GameView(this, model);
 
         cChecker = new CollisionChecker(this, model);
-
-        // TODO: Make pokedexController include Pokedex!
-        pokedex = new Pokedex(this, view.getKeyH(), originalPokemon);
-        ((PokedexController) pokedexController).setPokemon(originalPokemon);
-        ((PokedexController) pokedexController).setPokedex(pokedex);
 
         music = new Sound(this);
         collisionSound = new Sound(this);

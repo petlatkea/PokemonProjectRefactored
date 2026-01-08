@@ -10,8 +10,10 @@ import java.awt.event.KeyEvent;
 
 public class PokedexController extends ScreenController {
 
-    public Pokedex pokedex;
+    private Pokedex pokedex;
+    // NOTE: Still not sure why there is a pokemon AND an originalPokemon - but it breaks if I join them into one ;/
     private Pokemon pokemon;
+    private Pokemon originalPokemon = new Pokemon();
 
     // flags for UI-buttons pressed - used by the Screen/view - should really be in a model
     public boolean previousButtonPressed, nextButtonPressed, searchButtonPressed, searching, onOffButtonPressed;
@@ -31,6 +33,10 @@ public class PokedexController extends ScreenController {
         super(gameController);
         // create model and view - but skip model until actually needed
         screen = new PokedexScreen(this);
+
+        // create pokedex with original pokemon
+        pokedex = new Pokedex(gameController, originalPokemon);
+        pokemon = originalPokemon;
     }
 
     @Override
@@ -38,12 +44,8 @@ public class PokedexController extends ScreenController {
 
     }
 
-    public void setPokedex(Pokedex pokedex) {
-        this.pokedex = pokedex;
-    }
-
-    public void setPokemon(Pokemon pokemon) {
-        this.pokemon = pokemon;
+    public Pokedex getPokedex() {
+        return pokedex;
     }
 
     public Pokemon getPokemon() {
@@ -92,8 +94,8 @@ public class PokedexController extends ScreenController {
 //        System.out.println("Closing Pokedex");
         onOffButtonPressed = true;
         int reset = 0;
-        gameController.originalPokemon.setId(reset);
-        gameController.pokedex.pokemonSprite = null;
+        originalPokemon.setId(reset);
+        pokedex.pokemonSprite = null;
         closingPokedex = true;
     }
 
@@ -119,18 +121,18 @@ public class PokedexController extends ScreenController {
         //Pressed on Pokedex left button
         if (mouseClick.insideBox(190, 576, 45, 45)) {
             previousButtonPressed = true;
-            String input = String.valueOf((gameController.originalPokemon.getId() - 1));
+            String input = String.valueOf((originalPokemon.getId() - 1));
             if (!input.isEmpty()) {
-                gameController.pokedex.search(input);
+                pokedex.search(input);
             }
         }
 
         //Pressed on Pokedex right button
         if (mouseClick.insideBox(398, 576, 45, 45)) {
             nextButtonPressed = true;
-            String input = String.valueOf((gameController.originalPokemon.getId() + 1));
+            String input = String.valueOf((originalPokemon.getId() + 1));
             if (!input.isEmpty()) {
-                gameController.pokedex.search(input);
+                pokedex.search(input);
             }
         }
 

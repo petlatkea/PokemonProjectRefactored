@@ -123,7 +123,7 @@ public class PokedexScreen extends Screen {
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 10));
         g2.setColor(Color.black);
-        if (controller.pokedex.isSearching()) {
+        if (controller.getPokedex().isSearching()) {
             g2.drawString("Loading...", 700, 675);
             return;
         }
@@ -183,8 +183,8 @@ public class PokedexScreen extends Screen {
         int pokemonY = 300;
         int pokemonSize = 96;
 
-        if (controller.pokedex.pokemonSprite != null) {
-            g2.drawImage(controller.pokedex.pokemonSprite, pokemonX, pokemonY, pokemonSize * 2, pokemonSize * 2, null);
+        if (controller.getPokedex().pokemonSprite != null) {
+            g2.drawImage(controller.getPokedex().pokemonSprite, pokemonX, pokemonY, pokemonSize * 2, pokemonSize * 2, null);
         }
     }
 
