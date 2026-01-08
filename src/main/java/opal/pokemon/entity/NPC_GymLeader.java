@@ -5,11 +5,9 @@ import main.java.opal.pokemon.main.controller.GameController;
 
 
 public class NPC_GymLeader extends Entity {
-    ClickHandler clickH;
 
-    public NPC_GymLeader(GameController gp, ClickHandler clickH) {
+    public NPC_GymLeader(GameController gp) {
         super(gp);
-        this.clickH = clickH;
 
         direction = "down";
         speed = 3;

@@ -92,9 +92,9 @@ public class OverWorldScreen extends Screen {
     }
 
     private void drawNPCs() {
-        for (int i = 0; i < controller.getGameController().npc.length; i++) {
-            if (controller.getGameController().npc[i] != null) {
-                controller.getGameController().npc[i].draw(g2);
+        for (int i = 0; i < ((OverWorldController)controller).npc.length; i++) {
+            if (((OverWorldController)controller).npc[i] != null) {
+                ((OverWorldController)controller).npc[i].draw(g2);
             }
         }
     }

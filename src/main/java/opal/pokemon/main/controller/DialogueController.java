@@ -45,13 +45,15 @@ public class DialogueController extends ScreenController {
         }
     }
 
-    public void setNpc(Entity npc) {
-        System.out.println("setNpc in DialogueController to " + npc.toString());
+    public void initiateDialogueWithNPC(Entity npc) {
         // set this NPC
         this.currentNPC = npc;
         // and initialize speak
         this.currentNPC.speak();
         // Play Sound now??
         gameController.buttonSound.playButtonSound(); // TODO: Decide if sound should play for the first dialogue, or only for subsequent button-presses
+
+        // change the state to Dialogue
+        gameController.gameState = GameState.dialogueState;
     }
 }

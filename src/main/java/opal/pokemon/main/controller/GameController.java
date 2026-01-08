@@ -53,13 +53,13 @@ public class GameController implements Runnable {
     public Pokedex pokedex;// = new Pokedex(this, view.getKeyH(), originalPokemon);
 
     public CollisionChecker cChecker; // = new CollisionChecker(this);
-    public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
+//    public AssetSetter aSetter; // = new AssetSetter(this, view.getClickH());
 
     Thread gameThread;
 
     // == ENTITY & OBJECT ===
     public SuperObject[] obj = new SuperObject[10];
-    public Entity[] npc = new Entity[20];
+
 
     // == GAME STATE ==
     public GameState gameState = GameState.titleScreenState;
@@ -117,7 +117,7 @@ public class GameController implements Runnable {
         ((PokedexController) pokedexController).setPokedex(pokedex);
 
 
-        aSetter = new AssetSetter(this, view.getClickH());
+//        aSetter = new AssetSetter(this, view.getClickH());
 
         music = new Sound(this);
         collisionSound = new Sound(this);
@@ -127,8 +127,7 @@ public class GameController implements Runnable {
 
     public void setupGame() {
         music.playSound(40);
-        aSetter.setObject();
-        aSetter.setNPC();
+
         gameState = GameState.titleScreenState;
     }
 

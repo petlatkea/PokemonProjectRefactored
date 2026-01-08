@@ -4,6 +4,7 @@ import main.java.opal.pokemon.main.KeyHandler;
 import main.java.opal.pokemon.main.controller.DialogueController;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
+import main.java.opal.pokemon.main.controller.OverWorldController;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,15 +73,6 @@ public class Player extends Entity {
     }
 
     public void update() {
-        // Check if 'E' is pressed - so far only used for speaking with NPCs
-        if (gp.getControls().ePressed) {
-            // Find the NPC to enter dialogue with ...
-            int npcIndex = gp.cChecker.checkEntityInteraction(this, gp.npc);
-            // if there is an NPC (other than 999 == no NPC) - interact with it
-            if (npcIndex != 999) {
-                interactNPC(npcIndex);
-            }
-        }
 
         if (moving == false) {
             if (gp.getControls().upPressed || gp.getControls().leftPressed || gp.getControls().downPressed || gp.getControls().rightPressed) {
@@ -107,8 +99,9 @@ public class Player extends Entity {
                 int objectIndex = gp.cChecker.checkObject(this, true);
 
 
+                // TODO: Check WHY this is needed here!
                 // CHECK NPC COLLISION
-                gp.cChecker.checkEntityCollision(this, gp.npc);
+                gp.cChecker.checkEntityCollision(this, ((OverWorldController)gp.overWorldController).npc);
             } else {
                 standCounter++;
                 if (standCounter == 20) {
@@ -162,15 +155,6 @@ public class Player extends Entity {
 
             }
         }
-    }
-
-    private void interactNPC(int npcIndex) {
-        // Find NPC object (Entity)
-        Entity npc = gp.npc[npcIndex];
-        // setup the dialogue-controller with this NPC
-        ((DialogueController) gp.dialogueController).setNpc(npc);
-        // and change the state do Dialogue
-        gp.gameState = GameState.dialogueState;
     }
 
     public void draw(Graphics2D g2) {
