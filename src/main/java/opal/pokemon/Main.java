@@ -1,9 +1,6 @@
 package main.java.opal.pokemon;
 
-import main.java.opal.pokemon.main.controller.GameController;
-import main.java.opal.pokemon.main.view.MainWindow;
-
-import javax.swing.*;
+import main.java.opal.pokemon.game.GameController;
 
 public class Main {
     public static void main(String[] args) {
