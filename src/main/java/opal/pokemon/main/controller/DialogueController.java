@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.main.controller;
 
-import main.java.opal.pokemon.entity.Entity;
+import main.java.opal.pokemon.entity.NPC;
 import main.java.opal.pokemon.main.MouseClick;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.view.DialogueScreen;
@@ -8,7 +8,7 @@ import main.java.opal.pokemon.main.view.DialogueScreen;
 public class DialogueController extends ScreenController {
 
     public String currentDialogue = "";
-    private Entity currentNPC = null;
+    private NPC currentNPC = null;
 
     public DialogueController(GameController gameController) {
         super(gameController);
@@ -45,7 +45,7 @@ public class DialogueController extends ScreenController {
         }
     }
 
-    public void initiateDialogueWithNPC(Entity npc) {
+    public void initiateDialogueWithNPC(NPC npc) {
         // set this NPC
         this.currentNPC = npc;
         // and initialize speak

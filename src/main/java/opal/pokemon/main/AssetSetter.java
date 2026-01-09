@@ -46,7 +46,7 @@ public class AssetSetter {
     }
 
 
-    public void setNPC(Entity[] npc) {
+    public void setNPC(NPC[] npc) {
         npc[0] = new NPC_Prof(gp);
         npc[0].worldX = 12 * gp.tileSize;
         npc[0].worldY = 40 * gp.tileSize;

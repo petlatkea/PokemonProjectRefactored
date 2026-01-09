@@ -5,7 +5,7 @@ import main.java.opal.pokemon.main.controller.GameState;
 
 import java.util.Objects;
 
-public class NPC_Machop extends Entity {
+public class NPC_Machop extends NPC {
     public NPC_Machop (GameController gp) {
         super(gp);
 

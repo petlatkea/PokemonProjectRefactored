@@ -1,14 +1,13 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.controller.DialogueController;
-import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.UtilityTool;
+import main.java.opal.pokemon.main.controller.GameController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Entity {
+public abstract class Entity {
     GameController gp;
     public int worldX, worldY;
     public int speed;
@@ -26,37 +25,20 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean isGrassOn = false;
 
-    String[] dialogues = new String[25];
-    int dialogueIndex = 0;
-
-    public Entity (GameController gp) {
+    public Entity(GameController gp) {
         this.gp = gp;
     }
 
-    public void setAction() {} // Might be used later for NPC interaction
-    public void speak() {
-        if (dialogues[dialogueIndex] == null) {
-            dialogueIndex = 0;
-        }
-        // TODO: This is a bit nasty - move that into the controller in some other way!
-        ((DialogueController)gp.dialogueController).currentDialogue = dialogues[dialogueIndex];
-        dialogueIndex++;
-
-        switch(gp.getPlayer().direction) {
-            case "up" -> direction = "down";
-            case "down" -> direction = "up";
-            case "left" -> direction = "right";
-            case "right" -> direction = "left";
-        }
+    // NOTE: Only implemented by the player - maybe not necessary?
+    public void update() {
     }
-    public void update() {}
 
 
     public void draw(Graphics2D g2) {
-        int cameraLeft   = gp.getPlayer().worldX - gp.getPlayer().screenX;
-        int cameraTop    = gp.getPlayer().worldY - gp.getPlayer().screenY;
-        int cameraRight  = cameraLeft + gp.screenWidth;
-        int cameraBottom = cameraTop  + gp.screenHeight;
+        int cameraLeft = gp.getPlayer().worldX - gp.getPlayer().screenX;
+        int cameraTop = gp.getPlayer().worldY - gp.getPlayer().screenY;
+        int cameraRight = cameraLeft + gp.screenWidth;
+        int cameraBottom = cameraTop + gp.screenHeight;
 
         if (worldX + gp.tileSize >= cameraLeft &&
                 worldX <= cameraRight &&

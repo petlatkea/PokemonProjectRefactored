@@ -1,6 +1,6 @@
 package main.java.opal.pokemon.main.controller;
 
-import main.java.opal.pokemon.entity.Entity;
+import main.java.opal.pokemon.entity.NPC;
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.AssetSetter;
 import main.java.opal.pokemon.main.MouseClick;
@@ -12,7 +12,7 @@ public class OverWorldController extends ScreenController {
 
     // TODO: Split player and NPCs into model, view and controllers, and add separately
     private Player player;
-    public Entity[] npc = new Entity[20];
+    public NPC[] npc = new NPC[20];
     public SuperObject[] obj = new SuperObject[10];
 
     // TODO: Make this part of the model-initialization for the overworld - setting all the NPCs
@@ -40,6 +40,7 @@ public class OverWorldController extends ScreenController {
         // TODO: This should probably be handled by the GameController calling update directly on the soundController
         gameController.soundController.updateFade();
 
+        // NOTE: No NPCs implement .update() - so maybe get rid of it?
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {
                 npc[i].update();
@@ -53,18 +54,18 @@ public class OverWorldController extends ScreenController {
 
         if (controls.pokedexPressed) {
             gameController.openPokedex();
-        } else if(controls.escapePressed) {
-            gameController.gameState =  GameState.pauseState;
-        } else if(controls.ePressed) {
+        } else if (controls.escapePressed) {
+            gameController.gameState = GameState.pauseState;
+        } else if (controls.ePressed) {
             // Interact with NPC - if possible
-            Entity npc = getNPCforInteraction();
+            NPC npc = getNPCforInteraction();
             if (npc != null) {
                 interactWithNPC(npc);
             }
         }
     }
 
-    private Entity getNPCforInteraction() {
+    private NPC getNPCforInteraction() {
         int npcIndex = gameController.cChecker.checkEntityInteraction(player, npc);
         // if there is an NPC (other than 999 == no NPC) - return that
         if (npcIndex != 999) {
@@ -73,9 +74,9 @@ public class OverWorldController extends ScreenController {
         return null;
     }
 
-    private void interactWithNPC(Entity npc) {
+    private void interactWithNPC(NPC npc) {
         // ask the dialogue-controller to initiate dialogue with this NPC
-        ((DialogueController)gameController.dialogueController).initiateDialogueWithNPC(npc);
+        ((DialogueController) gameController.dialogueController).initiateDialogueWithNPC(npc);
     }
 
     @Override

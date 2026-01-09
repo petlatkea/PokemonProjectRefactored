@@ -3,7 +3,7 @@ package main.java.opal.pokemon.entity;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
 
-public class NPC_NurseJoy extends Entity {
+public class NPC_NurseJoy extends NPC {
 
     public NPC_NurseJoy(GameController gp) {
         super(gp);

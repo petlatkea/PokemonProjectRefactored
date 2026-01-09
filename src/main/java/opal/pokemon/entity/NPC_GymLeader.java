@@ -4,7 +4,7 @@ import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.controller.GameController;
 
 
-public class NPC_GymLeader extends Entity {
+public class NPC_GymLeader extends NPC {
 
     public NPC_GymLeader(GameController gp) {
         super(gp);
