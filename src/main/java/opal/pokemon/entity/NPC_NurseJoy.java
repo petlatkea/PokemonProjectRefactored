@@ -8,26 +8,26 @@ public class NPC_NurseJoy extends NPC {
     public NPC_NurseJoy(GameController gp) {
         super(gp);
 
-        direction = "down";
-        speed = 3;
+        model.direction = "down";
+        model.speed = 3;
 
         getNPCImage();
         setDialogue();
     }
 
     public void getNPCImage() {
-        up1 = setup("/images/characters/npc/nurse_joy/up_1");
-        up2 = setup("/images/characters/npc/nurse_joy/up_2");
-        up3 = setup("/images/characters/npc/nurse_joy/up_3");
-        left1 = setup("/images/characters/npc/nurse_joy/left_1");
-        left2 = setup("/images/characters/npc/nurse_joy/left_2");
-        left3 = setup("/images/characters/npc/nurse_joy/left_3");
-        down1 = setup("/images/characters/npc/nurse_joy/down_1");
-        down2 = setup("/images/characters/npc/nurse_joy/down_2");
-        down3 = setup("/images/characters/npc/nurse_joy/down_3");
-        right1 = setup("/images/characters/npc/nurse_joy/right_1");
-        right2 = setup("/images/characters/npc/nurse_joy/right_2");
-        right3 = setup("/images/characters/npc/nurse_joy/right_3");
+        view.up1 = view.setup("/images/characters/npc/nurse_joy/up_1", this);
+        view.up2 = view.setup("/images/characters/npc/nurse_joy/up_2", this);
+        view.up3 = view.setup("/images/characters/npc/nurse_joy/up_3", this);
+        view.left1 = view.setup("/images/characters/npc/nurse_joy/left_1", this);
+        view.left2 = view.setup("/images/characters/npc/nurse_joy/left_2", this);
+        view.left3 = view.setup("/images/characters/npc/nurse_joy/left_3", this);
+        view.down1 = view.setup("/images/characters/npc/nurse_joy/down_1", this);
+        view.down2 = view.setup("/images/characters/npc/nurse_joy/down_2", this);
+        view.down3 = view.setup("/images/characters/npc/nurse_joy/down_3", this);
+        view.right1 = view.setup("/images/characters/npc/nurse_joy/right_1", this);
+        view.right2 = view.setup("/images/characters/npc/nurse_joy/right_2", this);
+        view.right3 = view.setup("/images/characters/npc/nurse_joy/right_3", this);
     }
 
     public void setDialogue() {

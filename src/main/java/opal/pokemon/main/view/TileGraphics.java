@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.main.view;
 
+import main.java.opal.pokemon.entity.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.model.TileMap;
@@ -44,8 +45,8 @@ public class TileGraphics {
 
     // Draw tilemap (previously known as drawLayer)
     public void drawTileMap(Graphics2D g2, TileMap tileMap) {
-        int cameraLeft = controller.getPlayer().worldX - controller.getPlayer().screenX;
-        int cameraTop = controller.getPlayer().worldY - controller.getPlayer().screenY;
+        int cameraLeft = controller.getPlayer().model.worldX - ((PlayerView)controller.getPlayer().view).screenX;
+        int cameraTop = controller.getPlayer().model.worldY - ((PlayerView)controller.getPlayer().view).screenY;
         int cameraRight = cameraLeft + controller.screenWidth;
         int cameraBottom = cameraTop + controller.screenHeight;
 

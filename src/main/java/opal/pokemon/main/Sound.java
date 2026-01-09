@@ -37,8 +37,8 @@ public class Sound {
     // MUSIC ZONE HANDLING
     // ============================
     private int getMusicZone(Player player) {
-        int x = (player.worldX / gp.tileSize) + 1;
-        int y = (player.worldY / gp.tileSize) + 1;
+        int x = (player.model.worldX / gp.tileSize) + 1;
+        int y = (player.model.worldY / gp.tileSize) + 1;
 
         if (x > 42 && x <= 71 && y >= 5 && y <= 22) return 4;// floaroma town
         else if (x>=49 && x <= 55 && y>=62 && y <=66) return 6; // route 202 extra corner

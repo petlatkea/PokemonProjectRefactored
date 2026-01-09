@@ -94,13 +94,13 @@ public class OverWorldScreen extends Screen {
     private void drawNPCs() {
         for (int i = 0; i < ((OverWorldController)controller).npc.length; i++) {
             if (((OverWorldController)controller).npc[i] != null) {
-                ((OverWorldController)controller).npc[i].draw(g2);
+                ((OverWorldController)controller).npc[i].view.draw(g2);
             }
         }
     }
 
     private void drawPlayer() {
-        ((OverWorldController)controller).getPlayer().draw(g2);
+        ((OverWorldController)controller).getPlayer().view.draw(g2);
     }
 
     private void drawEnvironmentInFrontOfPlayer() {
@@ -112,8 +112,8 @@ public class OverWorldScreen extends Screen {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
-        int x = (((OverWorldController)controller).getPlayer().worldX / controller.getGameController().tileSize) + 1;
-        int y = (((OverWorldController)controller).getPlayer().worldY / controller.getGameController().tileSize) + 1;
+        int x = (((OverWorldController) controller).getPlayer().model.worldX / controller.getGameController().tileSize) + 1;
+        int y = (((OverWorldController) controller).getPlayer().model.worldY / controller.getGameController().tileSize) + 1;
 
         long elapsed = System.currentTimeMillis() - areaDisplayStartTime;
 

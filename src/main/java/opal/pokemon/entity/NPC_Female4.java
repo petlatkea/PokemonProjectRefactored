@@ -8,26 +8,26 @@ public class NPC_Female4 extends NPC {
     public NPC_Female4(GameController gp) {
         super(gp);
 
-        direction = "down";
-        speed = 3;
+        model.direction = "down";
+        model.speed = 3;
 
         getNPCImage();
         setDialogue();
     }
 
     public void getNPCImage() {
-        up1 = setup("/images/characters/npc/female_4/up_1");
-        up2 = setup("/images/characters/npc/female_4/up_2");
-        up3 = setup("/images/characters/npc/female_4/up_3");
-        left1 = setup("/images/characters/npc/female_4/left_1");
-        left2 = setup("/images/characters/npc/female_4/left_2");
-        left3 = setup("/images/characters/npc/female_4/left_3");
-        down1 = setup("/images/characters/npc/female_4/down_1");
-        down2 = setup("/images/characters/npc/female_4/down_2");
-        down3 = setup("/images/characters/npc/female_4/down_3");
-        right1 = setup("/images/characters/npc/female_4/right_1");
-        right2 = setup("/images/characters/npc/female_4/right_2");
-        right3 = setup("/images/characters/npc/female_4/right_3");
+        view.up1 = view.setup("/images/characters/npc/female_4/up_1", this);
+        view.up2 = view.setup("/images/characters/npc/female_4/up_2", this);
+        view.up3 = view.setup("/images/characters/npc/female_4/up_3", this);
+        view.left1 = view.setup("/images/characters/npc/female_4/left_1", this);
+        view.left2 = view.setup("/images/characters/npc/female_4/left_2", this);
+        view.left3 = view.setup("/images/characters/npc/female_4/left_3", this);
+        view.down1 = view.setup("/images/characters/npc/female_4/down_1", this);
+        view.down2 = view.setup("/images/characters/npc/female_4/down_2", this);
+        view.down3 = view.setup("/images/characters/npc/female_4/down_3", this);
+        view.right1 = view.setup("/images/characters/npc/female_4/right_1", this);
+        view.right2 = view.setup("/images/characters/npc/female_4/right_2", this);
+        view.right3 = view.setup("/images/characters/npc/female_4/right_3", this);
     }
 
     public void setDialogue() {

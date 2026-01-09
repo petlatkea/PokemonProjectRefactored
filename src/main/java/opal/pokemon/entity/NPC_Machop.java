@@ -9,18 +9,18 @@ public class NPC_Machop extends NPC {
     public NPC_Machop (GameController gp) {
         super(gp);
 
-        direction = "down";
-        speed = 3;
+        model.direction = "down";
+        model.speed = 3;
 
         getNPCImage();
         setDialogue();
     }
 
     public void getNPCImage() {
-        up1 = setup("/images/characters/npc/machop/up_1");
-        down1 = setup("/images/characters/npc/machop/down_1");
-        left1 = setup("/images/characters/npc/machop/left_1");
-        right1 = setup("/images/characters/npc/machop/right_1");
+        view.up1 = view.setup("/images/characters/npc/machop/up_1", this);
+        view.down1 = view.setup("/images/characters/npc/machop/down_1", this);
+        view.left1 = view.setup("/images/characters/npc/machop/left_1", this);
+        view.right1 = view.setup("/images/characters/npc/machop/right_1", this);
 
     }
 

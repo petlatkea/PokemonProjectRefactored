@@ -1,6 +1,5 @@
 package main.java.opal.pokemon.entity;
 
-import main.java.opal.pokemon.main.ClickHandler;
 import main.java.opal.pokemon.main.controller.GameController;
 
 
@@ -9,26 +8,26 @@ public class NPC_GymLeader extends NPC {
     public NPC_GymLeader(GameController gp) {
         super(gp);
 
-        direction = "down";
-        speed = 3;
+        model.direction = "down";
+        model.speed = 3;
 
         getNPCImage();
         setDialogue();
     }
 
     public void getNPCImage() {
-        up1 = setup("/images/characters/npc/gym_leader/up_1");
-        up2 = setup("/images/characters/npc/gym_leader/up_2");
-        up3 = setup("/images/characters/npc/gym_leader/up_3");
-        left1 = setup("/images/characters/npc/gym_leader/left_1");
-        left2 = setup("/images/characters/npc/gym_leader/left_2");
-        left3 = setup("/images/characters/npc/gym_leader/left_3");
-        down1 = setup("/images/characters/npc/gym_leader/down_1");
-        down2 = setup("/images/characters/npc/gym_leader/down_2");
-        down3 = setup("/images/characters/npc/gym_leader/down_3");
-        right1 = setup("/images/characters/npc/gym_leader/right_1");
-        right2 = setup("/images/characters/npc/gym_leader/right_2");
-        right3 = setup("/images/characters/npc/gym_leader/right_3");
+        view.up1 = view.setup("/images/characters/npc/gym_leader/up_1", this);
+        view.up2 = view.setup("/images/characters/npc/gym_leader/up_2", this);
+        view.up3 = view.setup("/images/characters/npc/gym_leader/up_3", this);
+        view.left1 = view.setup("/images/characters/npc/gym_leader/left_1", this);
+        view.left2 = view.setup("/images/characters/npc/gym_leader/left_2", this);
+        view.left3 = view.setup("/images/characters/npc/gym_leader/left_3", this);
+        view.down1 = view.setup("/images/characters/npc/gym_leader/down_1", this);
+        view.down2 = view.setup("/images/characters/npc/gym_leader/down_2", this);
+        view.down3 = view.setup("/images/characters/npc/gym_leader/down_3", this);
+        view.right1 = view.setup("/images/characters/npc/gym_leader/right_1", this);
+        view.right2 = view.setup("/images/characters/npc/gym_leader/right_2", this);
+        view.right3 = view.setup("/images/characters/npc/gym_leader/right_3", this);
     }
 
     public void setDialogue() {

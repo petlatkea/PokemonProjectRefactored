@@ -22,11 +22,11 @@ public abstract class NPC extends Entity{
         ((DialogueController)gp.dialogueController).currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
 
-        switch(gp.getPlayer().direction) {
-            case "up" -> direction = "down";
-            case "down" -> direction = "up";
-            case "left" -> direction = "right";
-            case "right" -> direction = "left";
+        switch(gp.getPlayer().model.direction) {
+            case "up" -> model.direction = "down";
+            case "down" -> model.direction = "up";
+            case "left" -> model.direction = "right";
+            case "right" -> model.direction = "left";
         }
     }
 
