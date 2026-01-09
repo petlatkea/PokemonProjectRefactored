@@ -1,7 +1,6 @@
 package main.java.opal.pokemon.battleSystem;
 
 import main.java.opal.pokemon.main.ClickHandler;
-import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.main.controller.GameController;
 import main.java.opal.pokemon.main.controller.GameState;
 import main.java.opal.pokemon.pokedex.EntryStats;
@@ -15,7 +14,6 @@ public class Battle {
 
     GameController gp;
     ClickHandler clickH;
-    Sound sound;
 
     // === Pokemons ===
     // TODO: Move to model, so it isn't public - this is just a hack to make the BattleScreen work
@@ -56,12 +54,11 @@ public class Battle {
     public MenuState menuState = MenuState.mainMenu;
 
 
-    public Battle(GameController gp, Pokemon playerPokemon, Pokemon enemyPokemon, ClickHandler clickH, Sound sound) {
+    public Battle(GameController gp, Pokemon playerPokemon, Pokemon enemyPokemon, ClickHandler clickH) {
         this.gp = gp;
         this.playerPokemon = playerPokemon;
         this.enemyPokemon = enemyPokemon;
         this.clickH = clickH;
-        this.sound = sound;
 
         // === HP INIT ===
         playerMaxHp = getBaseStat(playerPokemon, "hp");
@@ -226,7 +223,7 @@ public class Battle {
 
             if (clickH.consumeLeftClick(runButton.x, runButton.y, runButton.width, runButton.height)) {
                 showMessage("You ran away safely!");
-                sound.playSound(27);
+                gp.soundController.playSound(27);
                 menuState = MenuState.runAway;
                 isBattleFinished = true;
             }
@@ -256,7 +253,7 @@ public class Battle {
                 showMessage("You used a potion and healed " + playerPokemon.getName().toUpperCase() + " for 20HP");
                 playerCurrentHp += potionHealth;
             }
-            sound.playSound(26);
+            gp.soundController.playSound(26);
             menuState = MenuState.mainMenu;
             isPlayerTurn = false;
         }
@@ -268,7 +265,7 @@ public class Battle {
         if (move == null) return;
 
         if (Objects.equals(move.name, "Leer")) {
-            sound.playSound(33);
+            gp.soundController.playSound(33);
             leerCounter++;
             showMessage(playerPokemon.getName().toUpperCase() + " used " + move.name + "! \nThe enemy " + enemyPokemon.getName().toUpperCase() + "'s defense fell.");
         } else if (move.power <= 0) {
@@ -278,17 +275,18 @@ public class Battle {
             enemyCurrentHp = Math.max(0, enemyCurrentHp - damage);
             showMessage(playerPokemon.getName().toUpperCase() + " used " + move.name + " \nand dealt " + damage + "HP!");
             switch (move.name) {
-                case "Bite" -> sound.playSound(28);
-                case "BubbleBeam" -> sound.playSound(29);
-                case "Ember" -> sound.playSound(30);
-                case "Flame Wheel" -> sound.playSound(31);
-                case "Mach Punch" -> sound.playSound(34);
-                case "Peck" -> sound.playSound(35);
-                case "Pound" -> sound.playSound(36);
-                case "Razor Leaf" -> sound.playSound(37);
-                case "Tackle" -> sound.playSound(38);
-                case "Thunderbolt" -> sound.playSound(39);
-                default -> sound.playSound(32);
+                // TODO: This suggests having a playSoundEffect method that receives a string directly - and translates it to the sound in question
+                case "Bite" -> gp.soundController.playSound(28);
+                case "BubbleBeam" -> gp.soundController.playSound(29);
+                case "Ember" -> gp.soundController.playSound(30);
+                case "Flame Wheel" -> gp.soundController.playSound(31);
+                case "Mach Punch" -> gp.soundController.playSound(34);
+                case "Peck" -> gp.soundController.playSound(35);
+                case "Pound" -> gp.soundController.playSound(36);
+                case "Razor Leaf" -> gp.soundController.playSound(37);
+                case "Tackle" -> gp.soundController.playSound(38);
+                case "Thunderbolt" -> gp.soundController.playSound(39);
+                default -> gp.soundController.playSound(32);
             }
         }
 
@@ -309,11 +307,11 @@ public class Battle {
 
         Moves move = enemyMoves[rng.nextInt(enemyMoves.length)];
         if (Objects.equals(move.name, "Growl") || Objects.equals(move.name, "Amnesia") || Objects.equals(move.name, "Charm")) {
-            sound.playSound(42);
+            gp.soundController.playSound(42);
             leerCounter--;
             showMessage(enemyPokemon.getName().toUpperCase() + " used " + move.name + "! \nYour " + playerPokemon.getName().toUpperCase() + "'s attack fell.");
         } else if (Objects.equals(move.name, "Harden") || Objects.equals(move.name, "Defense Curl")) {
-            sound.playSound(43);
+            gp.soundController.playSound(43);
             leerCounter--;
             showMessage(enemyPokemon.getName().toUpperCase() + " used " + move.name + "! \nIt´s defense rose.");
         } else if (move.power <= 0) {
@@ -321,7 +319,7 @@ public class Battle {
         } else {
             int damage = calculateDamage(move.power);
             playerCurrentHp = Math.max(0, playerCurrentHp - damage);
-            sound.playSound(32);
+            gp.soundController.playSound(32);
             showMessage("Enemy " + enemyPokemon.getName().toUpperCase() + " used " + move.name + " \nand dealt " + damage + "HP!");
         }
 
@@ -357,7 +355,7 @@ public class Battle {
 
     public void endBattle() {
         gp.gameState = GameState.playState;
-        gp.music.stopMusic();
+        gp.soundController.stopMusic();
     }
 
     public void rightClick() {

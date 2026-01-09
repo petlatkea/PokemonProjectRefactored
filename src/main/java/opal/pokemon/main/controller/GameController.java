@@ -2,7 +2,6 @@ package main.java.opal.pokemon.main.controller;
 
 import main.java.opal.pokemon.entity.Player;
 import main.java.opal.pokemon.main.MouseClick;
-import main.java.opal.pokemon.main.Sound;
 import main.java.opal.pokemon.main.model.CollisionChecker;
 import main.java.opal.pokemon.main.model.Controls;
 import main.java.opal.pokemon.main.model.GameModel;
@@ -51,12 +50,6 @@ public class GameController implements Runnable {
     public final int maxWorldCol = 100;
     public final int maxWorldRow = 100;
 
-    // === SOUND ===
-    public Sound music;
-    public Sound collisionSound;
-    public Sound buttonSound;
-    public Sound grassSound;
-
     // === FPS ===
     int FPS = 60;
 
@@ -72,6 +65,7 @@ public class GameController implements Runnable {
 
     // custom controllers
     public final InputController inputController;
+    public final SoundController soundController;
 
     // === CONSTRUCTOR ===
     public GameController() {
@@ -87,21 +81,18 @@ public class GameController implements Runnable {
 
         // then create custom controllers
         inputController = new InputController(this);
+        soundController = new SoundController(this);
 
         // then create model and view - which might access some of these sub-controllers
         model = new GameModel(this);
         view = new GameView(this, model);
 
         cChecker = new CollisionChecker(this, model);
-
-        music = new Sound(this);
-        collisionSound = new Sound(this);
-        buttonSound = new Sound(this);
-        grassSound = new Sound(this);
     }
 
     public void setupGame() {
-        music.playSound(40);
+        // TODO: Check which sound this is, perhaps it is the titlescreen that should play it
+        soundController.playSound(40);
 
         gameState = GameState.titleScreenState;
     }

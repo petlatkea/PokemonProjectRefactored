@@ -34,6 +34,6 @@ public class NPC_Machop extends Entity {
             gp.gameState = GameState.playState;
         }
         super.speak();
-        gp.music.machopSound();
+        gp.soundController.machopSound();
     }
 }

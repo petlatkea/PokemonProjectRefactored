@@ -34,7 +34,9 @@ public class CollisionChecker {
         boolean walksInGrass = isGrass(model.backgroundTileMap, entityCol, entityRow);
 
         if(walksInGrass){
-            gp.grassSound.playGrassStep();
+            // TODO: The collisionChecker shouldn't be the one responsible for playing a sound - that should be the controller
+            // TODO: Maybe change method to return a boolean ...
+            gp.soundController.playGrassStep();
             entity.isGrassOn = true;
 
         } else{
@@ -69,7 +71,7 @@ public class CollisionChecker {
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
-                    gp.collisionSound.PlayCollisionSound();
+                    gp.soundController.playCollisionSound();
 
                 }
             }
@@ -88,7 +90,7 @@ public class CollisionChecker {
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
-                    gp.collisionSound.PlayCollisionSound();
+                    gp.soundController.playCollisionSound();
                 }
             }
             case "down" -> {
@@ -106,7 +108,7 @@ public class CollisionChecker {
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
-                    gp.collisionSound.PlayCollisionSound();
+                    gp.soundController.playCollisionSound();
 
                 }
             }
@@ -125,7 +127,7 @@ public class CollisionChecker {
 
                 if (collidingBackground || collidingEnvironmentB || collidingEnvironmentF) {
                     entity.collisionOn = true;
-                    gp.collisionSound.PlayCollisionSound();
+                    gp.soundController.playCollisionSound();
                 }
             }
         }

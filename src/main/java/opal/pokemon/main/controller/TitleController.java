@@ -16,9 +16,9 @@ public class TitleController extends ScreenController {
     }
 
     private void startGame() {
-        gameController.music.stopSound();
-        gameController.music.setFile();
-        gameController.music.play();
+        gameController.soundController.stopSound();
+        gameController.soundController.setFile();
+        gameController.soundController.play();
         gameController.gameState = GameState.playState;
     }
 

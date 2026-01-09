@@ -36,8 +36,9 @@ public class OverWorldController extends ScreenController {
     @Override
     public void update() {
         player.update();
-        gameController.music.updateMusic(player); // NOTE: used for updating the music for the zone
-        gameController.music.updateFade();
+        gameController.soundController.updateMusic(player); // NOTE: used for updating the music for the zone
+        // TODO: This should probably be handled by the GameController calling update directly on the soundController
+        gameController.soundController.updateFade();
 
         for (int i = 0; i < npc.length; i++) {
             if (npc[i] != null) {

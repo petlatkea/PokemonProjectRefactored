@@ -43,9 +43,9 @@ public class BattleController extends ScreenController {
         Pokemon playerPokemon = Pokemon.load(String.valueOf(gameController.playerPokemon));
         Pokemon enemyPokemon = Pokemon.load("448");
 
-        battle = new Battle(gameController, playerPokemon, enemyPokemon, gameController.getView().getClickH(), gameController.music);
+        battle = new Battle(gameController, playerPokemon, enemyPokemon, gameController.getView().getClickH());
         gameController.gameState = GameState.battleState;
-        gameController.music.updateMusic();
+        gameController.soundController.updateMusic();
 
         ((BattleScreen)screen).setPlayerAndEnemyGraphics(playerPokemon, enemyPokemon);
     }
@@ -104,10 +104,10 @@ public class BattleController extends ScreenController {
 
         Pokemon enemyPokemon = Pokemon.load(enemyID);
 
-        battle = new Battle(gameController, playerPokemon, enemyPokemon, gameController.getView().getClickH(), gameController.music);
+        battle = new Battle(gameController, playerPokemon, enemyPokemon, gameController.getView().getClickH());
         gameController.getView().getClickH().clicked = false;
         gameController.gameState = GameState.battleState;
-        gameController.music.updateMusic();
+        gameController.soundController.updateMusic();
         ((BattleScreen)screen).setPlayerAndEnemyGraphics(playerPokemon, enemyPokemon);
     }
 
