@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.Screen;
 import main.java.opal.pokemon.game.GameState;
 import main.java.opal.pokemon.game.screens.overworld.tiles.TileGraphics;
@@ -117,8 +118,8 @@ public class OverWorldScreen extends Screen {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
-        int x = (((OverWorldController) controller).getPlayer().model.worldX / controller.getGameController().tileSize) + 1;
-        int y = (((OverWorldController) controller).getPlayer().model.worldY / controller.getGameController().tileSize) + 1;
+        int x = (((OverWorldController) controller).getPlayer().model.worldX / ViewSettings.tileSize) + 1;
+        int y = (((OverWorldController) controller).getPlayer().model.worldY / ViewSettings.tileSize) + 1;
 
         long elapsed = System.currentTimeMillis() - areaDisplayStartTime;
 

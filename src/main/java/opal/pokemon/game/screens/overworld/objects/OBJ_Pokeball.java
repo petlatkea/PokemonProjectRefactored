@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.game.screens.overworld.objects;
 
 import main.java.opal.pokemon.game.GameController;
+import main.java.opal.pokemon.game.ViewSettings;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -14,9 +15,9 @@ public class OBJ_Pokeball extends SuperObject {
         name = "Pokeball";
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/images/objects/pokeball.png"));
-            uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            uTool.scaleImage(image, ViewSettings.tileSize, ViewSettings.tileSize);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         collision = true;

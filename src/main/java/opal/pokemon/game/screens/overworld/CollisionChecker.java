@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.screens.overworld.tiles.TileMap;
@@ -30,8 +31,8 @@ public class CollisionChecker {
         int entityWorldX_Center = entity.model.worldX + entity.solidArea.x + (entity.solidArea.width / 2);
         int entityWorldY_Bottom = entity.model.worldY + entity.solidArea.y + entity.solidArea.height;
 
-        int entityCol = entityWorldX_Center / gp.tileSize;
-        int entityRow = entityWorldY_Bottom / gp.tileSize;
+        int entityCol = entityWorldX_Center / ViewSettings.tileSize;
+        int entityRow = entityWorldY_Bottom / ViewSettings.tileSize;
         boolean walksInGrass = isGrass(model.backgroundTileMap, entityCol, entityRow);
 
         if(walksInGrass){
@@ -51,14 +52,14 @@ public class CollisionChecker {
         int entityTopWorldY = entity.model.worldY + entity.solidArea.y;
         int entityBottomWorldY = entity.model.worldY + entity.solidArea.y + entity.solidArea.height;
 
-        int entityLeftCol = entityLeftWorldX / gp.tileSize;
-        int entityRightCol = entityRightWorldX / gp.tileSize;
-        int entityTopRow = entityTopWorldY / gp.tileSize;
-        int entityBottomRow = entityBottomWorldY / gp.tileSize;
+        int entityLeftCol = entityLeftWorldX / ViewSettings.tileSize;
+        int entityRightCol = entityRightWorldX / ViewSettings.tileSize;
+        int entityTopRow = entityTopWorldY / ViewSettings.tileSize;
+        int entityBottomRow = entityBottomWorldY / ViewSettings.tileSize;
 
         switch (entity.model.direction) {
             case "up" -> {
-                entityTopRow = (entityTopWorldY - entity.model.speed) / gp.tileSize;
+                entityTopRow = (entityTopWorldY - entity.model.speed) / ViewSettings.tileSize;
 
                 boolean collidingBackground =
                         isTileColliding(model.backgroundTileMap, entityLeftCol, entityTopRow) ||
@@ -77,7 +78,7 @@ public class CollisionChecker {
                 }
             }
             case "left" -> {
-                entityLeftCol = (entityLeftWorldX - entity.model.speed) / gp.tileSize;
+                entityLeftCol = (entityLeftWorldX - entity.model.speed) / ViewSettings.tileSize;
 
                 boolean collidingBackground =
                         isTileColliding(model.backgroundTileMap, entityLeftCol, entityTopRow) ||
@@ -95,7 +96,7 @@ public class CollisionChecker {
                 }
             }
             case "down" -> {
-                entityBottomRow = (entityBottomWorldY + entity.model.speed) / gp.tileSize;
+                entityBottomRow = (entityBottomWorldY + entity.model.speed) / ViewSettings.tileSize;
 
                 boolean collidingBackground =
                         isTileColliding(model.backgroundTileMap, entityLeftCol, entityBottomRow) ||
@@ -114,7 +115,7 @@ public class CollisionChecker {
                 }
             }
             case "right" -> {
-                entityRightCol = (entityRightWorldX + entity.model.speed) / gp.tileSize;
+                entityRightCol = (entityRightWorldX + entity.model.speed) / ViewSettings.tileSize;
 
                 boolean collidingBackground =
                         isTileColliding(model.backgroundTileMap, entityRightCol, entityTopRow) ||

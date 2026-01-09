@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.tiles;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.game.GameController;
@@ -33,7 +34,7 @@ public class TileGraphics {
                 String fileName = String.format("tile%03d", i);
 
                 tileImages[i] = ImageIO.read(getClass().getResourceAsStream("/images/tiles/" + fileName + ".png"));
-                tileImages[i] = uTool.scaleImage(tileImages[i], controller.tileSize, controller.tileSize);
+                tileImages[i] = uTool.scaleImage(tileImages[i], ViewSettings.tileSize, ViewSettings.tileSize);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -46,19 +47,19 @@ public class TileGraphics {
     public void drawTileMap(Graphics2D g2, TileMap tileMap) {
         int cameraLeft = controller.getPlayer().model.worldX - ((PlayerView)controller.getPlayer().view).screenX;
         int cameraTop = controller.getPlayer().model.worldY - ((PlayerView)controller.getPlayer().view).screenY;
-        int cameraRight = cameraLeft + controller.screenWidth;
-        int cameraBottom = cameraTop + controller.screenHeight;
+        int cameraRight = cameraLeft + ViewSettings.screenWidth;
+        int cameraBottom = cameraTop + ViewSettings.screenHeight;
 
         for (int worldCol = 0; worldCol < tileMap.getCols(); worldCol++) {
             for (int worldRow = 0; worldRow < tileMap.getRows(); worldRow++) {
 
                 int tileNum = tileMap.map[worldCol][worldRow];
-                int worldX = worldCol * controller.tileSize;
-                int worldY = worldRow * controller.tileSize;
+                int worldX = worldCol * ViewSettings.tileSize;
+                int worldY = worldRow * ViewSettings.tileSize;
 
-                if (worldX + controller.tileSize >= cameraLeft &&
+                if (worldX + ViewSettings.tileSize >= cameraLeft &&
                         worldX <= cameraRight &&
-                        worldY + controller.tileSize >= cameraTop &&
+                        worldY + ViewSettings.tileSize >= cameraTop &&
                         worldY <= cameraBottom) {
 
                     int screenX = worldX - cameraLeft;

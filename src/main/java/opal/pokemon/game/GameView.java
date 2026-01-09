@@ -45,7 +45,7 @@ public class GameView extends JPanel {
         initializeScreens();
 
         // window settings
-        this.setPreferredSize(new Dimension(controller.screenWidth, controller.screenHeight));
+        this.setPreferredSize(new Dimension(ViewSettings.screenWidth, ViewSettings.screenHeight));
         this.setBackground(new java.awt.Color(120, 192, 248));
         this.setDoubleBuffered(true);
 

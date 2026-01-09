@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.title;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.Screen;
 
 import java.awt.*;
@@ -34,16 +35,16 @@ public class TitleScreen extends Screen {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18));
         g2.setColor(Color.BLACK);
 
-        g2.drawImage(titleScreenBackground, 0, 0, controller.getGameController().screenWidth, controller.getGameController().screenHeight, null);
-        g2.drawImage(logo, (controller.getGameController().screenWidth / 2) - 350, 25, 700, 250, null);
+        g2.drawImage(titleScreenBackground, 0, 0, ViewSettings.screenWidth, ViewSettings.screenHeight, null);
+        g2.drawImage(logo, (ViewSettings.screenWidth / 2) - 350, 25, 700, 250, null);
 
         if (!display) {
-            g2.drawString("Press enter to start", controller.getGameController().screenWidth / 2 - 150, controller.getGameController().screenHeight / 2 + 100);
+            g2.drawString("Press enter to start", ViewSettings.screenWidth / 2 - 150, ViewSettings.screenHeight / 2 + 100);
         }
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16));
         g2.drawString("Made By: Andreas, Jakob, Theis & Bertram", 25, 750);
-        g2.drawImage(opal, controller.getGameController().screenWidth / 2 - 150, 250, 350, 150, null);
+        g2.drawImage(opal, ViewSettings.screenWidth / 2 - 150, 250, 350, 150, null);
         g2.drawImage(rowan, 750, 400, 94 * 2, 139 * 2, null);
         g2.drawImage(lucas, 100, 400, 56 * 2, 123 * 2, null);
         g2.drawImage(dawn, 200, 450, 63 * 2, 125 * 2, null);

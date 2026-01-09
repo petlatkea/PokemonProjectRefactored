@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.battle;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.Screen;
 import main.java.opal.pokemon.game.screens.pokedex.Pokemon;
 
@@ -54,10 +55,10 @@ public class BattleScreen extends Screen {
 
         // Clear background
         g2.setColor(new Color(200, 230, 255));
-        g2.fillRect(0, 0, controller.getGameController().screenWidth, controller.getGameController().screenHeight);
+        g2.fillRect(0, 0, ViewSettings.screenWidth, ViewSettings.screenHeight);
 
         // Draw arena
-        g2.drawImage(battleBG, 0, 0, controller.getGameController().screenWidth, controller.getGameController().screenHeight, null);
+        g2.drawImage(battleBG, 0, 0, ViewSettings.screenWidth, ViewSettings.screenHeight, null);
         g2.drawImage(playerGround, 50, 460, 500, 100, null);
         g2.drawImage(enemyGround, 700, 280, 300, 80, null);
 
@@ -102,7 +103,7 @@ public class BattleScreen extends Screen {
         g2.drawRect(pBarX, pBarY, pBarW, pBarH);
 
         // Message box bottom-left
-        g2.drawImage(dialogBox, 0, 560, controller.getGameController().screenWidth, 145, null);
+        g2.drawImage(dialogBox, 0, 560, ViewSettings.screenWidth, 145, null);
 
         // Message Text
         g2.setColor(Color.BLACK);

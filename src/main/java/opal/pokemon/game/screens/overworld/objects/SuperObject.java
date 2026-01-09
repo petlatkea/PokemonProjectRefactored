@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.objects;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.game.GameController;
@@ -21,18 +22,18 @@ public class SuperObject {
     public void draw(Graphics2D g2, GameController gp) {
         int cameraLeft = gp.getPlayer().model.worldX - ((PlayerView) gp.getPlayer().view).screenX;
         int cameraTop = gp.getPlayer().model.worldY - ((PlayerView) gp.getPlayer().view).screenY;
-        int cameraRight = cameraLeft + gp.screenWidth;
-        int cameraBottom = cameraTop + gp.screenHeight;
+        int cameraRight = cameraLeft + ViewSettings.screenWidth;
+        int cameraBottom = cameraTop + ViewSettings.screenHeight;
 
-        if (worldX + gp.tileSize >= cameraLeft &&
+        if (worldX + ViewSettings.tileSize >= cameraLeft &&
                 worldX <= cameraRight &&
-                worldY + gp.tileSize >= cameraTop &&
+                worldY + ViewSettings.tileSize >= cameraTop &&
                 worldY <= cameraBottom) {
 
             int screenX = worldX - cameraLeft;
             int screenY = worldY - cameraTop;
 
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, ViewSettings.tileSize, ViewSettings.tileSize, null);
         }
     }
 }

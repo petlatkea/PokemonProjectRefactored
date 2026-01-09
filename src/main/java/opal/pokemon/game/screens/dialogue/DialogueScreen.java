@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.dialogue;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.game.screens.Screen;
 
@@ -27,14 +28,14 @@ public class DialogueScreen extends Screen {
     @Override
     public void drawScreen(Graphics2D g2) {
         // WINDOW
-        int x = (controller.getGameController().screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
-        int y = controller.getGameController().screenHeight - (dialogueWindowImage.getHeight() * 4) - (controller.getGameController().tileSize / 8);
+        int x = (ViewSettings.screenWidth - (dialogueWindowImage.getWidth() * 4)) / 2;
+        int y = ViewSettings.screenHeight - (dialogueWindowImage.getHeight() * 4) - (ViewSettings.tileSize / 8);
         drawDialogueWindow(x, y, dialogueWindowImage);
 
         // TEXT
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26));
-        x += controller.getGameController().tileSize - 5;
-        y += controller.getGameController().tileSize + 10;
+        x += ViewSettings.tileSize - 5;
+        y += ViewSettings.tileSize + 10;
         g2.setColor(Color.black);
 
         // Cast the controller to a DialogueController to use custom properties ...

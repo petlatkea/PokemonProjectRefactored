@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.characters.player;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.CollisionChecker;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
@@ -68,8 +69,10 @@ public class Player extends Entity {
     }
 
     private void setDefaultValues() {
-        model.worldX = (gp.tileSize * 19) + 32;  // WORLD START POS
-        model.worldY = (gp.tileSize * 53) + 16;  // =o=
+        // NOTE: This worldX and worldY tilesize is a bit weird here ...
+        // TODO: Figure out what it is needed for, and why it is set ...
+        model.worldX = (ViewSettings.tileSize * 19) + 32;  // WORLD START POS
+        model.worldY = (ViewSettings.tileSize * 53) + 16;  // =o=
         model.speed = 3;
         model.direction = "down";
     }
@@ -122,8 +125,8 @@ public class Player extends Entity {
                 move = model.speed;
             }
             if (!model.collisionOn) {
-                if (view.pixelCounter + move > gp.tileSize) {
-                    move = gp.tileSize - view.pixelCounter;
+                if (view.pixelCounter + move > ViewSettings.tileSize) {
+                    move = ViewSettings.tileSize - view.pixelCounter;
                 }
                 switch (model.direction) {
                     case "up" -> model.worldY = model.worldY - move;
@@ -143,7 +146,7 @@ public class Player extends Entity {
 
             view.pixelCounter = view.pixelCounter + move;
 
-            if (view.pixelCounter >= gp.tileSize) {
+            if (view.pixelCounter >= ViewSettings.tileSize) {
                 moving = false;
                 view.pixelCounter = 0;
                 if (model.isGrassOn && hasChecked == false) {

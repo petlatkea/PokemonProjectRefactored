@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.characters.player;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 import main.java.opal.pokemon.game.screens.overworld.characters.EntityView;
 import main.java.opal.pokemon.game.GameController;
@@ -22,8 +23,8 @@ public class PlayerView extends EntityView {
     public PlayerView(GameController gp, EntityModel model) {
         super(gp, model);
        // setPlayerImage();
-        screenX = gp.screenWidth / 2 - (entitySize / 2);
-        screenY = gp.screenHeight / 2 - (entitySize / 2);
+        screenX = ViewSettings.screenWidth / 2 - (entitySize / 2);
+        screenY = ViewSettings.screenHeight / 2 - (entitySize / 2);
     }
 
 

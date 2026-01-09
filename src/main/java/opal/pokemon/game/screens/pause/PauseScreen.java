@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.pause;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.Screen;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class PauseScreen extends Screen {
         String text = "PAUSED";
 
         int x = getXForCenteredText(text);
-        int y = controller.getGameController().screenHeight / 2;
+        int y = ViewSettings.screenHeight / 2;
         g2.drawString(text, x, y);
     }
 }

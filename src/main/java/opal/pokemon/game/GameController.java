@@ -25,17 +25,6 @@ public class GameController implements Runnable {
         return view;
     }
 
-    // === SCREEN SETTINGS ===
-    final int originalTileSize = 16;    // 16x16 px
-    public final int ScaleMultiplier = 4;
-
-    public final int tileSize = originalTileSize * ScaleMultiplier;     // 64x64 px
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12;
-
-    public final int screenWidth = tileSize * maxScreenCol;     // 1024 px
-    public final int screenHeight = tileSize * maxScreenRow;    // 768 px
-
     // == GENDER & STARTER POKEMON ==
     public int genderState = 1;
     public int playerPokemon = 25;

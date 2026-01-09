@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.battle;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.input.MouseClick;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
@@ -57,8 +58,8 @@ public class BattleController extends ScreenController {
         Pokemon playerPokemon = Pokemon.load(String.valueOf(gameController.playerPokemon));
         int poke = rng.nextInt(2);
         String enemyID;
-        int x = (gameController.getPlayer().model.worldX / gameController.tileSize) + 1;
-        int y = (gameController.getPlayer().model.worldY / gameController.tileSize) + 1;
+        int x = (gameController.getPlayer().model.worldX / ViewSettings.tileSize) + 1;
+        int y = (gameController.getPlayer().model.worldY / ViewSettings.tileSize) + 1;
 
         if (x >= 33 && y <= 60 && x <= 54 && y >= 20){
             // 201

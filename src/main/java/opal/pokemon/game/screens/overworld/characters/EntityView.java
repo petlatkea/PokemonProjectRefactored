@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.characters;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.game.GameController;
@@ -51,12 +52,12 @@ public class EntityView {
     public void draw(Graphics2D g2) {
         int cameraLeft = gp.getPlayer().model.worldX - ((PlayerView)gp.getPlayer().view).screenX;
         int cameraTop = gp.getPlayer().model.worldY - ((PlayerView)gp.getPlayer().view).screenY;
-        int cameraRight = cameraLeft + gp.screenWidth;
-        int cameraBottom = cameraTop + gp.screenHeight;
+        int cameraRight = cameraLeft + ViewSettings.screenWidth;
+        int cameraBottom = cameraTop + ViewSettings.screenHeight;
 
-        if (model.worldX + gp.tileSize >= cameraLeft &&
+        if (model.worldX + ViewSettings.tileSize >= cameraLeft &&
                 model.worldX <= cameraRight &&
-                model.worldY + gp.tileSize >= cameraTop &&
+                model.worldY + ViewSettings.tileSize >= cameraTop &&
                 model.worldY <= cameraBottom) {
 
             int screenX = model.worldX - cameraLeft - 32;  // Sprite offset fixes

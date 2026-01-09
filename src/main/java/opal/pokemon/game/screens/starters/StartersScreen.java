@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.starters;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.main.UtilityTool;
 import main.java.opal.pokemon.game.screens.Screen;
 
@@ -31,11 +32,10 @@ public class StartersScreen extends Screen {
 
     @Override
     public void drawScreen(Graphics2D g2) {
-        // TODO: Width and height should be out of the controller - and in the view!
-        int width = controller.getGameController().screenWidth;
+        int width = ViewSettings.screenWidth;
         int height = 200;
         int x = 0;
-        int y = (controller.getGameController().screenHeight - height) / 2;
+        int y = (ViewSettings.screenHeight - height) / 2;
         Color c = new Color(50, 50, 50, 150);
         g2.setColor(c);
         g2.fillRect(x, y, width, height);

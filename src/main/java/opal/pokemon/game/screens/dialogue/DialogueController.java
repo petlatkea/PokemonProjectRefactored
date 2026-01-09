@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.dialogue;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.npc.NPC;
 import main.java.opal.pokemon.game.input.MouseClick;
 import main.java.opal.pokemon.game.GameController;
@@ -40,7 +41,7 @@ public class DialogueController extends ScreenController {
     public void handleLeftClick(MouseClick mouseClick) {
         // Pressed on Dialogue
         // TODO: Not sure if this is supposed to work - nothing seems to happen ...
-        if (mouseClick.insideBox((gameController.screenWidth - (254 * 4)) / 2, gameController.screenHeight - (46 * 4) - (gameController.tileSize / 8), 254 * 4, 46 * 4)) {
+        if (mouseClick.insideBox((ViewSettings.screenWidth - (254 * 4)) / 2, ViewSettings.screenHeight - (46 * 4) - (ViewSettings.tileSize / 8), 254 * 4, 46 * 4)) {
             gameController.getControls().enterPressed = true;
             gameController.soundController.playButtonSound();
             gameController.gameState = GameState.playState;

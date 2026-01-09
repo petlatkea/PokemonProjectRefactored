@@ -1,5 +1,7 @@
 package main.java.opal.pokemon.game.screens;
 
+import main.java.opal.pokemon.game.ViewSettings;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -71,7 +73,7 @@ public abstract class Screen {
     // Text helpers
     public int getXForCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        return controller.getGameController().screenWidth / 2 - length / 2;
+        return ViewSettings.screenWidth / 2 - length / 2;
     }
 
     public int getXForCenteredTextAt(String text, int targetCenterX) {
