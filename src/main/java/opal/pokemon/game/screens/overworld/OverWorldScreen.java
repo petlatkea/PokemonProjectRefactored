@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 
 public class OverWorldScreen extends Screen {
 
+    // Keep a reference to the model throughout
+    private final OverWorldModel model;
+
     // === Pokedex Icon ===
     private BufferedImage pokedexIcon;
 
@@ -21,8 +24,9 @@ public class OverWorldScreen extends Screen {
     private static final long AREA_DISPLAY_DURATION = 3000; // 3 seconds
     private int animatedIconY = -200;
 
-    public OverWorldScreen(OverWorldController controller) {
+    public OverWorldScreen(OverWorldController controller, OverWorldModel model) {
         super(controller);
+        this.model = model;
         tileGraphics = new TileGraphics(controller.getGameController());
     }
 
@@ -77,7 +81,7 @@ public class OverWorldScreen extends Screen {
     private TileGraphics tileGraphics;
 
     private void drawBackground() {
-        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().backgroundTileMap);
+        tileGraphics.drawTileMap(g2, model.backgroundTileMap);
     }
 
     private void drawObjects() {
@@ -89,7 +93,7 @@ public class OverWorldScreen extends Screen {
     }
 
     private void drawEnvironmentBehindPlayer() {
-        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().environmentBTileMap);
+        tileGraphics.drawTileMap(g2, model.environmentBTileMap);
     }
 
     private void drawNPCs() {
@@ -105,7 +109,7 @@ public class OverWorldScreen extends Screen {
     }
 
     private void drawEnvironmentInFrontOfPlayer() {
-        tileGraphics.drawTileMap(g2, controller.getGameController().getModel().environmentFTileMap );
+        tileGraphics.drawTileMap(g2, model.environmentFTileMap );
     }
 
     // ===== AREA ICONS =====

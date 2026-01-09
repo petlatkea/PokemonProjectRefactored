@@ -1,36 +1,28 @@
 package main.java.opal.pokemon.game;
 
-import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
+import main.java.opal.pokemon.game.input.Controls;
 import main.java.opal.pokemon.game.input.InputController;
+import main.java.opal.pokemon.game.input.MouseClick;
 import main.java.opal.pokemon.game.screens.ScreenController;
 import main.java.opal.pokemon.game.screens.battle.BattleController;
 import main.java.opal.pokemon.game.screens.battle.BattleIntroController;
 import main.java.opal.pokemon.game.screens.dialogue.DialogueController;
 import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
+import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
 import main.java.opal.pokemon.game.screens.pause.PauseController;
 import main.java.opal.pokemon.game.screens.pokedex.PokedexController;
 import main.java.opal.pokemon.game.screens.starters.StartersController;
 import main.java.opal.pokemon.game.screens.title.TitleController;
 import main.java.opal.pokemon.game.sound.SoundController;
-import main.java.opal.pokemon.game.input.MouseClick;
-import main.java.opal.pokemon.game.screens.overworld.CollisionChecker;
-import main.java.opal.pokemon.game.input.Controls;
-import main.java.opal.pokemon.game.screens.overworld.GameModel;
 
 public class GameController implements Runnable {
 
     // View
     private GameView view;
-    private GameModel model;
 
     // TODO: Remove most usages apart from MainWindow
     public GameView getView() {
         return view;
-    }
-
-    // TODO: Get rid of all usages - only used by CollisionChecker it seems
-    public GameModel getModel() {
-        return model;
     }
 
     // === SCREEN SETTINGS ===
@@ -49,16 +41,10 @@ public class GameController implements Runnable {
     public int playerPokemon = 25;
 
     // === SYSTEM ===
-    public CollisionChecker cChecker; // = new CollisionChecker(this);
-
     Thread gameThread;
 
     // == GAME STATE ==
     public GameState gameState = GameState.titleScreenState;
-
-    // === WORLD SETTINGS ===
-    public final int maxWorldCol = 100;
-    public final int maxWorldRow = 100;
 
     // === FPS ===
     int FPS = 60;
@@ -94,10 +80,9 @@ public class GameController implements Runnable {
         soundController = new SoundController(this);
 
         // then create model and view - which might access some of these sub-controllers
-        model = new GameModel(this);
-        view = new GameView(this, model);
-
-        cChecker = new CollisionChecker(this, model);
+        // NOTE: Right now there's no model for the entire game - but maybe create one
+        //       to keep the gender and the current pokemon!!
+        view = new GameView(this);
     }
 
     public void setupGame() {

@@ -18,6 +18,14 @@ public class TileMap {
         this.map = new int[cols][rows];
     }
 
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
     public int getTileType(int col, int row) {
         return map[col][row];
     }

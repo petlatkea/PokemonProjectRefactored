@@ -12,6 +12,8 @@ import main.java.opal.pokemon.game.screens.overworld.objects.SuperObject;
 
 public class OverWorldController extends ScreenController {
 
+    private OverWorldModel model;
+
     // TODO: Split player and NPCs into model, view and controllers, and add separately
     private Player player;
     public NPC[] npc = new NPC[20];
@@ -22,10 +24,14 @@ public class OverWorldController extends ScreenController {
 
     public OverWorldController(GameController gameController) {
         super(gameController);
-        // create model and view - but skip model until actually needed
+        // create model and view
+        model = new OverWorldModel(gameController);
         player = new Player(gameController);
-        screen = new OverWorldScreen(this);
+        // temporarily let the player itself own a collision-checker - should probably be in the overworldmodel ...
+        player.setCollisionChecker( new CollisionChecker(gameController, model));
 
+        screen = new OverWorldScreen(this, model);
+        // load assets to the view
         assetSetter = new AssetSetter(gameController);
         assetSetter.setObject(obj);
         assetSetter.setNPC(npc);
@@ -68,7 +74,7 @@ public class OverWorldController extends ScreenController {
     }
 
     private NPC getNPCforInteraction() {
-        int npcIndex = gameController.cChecker.checkEntityInteraction(player, npc);
+        int npcIndex = player.checkEntityInteraction(player, npc);
         // if there is an NPC (other than 999 == no NPC) - return that
         if (npcIndex != 999) {
             return npc[npcIndex];

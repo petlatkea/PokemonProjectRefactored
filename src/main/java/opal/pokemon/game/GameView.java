@@ -2,7 +2,6 @@ package main.java.opal.pokemon.game;
 
 import main.java.opal.pokemon.game.input.ClickHandler;
 import main.java.opal.pokemon.game.input.KeyHandler;
-import main.java.opal.pokemon.game.screens.overworld.GameModel;
 import main.java.opal.pokemon.game.screens.Screen;
 
 import javax.swing.*;
@@ -11,7 +10,6 @@ import java.awt.*;
 public class GameView extends JPanel {
 
     private final GameController controller;
-    private final GameModel model;
 
     private KeyHandler keyH;
     private ClickHandler clickH;
@@ -33,9 +31,8 @@ public class GameView extends JPanel {
     private long drawCount = 0;
     private int frameSincePrint = 0;
 
-    public GameView(GameController gameController, GameModel model) {
+    public GameView(GameController gameController) {
         this.controller = gameController;
-        this.model = model;
 
         // input controllers
         keyH = new KeyHandler(controller);
@@ -137,7 +134,7 @@ public class GameView extends JPanel {
     private void drawScreens(Graphics2D g2) {
         // always draw the overWorldScreen before anything else
         // - unless state is title, battle or battleIntro
-        switch(controller.gameState) {
+        switch (controller.gameState) {
             case GameState.titleScreenState,
                  GameState.battleIntroState,
                  GameState.battleState: // don't draw overworld
@@ -147,10 +144,10 @@ public class GameView extends JPanel {
         }
 
         // then draw the screen for the current state
-        switch(controller.gameState) {
+        switch (controller.gameState) {
             case GameState.titleScreenState -> titleScreen.draw(g2);
             case GameState.battleIntroState -> battleIntroScreen.draw(g2);
-            case GameState.battleState ->  battleScreen.draw(g2);
+            case GameState.battleState -> battleScreen.draw(g2);
             case GameState.pauseState -> pauseScreen.draw(g2);
             case GameState.dialogueState -> dialogueScreen.draw(g2);
             case GameState.pokedexState -> pokedexScreen.draw(g2);

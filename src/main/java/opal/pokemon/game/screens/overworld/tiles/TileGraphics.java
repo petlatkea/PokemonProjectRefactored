@@ -49,8 +49,8 @@ public class TileGraphics {
         int cameraRight = cameraLeft + controller.screenWidth;
         int cameraBottom = cameraTop + controller.screenHeight;
 
-        for (int worldCol = 0; worldCol < controller.maxWorldCol; worldCol++) {
-            for (int worldRow = 0; worldRow < controller.maxWorldRow; worldRow++) {
+        for (int worldCol = 0; worldCol < tileMap.getCols(); worldCol++) {
+            for (int worldRow = 0; worldRow < tileMap.getRows(); worldRow++) {
 
                 int tileNum = tileMap.map[worldCol][worldRow];
                 int worldX = worldCol * controller.tileSize;

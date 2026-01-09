@@ -6,11 +6,12 @@ import main.java.opal.pokemon.game.screens.overworld.tiles.TileMap;
 
 public class CollisionChecker {
     // TODO: Try to get rid of the controller here!
+    //       Make the CollisionChecker be part of the OverWorldModel (as a composite)
     private final GameController gp;
-    private GameModel model;
+    private OverWorldModel model;
 
 
-    public CollisionChecker(GameController gp, GameModel model) {
+    public CollisionChecker(GameController gp, OverWorldModel model) {
         this.gp = gp;
         this.model = model;
     }

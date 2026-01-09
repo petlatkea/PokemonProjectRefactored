@@ -1,5 +1,6 @@
 package main.java.opal.pokemon.game.screens.overworld.characters.player;
 
+import main.java.opal.pokemon.game.screens.overworld.CollisionChecker;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
@@ -16,6 +17,12 @@ public class Player extends Entity {
     public boolean moving = false;
     boolean sprinting = false;
 
+    // Temporarily kept here - should be moved into the world-model!
+    private CollisionChecker collisionChecker;
+
+    public int checkEntityInteraction(Entity entity, Entity[] target) {
+        return collisionChecker.checkEntityInteraction(entity, target);
+    }
 
     public Player(GameController gp) {
         super(gp);
@@ -89,15 +96,15 @@ public class Player extends Entity {
 
                 // CHECK TILE COLLISION
                 model.collisionOn = false;
-                gp.cChecker.checkTile(this);
+                collisionChecker.checkTile(this);
 
                 // CHECK OBJECT COLLISION
-                int objectIndex = gp.cChecker.checkObject(this, true);
+                int objectIndex = collisionChecker.checkObject(this, true);
 
 
                 // TODO: Check WHY this is needed here!
                 // CHECK NPC COLLISION
-                gp.cChecker.checkEntityCollision(this, ((OverWorldController) gp.overWorldController).npc);
+                collisionChecker.checkEntityCollision(this, ((OverWorldController) gp.overWorldController).npc);
             } else {
                 standCounter++;
                 if (standCounter == 20) {
@@ -108,7 +115,7 @@ public class Player extends Entity {
         }
         int move;
         if (moving) {
-            gp.cChecker.checkGrass(this);
+            collisionChecker.checkGrass(this);
             if (sprinting) {
                 move = model.speed * 2;
             } else {
@@ -152,4 +159,7 @@ public class Player extends Entity {
         }
     }
 
+    public void setCollisionChecker(CollisionChecker collisionChecker) {
+        this.collisionChecker = collisionChecker;
+    }
 }

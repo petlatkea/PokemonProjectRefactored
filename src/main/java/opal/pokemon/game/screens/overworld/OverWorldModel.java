@@ -5,9 +5,10 @@ import main.java.opal.pokemon.game.screens.overworld.tiles.TileDefinitions;
 import main.java.opal.pokemon.game.screens.overworld.tiles.TileMap;
 import main.java.opal.pokemon.game.screens.overworld.tiles.TileType;
 
-// TODO: Change this to be in the OverworldModel
-public class GameModel {
-    private GameController gameController;
+public class OverWorldModel {
+    // === WORLD SETTINGS ===
+    public final int maxWorldCol = 100;
+    public final int maxWorldRow = 100;
 
     public TileMap backgroundTileMap;
     public TileMap environmentBTileMap;
@@ -15,14 +16,16 @@ public class GameModel {
 
     private final TileDefinitions tileDefinitions;
 
-    public GameModel(GameController controller) {
-        this.gameController = controller;
+    // TODO: Sometime in the near future, the model should contain the CollisionChecker
+//    public CollisionChecker cChecker; //= new CollisionChecker(this, model);
+
+    public OverWorldModel(GameController gameController) {
 
         tileDefinitions = new TileDefinitions();
 
-        backgroundTileMap = new TileMap("background", controller.maxWorldCol, controller.maxWorldRow);
-        environmentBTileMap = new TileMap("environmentB", controller.maxWorldCol, controller.maxWorldRow);
-        environmentFTileMap = new TileMap("environmentF", controller.maxWorldCol, controller.maxWorldRow);
+        backgroundTileMap = new TileMap("background", maxWorldCol, maxWorldRow);
+        environmentBTileMap = new TileMap("environmentB", maxWorldCol, maxWorldRow);
+        environmentFTileMap = new TileMap("environmentF", maxWorldCol, maxWorldRow);
 
         backgroundTileMap.loadMap("/maps/mapBackground.csv");
         environmentBTileMap.loadMap("/maps/mapEnvironmentB.csv");
