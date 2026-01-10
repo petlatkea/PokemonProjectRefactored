@@ -6,6 +6,7 @@ import main.java.opal.pokemon.game.input.MouseClick;
 import main.java.opal.pokemon.game.screens.ScreenController;
 import main.java.opal.pokemon.game.screens.battle.BattleController;
 import main.java.opal.pokemon.game.screens.battle.BattleIntroController;
+import main.java.opal.pokemon.game.screens.debug.DebugController;
 import main.java.opal.pokemon.game.screens.dialogue.DialogueController;
 import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
@@ -52,6 +53,9 @@ public class GameController implements Runnable {
     public final InputController inputController;
     public final SoundController soundController;
 
+    // debug controller
+    public final DebugController debugController;
+
     // === CONSTRUCTOR ===
     public GameController() {
         // create sub-controllers first
@@ -67,6 +71,8 @@ public class GameController implements Runnable {
         // then create custom controllers
         inputController = new InputController(this);
         soundController = new SoundController(this);
+
+        debugController = new DebugController(this);
 
         // then create model and view - which might access some of these sub-controllers
         // NOTE: Right now there's no model for the entire game - but maybe create one
@@ -141,6 +147,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.update();
             case pauseState -> pauseController.update();
         }
+        // always update debugController, no matter the state
+        debugController.update();
     }
 
     public void leftClick(MouseClick mouseClick) {
@@ -155,6 +163,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.handleLeftClick(mouseClick);
             case pauseState -> pauseController.handleLeftClick(mouseClick);
         }
+        // always inform the debugController, no matter the state
+        debugController.handleLeftClick(mouseClick);
     }
 
     public void rightClick(MouseClick mouseClick) {
@@ -169,6 +179,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.handleRightClick(mouseClick);
             case pauseState -> pauseController.handleRightClick(mouseClick);
         }
+        // always inform the debugController, no matter the state
+        debugController.handleRightClick(mouseClick);
     }
 
     public void mouseReleased(MouseClick mouseClick) {
@@ -189,6 +201,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.keyTyped(character);
             case pauseState -> pauseController.keyTyped(character);
         }
+        // always inform the debugController, no matter the state
+        debugController.keyTyped(character);
     }
 
     public void keyPressed(int keyCode) {
@@ -202,6 +216,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.keyPressed(keyCode);
             case pauseState -> pauseController.keyPressed(keyCode);
         }
+        // always inform the debugController, no matter the state
+        debugController.keyPressed(keyCode);
     }
 
     public void keyReleased(int keyCode) {
@@ -215,6 +231,8 @@ public class GameController implements Runnable {
             case battleState -> battleController.keyReleased(keyCode);
             case pauseState -> pauseController.keyReleased(keyCode);
         }
+        // always inform the debugController, no matter the state
+        debugController.keyReleased(keyCode);
     }
 
     public long getDrawCount() {

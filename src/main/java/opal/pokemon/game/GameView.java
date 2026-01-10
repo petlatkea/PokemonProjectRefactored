@@ -24,6 +24,9 @@ public class GameView extends JPanel {
     private Screen dialogueScreen;
     private Screen pokedexScreen;
 
+    // new DEBUG SCREEN
+    private Screen debugScreen;
+
     // === DEBUG ===
     private int warmupFrames = 30;
     private long highestDrawTime = 0;
@@ -81,6 +84,9 @@ public class GameView extends JPanel {
         dialogueScreen.init();
         pokedexScreen = controller.pokedexController.getScreen();
         pokedexScreen.init();
+
+        debugScreen = controller.debugController.getScreen();
+        debugScreen.init();
     }
 
     public void paintComponent(Graphics g) {
@@ -127,6 +133,9 @@ public class GameView extends JPanel {
                 frameSincePrint = 0;
             }
         }
+
+        // always draw debug-screen at the very end
+        debugScreen.draw(g2);
 
         g2.dispose();
     }
