@@ -9,10 +9,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class PlayerView extends EntityView {
-    int pixelCounter = 0;
+    public int pixelCounter = 0;
     public int chance = 0;
-    int[] spriteOrder = {1, 2, 1, 3};
-    int orderIndex = 0;
+
+
 
     // NOTE: I'm not sure what these screenX and screenY actually is - and they do seem to never change,
     //       so maybe it is simply something for calculating the center of the screen relative to the player
@@ -27,9 +27,17 @@ public class PlayerView extends EntityView {
         screenY = ViewSettings.screenHeight / 2 - (entitySize / 2);
     }
 
-
-
     public void draw(Graphics2D g2) {
+
+        if(model.moving) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
+
+        // TODO: Let the generic EntityView handle all of this:
+        animate();
+
         BufferedImage image = null;
         BufferedImage[] up = {up1, up2, up3};
         BufferedImage[] left = {left1, left2, left3};

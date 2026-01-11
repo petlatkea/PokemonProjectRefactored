@@ -8,6 +8,8 @@ public class EntityModel {
     public boolean collisionOn = false;
     public boolean isGrassOn = false;
 
+    public boolean moving = false;
+
     public EntityModel() {
     }
 }

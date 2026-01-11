@@ -3,6 +3,7 @@ package main.java.opal.pokemon.game.screens.debug;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.screens.ScreenController;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
+import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 
 import java.awt.event.KeyEvent;
 
@@ -31,6 +32,9 @@ public class DebugController extends ScreenController {
         debuginfo.player.direction = player.model.direction;
         debuginfo.player.collision = player.model.collisionOn?"on":"off";
         debuginfo.player.grass = player.model.isGrassOn?"on":"off";
+
+        debuginfo.player.moving = player.model.moving?"yes":"no";
+        debuginfo.player.pixelCounter = "" + ((PlayerView)player.view).pixelCounter;
     }
 
     private void toggleEnabled() {

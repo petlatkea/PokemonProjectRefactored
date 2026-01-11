@@ -1,9 +1,9 @@
 package main.java.opal.pokemon.game.screens.overworld.characters;
 
+import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
-import main.java.opal.pokemon.game.GameController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,8 +22,16 @@ public class EntityView {
     public BufferedImage right1;
     public BufferedImage right2;
     public BufferedImage right3;
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
+
+    // animation
+    protected boolean animating = false;
+    protected boolean stoppingAnimation = false;
+    // TODO: Rename these properties to something with frames and animation
+    protected int spriteCounter = 0;
+    protected int spriteNum = 1;
+    protected int orderIndex = 0;
+    protected int[] spriteOrder = {1, 2, 1, 3};
+
     final int originalEntitySize = 32;  // 32x32 px
     public final int entitySize = originalEntitySize * 4; // 128x128 px
 
@@ -49,9 +57,50 @@ public class EntityView {
         return image;
     }
 
+    public void animate() {
+        if (animating) {
+
+            // if the animation is stopping, and we are at spriteNum 1 : stop completely
+            if (stoppingAnimation && this.spriteNum == 1) {
+                animating = false;
+                stoppingAnimation = false;
+            } else {
+                // otherwise continue animating
+
+                // The spriteCounter counts frames
+                this.spriteCounter--;
+
+                // At 10 frames, the next sprite is selected
+                if (this.spriteCounter <= 0) {
+                    this.orderIndex = (orderIndex + 1) % spriteOrder.length;
+                    this.spriteNum = spriteOrder[orderIndex];
+
+                    // reset the framecounter to the framerate (currently hardcoded to 10)
+                    this.spriteCounter = 10;
+                }
+            }
+        }
+    }
+
+    /**
+     * when animating, the animation should make sure to stop at a sprite 1
+     * so don't stop immediately, just note that we are stopping!
+     */
+    public void stopAnimation() {
+        if (animating && !stoppingAnimation) {
+            stoppingAnimation = true;
+        }
+    }
+
+    public void startAnimation() {
+        animating = true;
+        stoppingAnimation = false;
+    }
+
+    // TODO: Move animation and sprite selection from player into here
     public void draw(Graphics2D g2) {
-        int cameraLeft = gp.getPlayer().model.worldX - ((PlayerView)gp.getPlayer().view).screenX;
-        int cameraTop = gp.getPlayer().model.worldY - ((PlayerView)gp.getPlayer().view).screenY;
+        int cameraLeft = gp.getPlayer().model.worldX - ((PlayerView) gp.getPlayer().view).screenX;
+        int cameraTop = gp.getPlayer().model.worldY - ((PlayerView) gp.getPlayer().view).screenY;
         int cameraRight = cameraLeft + ViewSettings.screenWidth;
         int cameraBottom = cameraTop + ViewSettings.screenHeight;
 

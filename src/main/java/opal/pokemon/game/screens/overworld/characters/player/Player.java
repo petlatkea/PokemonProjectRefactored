@@ -14,8 +14,6 @@ public class Player extends Entity {
     private Random random = new Random();
 
     private boolean hasChecked;
-    int standCounter = 0;
-    public boolean moving = false;
     boolean sprinting = false;
 
     // Temporarily kept here - should be moved into the world-model!
@@ -78,9 +76,28 @@ public class Player extends Entity {
     }
 
     public void update() {
+        /*
+        NOTE: The player can only be moved one tile at a time - no matter how long or short the user holds the movement
+              key(s) pressed down, the player only stops moving when completely inside a tile.
+              When the player is moving, the sprites are animated in a fixed 1,2,1,3,... order, but the animation-frame
+              speed is much, much lower than the update speed.
+              There is a bit of trickery with stopping the animation - i.e. standing still:
+              - this has been completely rewritten
+              When the player is moving across grass, calculate the chance of a random occurence of a battle.
+         */
+
+
         // cast EntityView to PlayerView to make it easier to use ...
         PlayerView view = (PlayerView) this.view;
-        if (moving == false) {
+
+        // this is the order to do things in
+        // 1. check if controls are pressed, and activate movement (in given direction)
+        // 2. check if movement in that direction is possible
+        // 3. calculate the actual pixels being moved (for this frame)
+        //  - stop when the player is entirely within a tile
+        // 4. check if walking on grass, and activate a chance battle ... doesn't really belong here, now does it?
+
+        if (model.moving == false) {
             if (gp.getControls().upPressed || gp.getControls().leftPressed || gp.getControls().downPressed || gp.getControls().rightPressed) {
                 if (gp.getControls().upPressed) {
                     model.direction = "up";
@@ -94,7 +111,8 @@ public class Player extends Entity {
 
                 sprinting = gp.getControls().shiftPressed;
 
-                moving = true;
+                model.moving = true;
+
                 hasChecked = false;
 
                 // CHECK TILE COLLISION
@@ -108,16 +126,16 @@ public class Player extends Entity {
                 // TODO: Check WHY this is needed here!
                 // CHECK NPC COLLISION
                 collisionChecker.checkEntityCollision(this, ((OverWorldController) gp.overWorldController).npc);
-            } else {
-                standCounter++;
-                if (standCounter == 20) {
-                    this.view.spriteNum = 1;
-                    standCounter = 0;
-                }
-            }
+            } //else {
+//                standCounter++;
+//                if (standCounter == 20) {
+//                    this.view.spriteNum = 1;
+//                    standCounter = 0;
+//                }
+//            }
         }
         int move;
-        if (moving) {
+        if (model.moving) {
             collisionChecker.checkGrass(this);
             if (sprinting) {
                 move = model.speed * 2;
@@ -136,18 +154,11 @@ public class Player extends Entity {
                 }
             }
 
-            this.view.spriteCounter++;
-
-            if (this.view.spriteCounter > 10) {
-                view.orderIndex = (view.orderIndex + 1) % view.spriteOrder.length;
-                this.view.spriteNum = view.spriteOrder[view.orderIndex];
-                this.view.spriteCounter = 0;
-            }
-
+            // The pixelCounter keeps track of how far into a tile the player has moved
             view.pixelCounter = view.pixelCounter + move;
 
             if (view.pixelCounter >= ViewSettings.tileSize) {
-                moving = false;
+                model.moving = false;
                 view.pixelCounter = 0;
                 if (model.isGrassOn && hasChecked == false) {
                     view.chance = random.nextInt(10);

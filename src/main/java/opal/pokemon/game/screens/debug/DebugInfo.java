@@ -20,5 +20,8 @@ public class DebugInfo {
         public String direction;
         public String collision;
         public String grass;
+
+        public String moving;
+        public String pixelCounter;
     }
 }

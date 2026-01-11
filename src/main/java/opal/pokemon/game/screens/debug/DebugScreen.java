@@ -71,6 +71,9 @@ public class DebugScreen extends Screen {
         printValueln("direction", debuginfo.player.direction);
         printValueln("collision", debuginfo.player.collision);
         printValueln("grass", debuginfo.player.grass);
+
+        printValueln("moving", debuginfo.player.moving);
+        printValueln("pixel", debuginfo.player.pixelCounter);
     }
 
 
