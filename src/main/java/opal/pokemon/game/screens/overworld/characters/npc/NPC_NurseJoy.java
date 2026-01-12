@@ -2,13 +2,14 @@ package main.java.opal.pokemon.game.screens.overworld.characters.npc;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 
 public class NPC_NurseJoy extends NPC {
 
     public NPC_NurseJoy(GameController gp) {
         super(gp);
 
-        model.direction = "down";
+        model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
         getNPCImage();

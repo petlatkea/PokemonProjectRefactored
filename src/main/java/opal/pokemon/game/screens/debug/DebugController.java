@@ -29,7 +29,7 @@ public class DebugController extends ScreenController {
         Player player = gameController.getPlayer();
         debuginfo.player.x = "" + player.model.worldX;
         debuginfo.player.y = "" + player.model.worldY;
-        debuginfo.player.direction = player.model.direction;
+        debuginfo.player.direction = String.valueOf(player.model.direction);
         debuginfo.player.collision = player.model.collisionOn?"on":"off";
         debuginfo.player.grass = player.model.isGrassOn?"on":"off";
 

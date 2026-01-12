@@ -2,6 +2,7 @@ package main.java.opal.pokemon.game.screens.overworld;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 import main.java.opal.pokemon.game.screens.overworld.characters.npc.*;
 import main.java.opal.pokemon.game.screens.overworld.objects.OBJ_Pokeball;
 import main.java.opal.pokemon.game.screens.overworld.objects.OBJ_Rock;
@@ -52,7 +53,7 @@ public class AssetSetter {
         npc[0] = new NPC_Prof(gp);
         npc[0].model.worldX = 12 * ViewSettings.tileSize;
         npc[0].model.worldY = 40 * ViewSettings.tileSize;
-        npc[0].model.direction = "up";
+        npc[0].model.direction = EntityModel.Direction.UP;
 
         npc[1] = new NPC_Female1(gp);
         npc[1].model.worldX = 23 * ViewSettings.tileSize;
@@ -69,12 +70,12 @@ public class AssetSetter {
         npc[4] = new NPC_Male6(gp);
         npc[4].model.worldX = 5 * ViewSettings.tileSize;
         npc[4].model.worldY = 12 * ViewSettings.tileSize;
-        npc[4].model.direction = "left";
+        npc[4].model.direction = EntityModel.Direction.LEFT;
 
         npc[5] = new NPC_Male4(gp);
         npc[5].model.worldX = 19 * ViewSettings.tileSize;
         npc[5].model.worldY = 12 * ViewSettings.tileSize;
-        npc[5].model.direction = "up";
+        npc[5].model.direction = EntityModel.Direction.UP;
 
         npc[6] = new NPC_Female5(gp);
         npc[6].model.worldX = 71 * ViewSettings.tileSize;
@@ -83,7 +84,7 @@ public class AssetSetter {
         npc[7] = new NPC_Male3(gp);
         npc[7].model.worldX = 90 * ViewSettings.tileSize;
         npc[7].model.worldY = 7 * ViewSettings.tileSize;
-        npc[7].model.direction = "right";
+        npc[7].model.direction = EntityModel.Direction.RIGHT;
 
         npc[8] = new NPC_Male5(gp);
         npc[8].model.worldX = 87 * ViewSettings.tileSize;
@@ -92,7 +93,7 @@ public class AssetSetter {
         npc[9] = new NPC_Female4(gp);
         npc[9].model.worldX = 51 * ViewSettings.tileSize;
         npc[9].model.worldY = 63 * ViewSettings.tileSize;
-        npc[9].model.direction = "up";
+        npc[9].model.direction = EntityModel.Direction.UP;
 
         npc[10] = new NPC_Female6(gp);
         npc[10].model.worldX = 26 * ViewSettings.tileSize;
@@ -116,18 +117,18 @@ public class AssetSetter {
         npc[14] = new NPC_Male1(gp);
         npc[14].model.worldX = 60 * ViewSettings.tileSize;
         npc[14].model.worldY = 90 * ViewSettings.tileSize;
-        npc[14].model.direction = "up";
+        npc[14].model.direction = EntityModel.Direction.UP;
 
 
         npc[15] = new NPC_Machop(gp);
         npc[15].model.worldX = 59 * ViewSettings.tileSize;
         npc[15].model.worldY = 89 * ViewSettings.tileSize;
-        npc[15].model.direction = "right";
+        npc[15].model.direction = EntityModel.Direction.RIGHT;
 
         npc[16] = new NPC_Machop(gp);
         npc[16].model.worldX = 70 * ViewSettings.tileSize;
         npc[16].model.worldY = 84 * ViewSettings.tileSize;
-        npc[16].model.direction = "left";
+        npc[16].model.direction = EntityModel.Direction.LEFT;
 
         npc[17] = new NPC_Machop(gp);
         npc[17].model.worldX = 85 * ViewSettings.tileSize;

@@ -6,6 +6,7 @@ import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
 import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel.Direction;
 
 import java.awt.*;
 import java.util.Random;
@@ -48,7 +49,7 @@ public class Player extends Entity {
         model.worldX = (ViewSettings.tileSize * 19) + 32;  // WORLD START POS
         model.worldY = (ViewSettings.tileSize * 53) + 16;  // =o=
         model.speed = 3;
-        model.direction = "down";
+        model.direction = Direction.DOWN;
     }
 
     public void update() {
@@ -76,13 +77,13 @@ public class Player extends Entity {
         if (model.moving == false) {
             if (gp.getControls().upPressed || gp.getControls().leftPressed || gp.getControls().downPressed || gp.getControls().rightPressed) {
                 if (gp.getControls().upPressed) {
-                    model.direction = "up";
+                    model.direction = Direction.UP;
                 } else if (gp.getControls().leftPressed) {
-                    model.direction = "left";
+                    model.direction = Direction.LEFT;
                 } else if (gp.getControls().downPressed) {
-                    model.direction = "down";
+                    model.direction = Direction.DOWN;
                 } else if (gp.getControls().rightPressed) {
-                    model.direction = "right";
+                    model.direction = Direction.RIGHT;
                 }
 
                 sprinting = gp.getControls().shiftPressed;
@@ -123,10 +124,10 @@ public class Player extends Entity {
                     move = ViewSettings.tileSize - view.pixelCounter;
                 }
                 switch (model.direction) {
-                    case "up" -> model.worldY = model.worldY - move;
-                    case "left" -> model.worldX = model.worldX - move;
-                    case "down" -> model.worldY = model.worldY + move;
-                    case "right" -> model.worldX = model.worldX + move;
+                    case UP -> model.worldY = model.worldY - move;
+                    case LEFT -> model.worldX = model.worldX - move;
+                    case DOWN -> model.worldY = model.worldY + move;
+                    case RIGHT -> model.worldX = model.worldX + move;
                 }
             }
 

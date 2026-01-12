@@ -2,6 +2,7 @@ package main.java.opal.pokemon.game.screens.overworld.characters.npc;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class NPC_Machop extends NPC {
     public NPC_Machop (GameController gp) {
         super(gp);
 
-        model.direction = "down";
+        model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
         getNPCImage();

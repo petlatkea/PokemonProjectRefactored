@@ -3,6 +3,7 @@ package main.java.opal.pokemon.game.screens.overworld.characters.npc;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.screens.dialogue.DialogueController;
 import main.java.opal.pokemon.game.GameController;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel.Direction;
 
 public abstract class NPC extends Entity {
 
@@ -24,10 +25,10 @@ public abstract class NPC extends Entity {
         dialogueIndex++;
 
         switch(gp.getPlayer().model.direction) {
-            case "up" -> model.direction = "down";
-            case "down" -> model.direction = "up";
-            case "left" -> model.direction = "right";
-            case "right" -> model.direction = "left";
+            case UP -> model.direction = Direction.DOWN;
+            case DOWN -> model.direction = Direction.UP;
+            case LEFT -> model.direction = Direction.RIGHT;
+            case RIGHT -> model.direction = Direction.LEFT;
         }
     }
 

@@ -1,6 +1,7 @@
 package main.java.opal.pokemon.game.screens.overworld.characters.npc;
 
 import main.java.opal.pokemon.game.GameController;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 
 
 public class NPC_GymLeader extends NPC {
@@ -8,7 +9,7 @@ public class NPC_GymLeader extends NPC {
     public NPC_GymLeader(GameController gp) {
         super(gp);
 
-        model.direction = "down";
+        model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
         getNPCImage();

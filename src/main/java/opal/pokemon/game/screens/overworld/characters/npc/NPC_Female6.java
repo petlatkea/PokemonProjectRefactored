@@ -2,13 +2,14 @@ package main.java.opal.pokemon.game.screens.overworld.characters.npc;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 
 public class NPC_Female6 extends NPC {
 
     public NPC_Female6(GameController gp) {
         super(gp);
 
-        model.direction = "down";
+        model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
         getNPCImage();

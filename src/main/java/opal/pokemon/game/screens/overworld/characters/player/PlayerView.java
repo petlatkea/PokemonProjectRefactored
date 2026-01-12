@@ -68,10 +68,10 @@ public class PlayerView extends EntityView {
         BufferedImage[] right = {right1, right2, right3};
 
         switch (model.direction) {
-            case "up" -> image = up[spriteNum - 1];
-            case "left" -> image = left[spriteNum - 1];
-            case "down" -> image = down[spriteNum - 1];
-            case "right" -> image = right[spriteNum - 1];
+            case UP -> image = up[spriteNum - 1];
+            case LEFT -> image = left[spriteNum - 1];
+            case DOWN -> image = down[spriteNum - 1];
+            case RIGHT -> image = right[spriteNum - 1];
         }
         g2.drawImage(image, screenX, screenY - 8, null);
     }
