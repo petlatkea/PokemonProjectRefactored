@@ -128,4 +128,22 @@ public class EntityView {
             g2.drawImage(image, screenX, screenY, entitySize, entitySize, null);
         }
     }
+
+    public void loadSprites(String filepath) {
+        if(!filepath.endsWith("/")) {
+            filepath+="/";
+        }
+        up1 = setup(filepath + "up_1");
+        up2 = setup(filepath + "up_2");
+        up3 = setup(filepath + "up_3");
+        left1 = setup(filepath +"left_1");
+        left2 = setup(filepath + "left_2");
+        left3 = setup(filepath + "left_3");
+        down1 = setup(filepath + "down_1");
+        down2 = setup(filepath + "down_2");
+        down3 = setup(filepath + "down_3");
+        right1 = setup(filepath + "right_1");
+        right2 = setup(filepath + "right_2");
+        right3 = setup(filepath + "right_3");
+    }
 }

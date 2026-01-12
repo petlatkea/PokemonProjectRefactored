@@ -12,23 +12,8 @@ public class NPC_Female6 extends NPC {
         model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
-        getNPCImage();
+        view.loadSprites("/images/characters/npc/female_6/");
         setDialogue();
-    }
-
-    public void getNPCImage() {
-        view.up1 = view.setup("/images/characters/npc/female_6/up_1");
-        view.up2 = view.setup("/images/characters/npc/female_6/up_2");
-        view.up3 = view.setup("/images/characters/npc/female_6/up_3");
-        view.left1 = view.setup("/images/characters/npc/female_6/left_1");
-        view.left2 = view.setup("/images/characters/npc/female_6/left_2");
-        view.left3 = view.setup("/images/characters/npc/female_6/left_3");
-        view.down1 = view.setup("/images/characters/npc/female_6/down_1");
-        view.down2 = view.setup("/images/characters/npc/female_6/down_2");
-        view.down3 = view.setup("/images/characters/npc/female_6/down_3");
-        view.right1 = view.setup("/images/characters/npc/female_6/right_1");
-        view.right2 = view.setup("/images/characters/npc/female_6/right_2");
-        view.right3 = view.setup("/images/characters/npc/female_6/right_3");
     }
 
     public void setDialogue() {

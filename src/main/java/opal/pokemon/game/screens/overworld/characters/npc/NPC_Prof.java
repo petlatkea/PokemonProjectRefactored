@@ -12,23 +12,8 @@ public class NPC_Prof extends NPC {
         model.direction = EntityModel.Direction.DOWN;
         model.speed = 3;
 
-        getNPCImage();
+        view.loadSprites("/images/characters/npc/prof_peter/");
         setDialogue();
-    }
-
-    public void getNPCImage() {
-        view.up1 = view.setup("/images/characters/npc/prof_peter/up_1");
-        view.up2 = view.setup("/images/characters/npc/prof_peter/up_2");
-        view.up3 = view.setup("/images/characters/npc/prof_peter/up_3");
-        view.left1 = view.setup("/images/characters/npc/prof_peter/left_1");
-        view.left2 = view.setup("/images/characters/npc/prof_peter/left_2");
-        view.left3 = view.setup("/images/characters/npc/prof_peter/left_3");
-        view.down1 = view.setup("/images/characters/npc/prof_peter/down_1");
-        view.down2 = view.setup("/images/characters/npc/prof_peter/down_2");
-        view.down3 = view.setup("/images/characters/npc/prof_peter/down_3");
-        view.right1 = view.setup("/images/characters/npc/prof_peter/right_1");
-        view.right2 = view.setup("/images/characters/npc/prof_peter/right_2");
-        view.right3 = view.setup("/images/characters/npc/prof_peter/right_3");
     }
 
     public void setDialogue() {
