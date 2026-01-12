@@ -31,6 +31,9 @@ public class Player extends Entity {
         model = new PlayerModel();
         view = new PlayerView(gp, model);
 
+        // TODO: Make Gender an enum with a name
+        String gender = gp.genderState == 1 ? "female" : "male";
+        view.loadSprites("/images/characters/player/"+gender+"/walk_");
 
         solidArea = new Rectangle();
         solidArea.x = 33;

@@ -8,6 +8,7 @@ import main.java.opal.pokemon.main.UtilityTool;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 public class EntityView {
     public BufferedImage up1;
@@ -44,15 +45,22 @@ public class EntityView {
         this.model = entityModel;
     }
 
-    public BufferedImage setup(String imagePath) {
+    // TODO: At some point combine with "GraphicsObject" and use the same load method for all graphics
+    //       also see if we can get rid of the image scaling here - shouldn't happen before drawing,
+    //       but that might be long into the future!
+    public BufferedImage loadImage(String imagePath) {
         UtilityTool uTool = new UtilityTool();
-        BufferedImage image;
+        BufferedImage image = null;
 
         try {
-            image = ImageIO.read(this.getClass().getResourceAsStream(imagePath + ".png"));
-            image = uTool.scaleImage(image, entitySize, entitySize);
+            InputStream input = this.getClass().getResourceAsStream(imagePath + ".png");
+            if (input != null) {
+                image = ImageIO.read(input);
+                image = uTool.scaleImage(image, entitySize, entitySize);
+            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.err.println("EntityView cannot load image: " + imagePath + ".png");
+            System.err.println(e);
         }
         return image;
     }
@@ -130,20 +138,17 @@ public class EntityView {
     }
 
     public void loadSprites(String filepath) {
-        if(!filepath.endsWith("/")) {
-            filepath+="/";
-        }
-        up1 = setup(filepath + "up_1");
-        up2 = setup(filepath + "up_2");
-        up3 = setup(filepath + "up_3");
-        left1 = setup(filepath +"left_1");
-        left2 = setup(filepath + "left_2");
-        left3 = setup(filepath + "left_3");
-        down1 = setup(filepath + "down_1");
-        down2 = setup(filepath + "down_2");
-        down3 = setup(filepath + "down_3");
-        right1 = setup(filepath + "right_1");
-        right2 = setup(filepath + "right_2");
-        right3 = setup(filepath + "right_3");
+        up1 = loadImage(filepath + "up_1");
+        up2 = loadImage(filepath + "up_2");
+        up3 = loadImage(filepath + "up_3");
+        left1 = loadImage(filepath + "left_1");
+        left2 = loadImage(filepath + "left_2");
+        left3 = loadImage(filepath + "left_3");
+        down1 = loadImage(filepath + "down_1");
+        down2 = loadImage(filepath + "down_2");
+        down3 = loadImage(filepath + "down_3");
+        right1 = loadImage(filepath + "right_1");
+        right2 = loadImage(filepath + "right_2");
+        right3 = loadImage(filepath + "right_3");
     }
 }
