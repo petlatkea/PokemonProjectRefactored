@@ -40,30 +40,6 @@ public class Player extends Entity {
         solidArea.height = 62;
 
         setDefaultValues();
-        setPlayerImage(this);
-    }
-
-    void setPlayerImage(Player player) {
-        String gender = switch (player.gp.genderState) {
-            case 1 -> "female";
-            case 2 -> "male";
-            default -> throw new IllegalStateException("No gender with the genderSate: " + player.gp.genderState);
-        };
-
-        String path = "/images/characters/player/" + gender + "/";
-
-        view.up1 = view.setup(path + "walk_up_1", player);
-        view.up2 = view.setup(path + "walk_up_2", player);
-        view.up3 = view.setup(path + "walk_up_3", player);
-        view.left1 = view.setup(path + "walk_left_1", player);
-        view.left2 = view.setup(path + "walk_left_2", player);
-        view.left3 = view.setup(path + "walk_left_3", player);
-        view.down1 = view.setup(path + "walk_down_1", player);
-        view.down2 = view.setup(path + "walk_down_2", player);
-        view.down3 = view.setup(path + "walk_down_3", player);
-        view.right1 = view.setup(path + "walk_right_1", player);
-        view.right2 = view.setup(path + "walk_right_2", player);
-        view.right3 = view.setup(path + "walk_right_3", player);
     }
 
     private void setDefaultValues() {

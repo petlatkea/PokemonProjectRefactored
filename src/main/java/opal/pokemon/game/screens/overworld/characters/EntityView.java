@@ -44,12 +44,12 @@ public class EntityView {
         this.model = entityModel;
     }
 
-    public BufferedImage setup(String imagePath, Entity entity) {
+    public BufferedImage setup(String imagePath) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image;
 
         try {
-            image = ImageIO.read(entity.getClass().getResourceAsStream(imagePath + ".png"));
+            image = ImageIO.read(this.getClass().getResourceAsStream(imagePath + ".png"));
             image = uTool.scaleImage(image, entitySize, entitySize);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -16,18 +16,18 @@ public class NPC_GymLeader extends NPC {
     }
 
     public void getNPCImage() {
-        view.up1 = view.setup("/images/characters/npc/gym_leader/up_1", this);
-        view.up2 = view.setup("/images/characters/npc/gym_leader/up_2", this);
-        view.up3 = view.setup("/images/characters/npc/gym_leader/up_3", this);
-        view.left1 = view.setup("/images/characters/npc/gym_leader/left_1", this);
-        view.left2 = view.setup("/images/characters/npc/gym_leader/left_2", this);
-        view.left3 = view.setup("/images/characters/npc/gym_leader/left_3", this);
-        view.down1 = view.setup("/images/characters/npc/gym_leader/down_1", this);
-        view.down2 = view.setup("/images/characters/npc/gym_leader/down_2", this);
-        view.down3 = view.setup("/images/characters/npc/gym_leader/down_3", this);
-        view.right1 = view.setup("/images/characters/npc/gym_leader/right_1", this);
-        view.right2 = view.setup("/images/characters/npc/gym_leader/right_2", this);
-        view.right3 = view.setup("/images/characters/npc/gym_leader/right_3", this);
+        view.up1 = view.setup("/images/characters/npc/gym_leader/up_1");
+        view.up2 = view.setup("/images/characters/npc/gym_leader/up_2");
+        view.up3 = view.setup("/images/characters/npc/gym_leader/up_3");
+        view.left1 = view.setup("/images/characters/npc/gym_leader/left_1");
+        view.left2 = view.setup("/images/characters/npc/gym_leader/left_2");
+        view.left3 = view.setup("/images/characters/npc/gym_leader/left_3");
+        view.down1 = view.setup("/images/characters/npc/gym_leader/down_1");
+        view.down2 = view.setup("/images/characters/npc/gym_leader/down_2");
+        view.down3 = view.setup("/images/characters/npc/gym_leader/down_3");
+        view.right1 = view.setup("/images/characters/npc/gym_leader/right_1");
+        view.right2 = view.setup("/images/characters/npc/gym_leader/right_2");
+        view.right3 = view.setup("/images/characters/npc/gym_leader/right_3");
     }
 
     public void setDialogue() {

@@ -22,9 +22,32 @@ public class PlayerView extends EntityView {
 
     public PlayerView(GameController gp, EntityModel model) {
         super(gp, model);
-       // setPlayerImage();
+       setPlayerImage();
         screenX = ViewSettings.screenWidth / 2 - (entitySize / 2);
         screenY = ViewSettings.screenHeight / 2 - (entitySize / 2);
+    }
+
+    private void setPlayerImage() {
+        String gender = switch (gp.genderState) {
+            case 1 -> "female";
+            case 2 -> "male";
+            default -> throw new IllegalStateException("No gender with the genderSate: " + gp.genderState);
+        };
+
+        String path = "/images/characters/player/" + gender + "/";
+
+        up1 = setup(path + "walk_up_1");
+        up2 = setup(path + "walk_up_2");
+        up3 = setup(path + "walk_up_3");
+        left1 = setup(path + "walk_left_1");
+        left2 = setup(path + "walk_left_2");
+        left3 = setup(path + "walk_left_3");
+        down1 = setup(path + "walk_down_1");
+        down2 = setup(path + "walk_down_2");
+        down3 = setup(path + "walk_down_3");
+        right1 = setup(path + "walk_right_1");
+        right2 = setup(path + "walk_right_2");
+        right3 = setup(path + "walk_right_3");
     }
 
     public void draw(Graphics2D g2) {

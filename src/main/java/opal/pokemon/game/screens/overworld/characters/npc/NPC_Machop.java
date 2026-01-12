@@ -17,10 +17,10 @@ public class NPC_Machop extends NPC {
     }
 
     public void getNPCImage() {
-        view.up1 = view.setup("/images/characters/npc/machop/up_1", this);
-        view.down1 = view.setup("/images/characters/npc/machop/down_1", this);
-        view.left1 = view.setup("/images/characters/npc/machop/left_1", this);
-        view.right1 = view.setup("/images/characters/npc/machop/right_1", this);
+        view.up1 = view.setup("/images/characters/npc/machop/up_1");
+        view.down1 = view.setup("/images/characters/npc/machop/down_1");
+        view.left1 = view.setup("/images/characters/npc/machop/left_1");
+        view.right1 = view.setup("/images/characters/npc/machop/right_1");
 
     }
 
