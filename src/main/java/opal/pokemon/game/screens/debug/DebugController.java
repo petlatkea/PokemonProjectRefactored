@@ -1,7 +1,9 @@
 package main.java.opal.pokemon.game.screens.debug;
 
 import main.java.opal.pokemon.game.GameController;
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.ScreenController;
+import main.java.opal.pokemon.game.screens.overworld.Camera;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 
@@ -20,8 +22,9 @@ public class DebugController extends ScreenController {
     @Override
     public void update() {
         // only update model if the display is enabled - to save a bit of time
-        if(debuginfo.enabled) {
+        if (debuginfo.enabled) {
             updatePlayerInfo();
+            updateCameraInfo();
         }
     }
 
@@ -29,17 +32,25 @@ public class DebugController extends ScreenController {
         Player player = gameController.getPlayer();
         debuginfo.player.x = "" + player.model.worldX;
         debuginfo.player.y = "" + player.model.worldY;
-        debuginfo.player.direction = String.valueOf(player.model.direction);
-        debuginfo.player.collision = player.model.collisionOn?"on":"off";
-        debuginfo.player.grass = player.model.isGrassOn?"on":"off";
+        debuginfo.player.col = "" + player.model.worldX / ViewSettings.tileSize;
+        debuginfo.player.row = "" + player.model.worldY / ViewSettings.tileSize;
 
-        debuginfo.player.moving = player.model.moving?"yes":"no";
-        debuginfo.player.pixelCounter = "" + ((PlayerView)player.view).pixelCounter;
+        debuginfo.player.direction = String.valueOf(player.model.direction);
+        debuginfo.player.collision = player.model.collisionOn ? "on" : "off";
+        debuginfo.player.grass = player.model.isGrassOn ? "on" : "off";
+
+        debuginfo.player.moving = player.model.moving ? "yes" : "no";
+        debuginfo.player.pixelCounter = "" + ((PlayerView) player.view).pixelCounter;
+    }
+
+    private void updateCameraInfo() {
+        Camera camera = gameController.getCamera();
+        debuginfo.camera = camera;
     }
 
     private void toggleEnabled() {
         debuginfo.enabled = !debuginfo.enabled;
-        System.out.println((debuginfo.enabled?"Displaying":"No longer displaying") + " debug-info on screen");
+        System.out.println((debuginfo.enabled ? "Displaying" : "No longer displaying") + " debug-info on screen");
     }
 
     private boolean allowToggling = true;

@@ -47,10 +47,9 @@ public class Player extends Entity {
     }
 
     private void setDefaultValues() {
-        // NOTE: This worldX and worldY tilesize is a bit weird here ...
-        // TODO: Figure out what it is needed for, and why it is set ...
-        model.worldX = (ViewSettings.tileSize * 19) + 32;  // WORLD START POS
-        model.worldY = (ViewSettings.tileSize * 53) + 16;  // =o=
+        // setting starting positions - TODO: This should be part of the model, and set like every other asset
+        model.worldX = 20 * ViewSettings.tileSize;
+        model.worldY = 54 * ViewSettings.tileSize;
         model.speed = 3;
         model.direction = Direction.DOWN;
     }

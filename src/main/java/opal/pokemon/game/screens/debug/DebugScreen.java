@@ -55,7 +55,8 @@ public class DebugScreen extends Screen {
 
         // then draw player-info
         drawPlayerInfo();
-
+        // and camera info
+        drawCameraInfo();
         // TODO: Draw other selected debug-info blocks
 
     }
@@ -67,6 +68,9 @@ public class DebugScreen extends Screen {
         printValue("x", debuginfo.player.x);
         printValue("y", debuginfo.player.y);
         println("");
+        printValue("col,row", debuginfo.player.col);
+        print(red,",");
+        println(white, debuginfo.player.row);
 
         printValueln("direction", debuginfo.player.direction);
         printValueln("collision", debuginfo.player.collision);
@@ -76,6 +80,11 @@ public class DebugScreen extends Screen {
         printValueln("pixel", debuginfo.player.pixelCounter);
     }
 
+    private void drawCameraInfo() {
+        g2.setFont(dataFont);
+        printGroupName("Camera");
+        printValueln("left, top", "" + debuginfo.camera.left +"," + debuginfo.camera.top);
+    }
 
     // ========== Text Writing Helpers ==========
 

@@ -1,5 +1,7 @@
 package main.java.opal.pokemon.game.screens.debug;
 
+import main.java.opal.pokemon.game.screens.overworld.Camera;
+
 /**
  * DebugInfo is the 'model' for the DebugController
  * - it contains all the information that the DebugScreen can display,
@@ -13,10 +15,12 @@ package main.java.opal.pokemon.game.screens.debug;
 public class DebugInfo {
     public boolean enabled = false;
     public PlayerInfo player = new PlayerInfo();
+    public Camera camera;
+
 
     class PlayerInfo {
-        public String x;
-        public String y;
+        public String x, y;
+        public String col, row;
         public String direction;
         public String collision;
         public String grass;

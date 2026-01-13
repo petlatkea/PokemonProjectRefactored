@@ -1,9 +1,10 @@
 package main.java.opal.pokemon.game.screens.overworld.characters.player;
 
+import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
+import main.java.opal.pokemon.game.screens.overworld.Camera;
 import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel;
 import main.java.opal.pokemon.game.screens.overworld.characters.EntityView;
-import main.java.opal.pokemon.game.GameController;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,23 +13,13 @@ public class PlayerView extends EntityView {
     public int pixelCounter = 0;
     public int chance = 0;
 
-
-
-    // NOTE: I'm not sure what these screenX and screenY actually is - and they do seem to never change,
-    //       so maybe it is simply something for calculating the center of the screen relative to the player
-    public final int screenX;
-    public final int screenY;
-
-
     public PlayerView(GameController gp, EntityModel model) {
         super(gp, model);
-        screenX = ViewSettings.screenWidth / 2 - (entitySize / 2);
-        screenY = ViewSettings.screenHeight / 2 - (entitySize / 2);
     }
 
     public void draw(Graphics2D g2) {
 
-        if(model.moving) {
+        if (model.moving) {
             startAnimation();
         } else {
             stopAnimation();
@@ -49,6 +40,8 @@ public class PlayerView extends EntityView {
             case DOWN -> image = down[spriteNum - 1];
             case RIGHT -> image = right[spriteNum - 1];
         }
-        g2.drawImage(image, screenX, screenY - 8, null);
+
+        Camera camera = gp.getCamera();
+        g2.drawImage(image, model.worldX - ViewSettings.tileSize / 2 - camera.left, model.worldY - ViewSettings.tileSize / 2 - 16 - camera.top, entitySize, entitySize, null);
     }
 }

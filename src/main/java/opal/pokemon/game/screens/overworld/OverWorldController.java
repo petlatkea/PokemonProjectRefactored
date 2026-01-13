@@ -19,6 +19,8 @@ public class OverWorldController extends ScreenController {
     public NPC[] npc = new NPC[20];
     public SuperObject[] obj = new SuperObject[10];
 
+    private Camera camera;
+
     // TODO: Make this part of the model-initialization for the overworld - setting all the NPCs
     private AssetSetter assetSetter;
 
@@ -35,11 +37,16 @@ public class OverWorldController extends ScreenController {
         assetSetter = new AssetSetter(gameController);
         assetSetter.setObject(obj);
         assetSetter.setNPC(npc);
+
+        camera = new Camera();
+
     }
 
     public Player getPlayer() {
         return player;
     }
+
+    public Camera getCamera() { return camera; }
 
     @Override
     public void update() {
@@ -54,6 +61,8 @@ public class OverWorldController extends ScreenController {
                 npc[i].update();
             }
         }
+
+        camera.centerOn(player);
     }
 
     @Override

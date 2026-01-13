@@ -2,6 +2,8 @@ package main.java.opal.pokemon.game.screens.overworld.characters;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
+import main.java.opal.pokemon.game.screens.overworld.Camera;
+import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 import main.java.opal.pokemon.main.UtilityTool;
 
@@ -49,14 +51,12 @@ public class EntityView {
     //       also see if we can get rid of the image scaling here - shouldn't happen before drawing,
     //       but that might be long into the future!
     public BufferedImage loadImage(String imagePath) {
-        UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
 
         try {
             InputStream input = this.getClass().getResourceAsStream(imagePath + ".png");
             if (input != null) {
                 image = ImageIO.read(input);
-                image = uTool.scaleImage(image, entitySize, entitySize);
             }
         } catch (Exception e) {
             System.err.println("EntityView cannot load image: " + imagePath + ".png");
@@ -107,18 +107,11 @@ public class EntityView {
 
     // TODO: Move animation and sprite selection from player into here
     public void draw(Graphics2D g2) {
-        int cameraLeft = gp.getPlayer().model.worldX - ((PlayerView) gp.getPlayer().view).screenX;
-        int cameraTop = gp.getPlayer().model.worldY - ((PlayerView) gp.getPlayer().view).screenY;
-        int cameraRight = cameraLeft + ViewSettings.screenWidth;
-        int cameraBottom = cameraTop + ViewSettings.screenHeight;
-
-        if (model.worldX + ViewSettings.tileSize >= cameraLeft &&
-                model.worldX <= cameraRight &&
-                model.worldY + ViewSettings.tileSize >= cameraTop &&
-                model.worldY <= cameraBottom) {
-
-            int screenX = model.worldX - cameraLeft - 32;  // Sprite offset fixes
-            int screenY = model.worldY - cameraTop - 56; // =o=
+        Camera camera = gp.getCamera();
+        if (model.worldX + ViewSettings.tileSize >= camera.left &&
+                model.worldX <= camera.right &&
+                model.worldY + ViewSettings.tileSize >= camera.top &&
+                model.worldY <= camera.bottom) {
 
             BufferedImage image = null;
             BufferedImage[] up = {up1, up2, up3};
@@ -133,7 +126,7 @@ public class EntityView {
                 case RIGHT -> image = right[spriteNum - 1];
             }
 
-            g2.drawImage(image, screenX, screenY, entitySize, entitySize, null);
+            g2.drawImage(image, model.worldX-ViewSettings.tileSize/2 - camera.left, model.worldY-ViewSettings.tileSize/2-16 - camera.top, entitySize, entitySize, null);
         }
     }
 

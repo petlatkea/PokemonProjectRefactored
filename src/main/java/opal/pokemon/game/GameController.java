@@ -8,6 +8,7 @@ import main.java.opal.pokemon.game.screens.battle.BattleController;
 import main.java.opal.pokemon.game.screens.battle.BattleIntroController;
 import main.java.opal.pokemon.game.screens.debug.DebugController;
 import main.java.opal.pokemon.game.screens.dialogue.DialogueController;
+import main.java.opal.pokemon.game.screens.overworld.Camera;
 import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
 import main.java.opal.pokemon.game.screens.pause.PauseController;
@@ -260,5 +261,8 @@ public class GameController implements Runnable {
         return inputController.getControls();
     }
 
-
+    // temporarily here, to make it easier to move into the OverWorldController
+    public Camera getCamera() {
+        return ((OverWorldController)overWorldController).getCamera();
+    }
 }
