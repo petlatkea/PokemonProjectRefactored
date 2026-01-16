@@ -1,6 +1,11 @@
 package main.java.opal.pokemon.game.screens.debug;
 
+import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.Screen;
+import main.java.opal.pokemon.game.screens.overworld.Camera;
+import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
+import main.java.opal.pokemon.game.screens.overworld.OverWorldModel;
+import main.java.opal.pokemon.game.screens.overworld.tiles.TileMap;
 
 import java.awt.*;
 
@@ -40,6 +45,10 @@ public class DebugScreen extends Screen {
     }
 
     private void drawDebugInfo() {
+
+        // Draw grid before anything else - as that otherwise covers text
+        drawGrid();
+
         // draw semi-transparent box in upper left corner
         g2.setColor(backgroundColor);
         g2.fillRect(10, 10, 200, 400);
@@ -57,6 +66,9 @@ public class DebugScreen extends Screen {
         drawPlayerInfo();
         // and camera info
         drawCameraInfo();
+        // and tile info
+        drawTileInfo();
+
         // TODO: Draw other selected debug-info blocks
 
     }
@@ -84,6 +96,69 @@ public class DebugScreen extends Screen {
         g2.setFont(dataFont);
         printGroupName("Camera");
         printValueln("left, top", "" + debuginfo.camera.left +"," + debuginfo.camera.top);
+    }
+
+    private void drawTileInfo() {
+        g2.setFont(dataFont);
+        printGroupName("Tiles");
+        printCheckBox(debuginfo.grid.grid);
+        print(" ");
+        printCheckBox(debuginfo.grid.coords);
+        println("");
+        printCheckBox(debuginfo.grid.tileType);
+    }
+
+    private void drawGrid() {
+        Camera camera = controller.getGameController().getCamera();
+        // TODO: Check if there's a better way of getting the map ...
+        TileMap map = ((OverWorldController)controller.getGameController().overWorldController).getModel().backgroundTileMap;
+
+        Font boldFont = dataFont.deriveFont(Font.BOLD);
+        FontMetrics metrics = g2.getFontMetrics();
+        int c = ViewSettings.tileSize / 2 - metrics.stringWidth("000");
+        int h = ViewSettings.tileSize / 2 - metrics.getAscent() / 2;
+
+
+        for (int worldCol = 0; worldCol < map.getCols(); worldCol++) {
+            for (int worldRow = 0; worldRow < map.getRows(); worldRow++) {
+
+                int tileNum = map.map[worldCol][worldRow];
+                int worldX = worldCol * ViewSettings.tileSize;
+                int worldY = worldRow * ViewSettings.tileSize;
+
+                if (worldX + ViewSettings.tileSize >= camera.left &&
+                        worldX <= camera.right &&
+                        worldY + ViewSettings.tileSize >= camera.top &&
+                        worldY <= camera.bottom) {
+
+
+
+                    if(debuginfo.grid.grid.isChecked()) {
+                        g2.setFont(dataFont);
+                        g2.setColor(new Color(131, 0, 131));
+                        g2.drawRect(worldX - camera.left, worldY - camera.top, ViewSettings.tileSize, ViewSettings.tileSize);
+                    }
+                    if(debuginfo.grid.coords.isChecked()) {
+                        g2.setFont(dataFont);
+                        g2.setColor(new Color(253, 0, 253));
+                        g2.drawString(worldCol+","+worldRow, worldX - camera.left+2, worldY - camera.top + 14);
+                    }
+                    if(debuginfo.grid.tileType.isChecked()) {
+                        g2.setFont(boldFont);
+                        g2.setColor(new Color(230, 205, 26));
+                        g2.drawString(""+tileNum, worldX-camera.left+c, worldY-camera.top+h);
+                    }
+                }
+            }
+        }
+    }
+
+    // ========== Interaction Helpers ===========
+
+    private void printCheckBox(CheckBox checkbox) {
+        checkbox.draw(g2, textOffsetX+textX, textOffsetY+textY);
+        textX += 16;
+        print(red, checkbox.getName());
     }
 
     // ========== Text Writing Helpers ==========

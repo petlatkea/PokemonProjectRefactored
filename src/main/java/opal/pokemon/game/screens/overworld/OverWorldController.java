@@ -42,6 +42,10 @@ public class OverWorldController extends ScreenController {
 
     }
 
+    public OverWorldModel getModel() {
+        return model;
+    }
+
     public Player getPlayer() {
         return player;
     }

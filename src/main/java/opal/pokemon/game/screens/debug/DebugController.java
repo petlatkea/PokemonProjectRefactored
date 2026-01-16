@@ -2,21 +2,29 @@ package main.java.opal.pokemon.game.screens.debug;
 
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
+import main.java.opal.pokemon.game.input.MouseClick;
 import main.java.opal.pokemon.game.screens.ScreenController;
 import main.java.opal.pokemon.game.screens.overworld.Camera;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.Player;
 import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DebugController extends ScreenController {
 
     private final DebugInfo debuginfo;
+    private List<CheckBox> checkBoxes = new ArrayList<>();
 
     public DebugController(GameController gameController) {
         super(gameController);
-        debuginfo = new DebugInfo();
+        debuginfo = new DebugInfo(this);
         screen = new DebugScreen(this, debuginfo);
+    }
+
+    void registerCheckBox(CheckBox checkBox) {
+        checkBoxes.add(checkBox);
     }
 
     @Override
@@ -68,6 +76,16 @@ public class DebugController extends ScreenController {
     public void keyReleased(int keyCode) {
         if(keyCode == KeyEvent.VK_F4) {
             allowToggling = true;
+        }
+    }
+
+    @Override
+    public void handleLeftClick(MouseClick mouseClick) {
+        // check if any of the checkboxes was "clicked" - and if so, toggle it
+        for (CheckBox checkBox : checkBoxes) {
+            if(mouseClick.insideBox(checkBox.x, checkBox.y, checkBox.w, checkBox.h)) {
+                checkBox.toggle();
+            }
         }
     }
 }

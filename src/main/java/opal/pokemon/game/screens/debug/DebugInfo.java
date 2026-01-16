@@ -13,10 +13,17 @@ import main.java.opal.pokemon.game.screens.overworld.Camera;
  *  anywhere else!
  */
 public class DebugInfo {
+    private final DebugController controller;
+
     public boolean enabled = false;
     public PlayerInfo player = new PlayerInfo();
     public Camera camera;
+    public GridInfo grid;
 
+    public DebugInfo(DebugController controller) {
+        this.controller = controller;
+        grid = new GridInfo();
+    }
 
     class PlayerInfo {
         public String x, y;
@@ -27,5 +34,17 @@ public class DebugInfo {
 
         public String moving;
         public String pixelCounter;
+    }
+
+    class GridInfo {
+        public CheckBox grid = new CheckBox("grid");
+        public CheckBox coords = new CheckBox("coords");
+        public CheckBox tileType = new CheckBox("tile type");
+
+        public GridInfo() {
+            controller.registerCheckBox(grid);
+            controller.registerCheckBox(coords);
+            controller.registerCheckBox(tileType);
+        }
     }
 }
