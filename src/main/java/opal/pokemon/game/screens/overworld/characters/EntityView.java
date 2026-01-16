@@ -3,9 +3,6 @@ package main.java.opal.pokemon.game.screens.overworld.characters;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.Camera;
-import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
-import main.java.opal.pokemon.game.screens.overworld.characters.player.PlayerView;
-import main.java.opal.pokemon.main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,23 +10,18 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public class EntityView {
-    public BufferedImage up1;
-    public BufferedImage up2;
-    public BufferedImage up3;
-    public BufferedImage left1;
-    public BufferedImage left2;
-    public BufferedImage left3;
-    public BufferedImage down1;
-    public BufferedImage down2;
-    public BufferedImage down3;
-    public BufferedImage right1;
-    public BufferedImage right2;
-    public BufferedImage right3;
 
-    // animation
+    // animation images
+    private BufferedImage[] up;
+    private BufferedImage[] left;
+    private BufferedImage[] down;
+    private BufferedImage[] right;
+
+    // animation control
     protected boolean animating = false;
     protected boolean stoppingAnimation = false;
     // TODO: Rename these properties to something with frames and animation
+    // animation status
     protected int spriteCounter = 0;
     protected int spriteNum = 1;
     protected int orderIndex = 0;
@@ -105,19 +97,19 @@ public class EntityView {
         stoppingAnimation = false;
     }
 
-    // TODO: Move animation and sprite selection from player into here
     public void draw(Graphics2D g2) {
-        Camera camera = gp.getCamera();
-        if (model.worldX + ViewSettings.tileSize >= camera.left &&
-                model.worldX <= camera.right &&
-                model.worldY + ViewSettings.tileSize >= camera.top &&
-                model.worldY <= camera.bottom) {
+        if (model.moving) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
 
+        animate();
+
+        Camera camera = gp.getCamera();
+
+        if (camera.isInView(model)) {
             BufferedImage image = null;
-            BufferedImage[] up = {up1, up2, up3};
-            BufferedImage[] left = {left1, left2, left3};
-            BufferedImage[] down = {down1, down2, down3};
-            BufferedImage[] right = {right1, right2, right3};
 
             switch (model.direction) {
                 case UP -> image = up[spriteNum - 1];
@@ -131,17 +123,23 @@ public class EntityView {
     }
 
     public void loadSprites(String filepath) {
-        up1 = loadImage(filepath + "up_1");
-        up2 = loadImage(filepath + "up_2");
-        up3 = loadImage(filepath + "up_3");
-        left1 = loadImage(filepath + "left_1");
-        left2 = loadImage(filepath + "left_2");
-        left3 = loadImage(filepath + "left_3");
-        down1 = loadImage(filepath + "down_1");
-        down2 = loadImage(filepath + "down_2");
-        down3 = loadImage(filepath + "down_3");
-        right1 = loadImage(filepath + "right_1");
-        right2 = loadImage(filepath + "right_2");
-        right3 = loadImage(filepath + "right_3");
+        BufferedImage up1 = loadImage(filepath + "up_1");
+        BufferedImage up2 = loadImage(filepath + "up_2");
+        BufferedImage up3 = loadImage(filepath + "up_3");
+        BufferedImage left1 = loadImage(filepath + "left_1");
+        BufferedImage left2 = loadImage(filepath + "left_2");
+        BufferedImage left3 = loadImage(filepath + "left_3");
+        BufferedImage down1 = loadImage(filepath + "down_1");
+        BufferedImage down2 = loadImage(filepath + "down_2");
+        BufferedImage down3 = loadImage(filepath + "down_3");
+        BufferedImage right1 = loadImage(filepath + "right_1");
+        BufferedImage right2 = loadImage(filepath + "right_2");
+        BufferedImage right3 = loadImage(filepath + "right_3");
+
+        up = new BufferedImage[]{up1, up2, up3};
+        left = new BufferedImage[]{left1, left2, left3};
+        down = new BufferedImage[]{down1, down2, down3};
+        right = new BufferedImage[]{right1, right2, right3};
+
     }
 }

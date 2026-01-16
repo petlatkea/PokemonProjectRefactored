@@ -22,11 +22,7 @@ public class SuperObject {
 
     public void draw(Graphics2D g2, GameController gp) {
         Camera camera = gp.getCamera();
-
-        if (worldX + ViewSettings.tileSize >= camera.left &&
-                worldX <= camera.right &&
-                worldY + ViewSettings.tileSize >= camera.top &&
-                worldY <= camera.bottom) {
+        if (camera.isInView(this)) {
 
             int screenX = worldX - camera.left;
             int screenY = worldY - camera.top;
