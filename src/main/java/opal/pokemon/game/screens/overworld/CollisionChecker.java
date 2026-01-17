@@ -3,6 +3,7 @@ package main.java.opal.pokemon.game.screens.overworld;
 import main.java.opal.pokemon.game.ViewSettings;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
+import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel.Direction;
 import main.java.opal.pokemon.game.screens.overworld.tiles.TileMap;
 
 public class CollisionChecker {
@@ -25,6 +26,36 @@ public class CollisionChecker {
     boolean isGrass(TileMap map, int col, int row) {
         int tileNum = map.getTileType(col,row);
         return model.getTileType(tileNum).isGrass();
+    }
+
+    public boolean isTileWalkable(int row, int col) {
+        boolean collision = isTileColliding(model.backgroundTileMap, col, row)
+                || isTileColliding(model.environmentBTileMap, col, row)
+                || isTileColliding(model.environmentFTileMap, col, row);
+        return !collision;
+    }
+
+    public boolean canMoveInDirection(Entity entity, Direction direction) {
+        // find the current row and col of the player
+        int currentRow = entity.model.worldY / ViewSettings.tileSize;
+        int currentCol = entity.model.worldX / ViewSettings.tileSize;
+
+        // and then the requested row / col
+        int requestedRow = currentRow;
+        if(direction == Direction.UP) {
+            requestedRow--;
+        } else if(direction == Direction.DOWN) {
+            requestedRow++;
+        }
+        int requestedCol = currentCol;
+        if(direction == Direction.LEFT) {
+            requestedCol--;
+        } else if(direction == Direction.RIGHT) {
+            requestedCol++;
+        }
+
+        // check if the tile in that direction is walkable
+        return isTileWalkable( requestedRow, requestedCol );
     }
 
     public void checkGrass(Entity entity){
@@ -56,6 +87,9 @@ public class CollisionChecker {
         int entityRightCol = entityRightWorldX / ViewSettings.tileSize;
         int entityTopRow = entityTopWorldY / ViewSettings.tileSize;
         int entityBottomRow = entityBottomWorldY / ViewSettings.tileSize;
+
+        System.out.println("entity left, right: " + entityLeftCol + "," + entityRightCol);
+        System.out.println("entity top, bottom: " + entityTopRow + "," + entityBottomRow);
 
         switch (entity.model.direction) {
             case UP -> {
@@ -333,4 +367,5 @@ public class CollisionChecker {
         gp.getPlayer().solidArea.x = gp.getPlayer().solidAreaDefaultX;
         gp.getPlayer().solidArea.y = gp.getPlayer().solidAreaDefaultY;
     }
+
 }

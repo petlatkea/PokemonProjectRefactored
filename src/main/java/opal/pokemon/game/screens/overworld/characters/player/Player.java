@@ -5,7 +5,6 @@ import main.java.opal.pokemon.game.screens.overworld.CollisionChecker;
 import main.java.opal.pokemon.game.screens.overworld.characters.Entity;
 import main.java.opal.pokemon.game.GameController;
 import main.java.opal.pokemon.game.GameState;
-import main.java.opal.pokemon.game.screens.overworld.OverWorldController;
 import main.java.opal.pokemon.game.screens.overworld.characters.EntityModel.Direction;
 
 import java.awt.*;
@@ -76,7 +75,8 @@ public class Player extends Entity {
         //  - stop when the player is entirely within a tile
         // 4. check if walking on grass, and activate a chance battle ... doesn't really belong here, now does it?
 
-        if (model.moving == false) {
+        if (!model.moving) {
+            // if the player isn't moving, it would like to move in some direction
             if (gp.getControls().upPressed || gp.getControls().leftPressed || gp.getControls().downPressed || gp.getControls().rightPressed) {
                 if (gp.getControls().upPressed) {
                     model.direction = Direction.UP;
@@ -90,32 +90,36 @@ public class Player extends Entity {
 
                 sprinting = gp.getControls().shiftPressed;
 
-                model.moving = true;
-
-                hasChecked = false;
-
+                // but only move if the tile in that direction is walkable
+                if( collisionChecker.canMoveInDirection(this, model.direction)) {
+                    model.moving = true;
+                    hasChecked = false;
+                    model.collisionOn = false;
+                } else {
+                    model.moving = false;
+                    model.collisionOn = true;
+                }
+/*
                 // CHECK TILE COLLISION
                 model.collisionOn = false;
-                collisionChecker.checkTile(this);
+                if( canMoveInDirection(model.direction)) {
+
+                }
+//                collisionChecker.checkTile(this);
 
                 // CHECK OBJECT COLLISION
-                int objectIndex = collisionChecker.checkObject(this, true);
-
+//                int objectIndex = collisionChecker.checkObject(this, true);
+*/
 
                 // TODO: Check WHY this is needed here!
                 // CHECK NPC COLLISION
-                collisionChecker.checkEntityCollision(this, ((OverWorldController) gp.overWorldController).npc);
-            } //else {
-//                standCounter++;
-//                if (standCounter == 20) {
-//                    this.view.spriteNum = 1;
-//                    standCounter = 0;
-//                }
-//            }
+//                collisionChecker.checkEntityCollision(this, ((OverWorldController) gp.overWorldController).npc);
+            }
         }
+
         int move;
         if (model.moving) {
-            collisionChecker.checkGrass(this);
+//            collisionChecker.checkGrass(this);
             if (sprinting) {
                 move = model.speed * 2;
             } else {
